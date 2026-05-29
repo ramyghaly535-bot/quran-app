@@ -873,8 +873,6 @@ export default function Home() {
         <div className="qr-side-footer">شارك القرآن الكريم مع الجميع</div>
       </div>
 
-      {/* زر التحميلات - مخفي من العائم */
-
       {/* نافذة المفضلات */}
       <div className="ov" id="favOv">
         <div className="mb fv-b" style={{maxWidth:440}}>
