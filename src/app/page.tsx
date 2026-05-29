@@ -1019,8 +1019,8 @@ export default function Home() {
                   <i className="fas fa-caret-down sur-arrow-icon"></i>
                 </div>
                 <button className="sur-circle-btn" id="surBtn" title="اختر سورة"><i className="fas fa-book-quran"></i> اختر سورة</button>
-                <button className="dl-circle-btn" onClick={() => (window as any).toggleDlM?.()} title="تحميل السور"><i className="fas fa-cloud-arrow-down"></i> حمل السورة</button>
               </div>
+              <button className="dl-circle-btn" onClick={() => (window as any).toggleDlM?.()} title="تحميل السور"><i className="fas fa-cloud-arrow-down"></i> حمل السورة</button>
             </div>
           </div>
         </div>
