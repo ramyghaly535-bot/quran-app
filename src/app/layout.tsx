@@ -6,10 +6,16 @@ export const metadata: Metadata = {
   description: "تطبيق الاستماع إلى القرآن الكريم",
   icons: {
     icon: [
+      { url: "/icon-16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-48.png", sizes: "48x48", type: "image/png" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/icon-152.png", sizes: "152x152", type: "image/png" },
+    ],
     shortcut: "/favicon.ico",
   },
   manifest: "/manifest.json",
@@ -47,12 +53,11 @@ export default function RootLayout({
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
         {/* Favicon for desktop browsers */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png" />
         {/* iOS / Safari PWA */}
-        <link rel="apple-touch-icon" sizes="180x180" href="/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/icon-152.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
@@ -63,10 +68,10 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         {/* Windows tile */}
         <meta name="msapplication-TileColor" content="#d4af37" />
-        <meta name="msapplication-TileImage" content="/icon-192.png" />
-        <meta name="msapplication-square70x70logo" content="/icon-192.png" />
-        <meta name="msapplication-square150x150logo" content="/icon-192.png" />
-        <meta name="msapplication-wide310x150logo" content="/icon-512.png" />
+        <meta name="msapplication-TileImage" content="/icon-150.png" />
+        <meta name="msapplication-square70x70logo" content="/icon-70.png" />
+        <meta name="msapplication-square150x150logo" content="/icon-150.png" />
+        <meta name="msapplication-wide310x150logo" content="/icon-310.png" />
         <meta name="msapplication-square310x310logo" content="/icon-512.png" />
         <meta name="application-name" content="قرآن في كل زمان ومكان" />
         <link rel="manifest" href="/manifest.json" />
