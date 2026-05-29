@@ -1051,10 +1051,11 @@ export default function Home() {
       </div>
 
       <footer>
-        <div>
-          <i className="fab fa-whatsapp" style={{color:'#25d366',marginLeft:5}}></i>{' '}
-          <a className="footer-link" onClick={() => (window as any).openWhatsApp?.()}>
-            <i className="fas fa-envelope" style={{marginLeft:3}}></i> ramyghaly535@gmail.com
+        <div className="footer-email-row">
+          <a className="footer-link footer-email-link" onClick={() => (window as any).openWhatsApp?.()}>
+            <i className="fab fa-whatsapp"></i>
+            <i className="fas fa-envelope"></i>
+            <span>ramyghaly535@gmail.com</span>
           </a>
         </div>
         <div className="ci">
