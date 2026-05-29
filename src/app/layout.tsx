@@ -4,6 +4,15 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "قرآن في كل زمان ومكان",
   description: "تطبيق الاستماع إلى القرآن الكريم",
+  icons: {
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
+  },
+  manifest: "/manifest.json",
 };
 
 export const viewport: Viewport = {
@@ -37,15 +46,30 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
         />
+        {/* Favicon for desktop browsers */}
+        <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png" />
+        {/* iOS / Safari PWA */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/icon-192.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png" />
+        <link rel="apple-touch-icon" sizes="512x512" href="/icon-512.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
         <meta name="apple-mobile-web-app-title" content="قرآن" />
+        {/* PWA manifest */}
         <meta name="mobile-web-app-capable" content="yes" />
+        {/* Windows tile */}
+        <meta name="msapplication-TileColor" content="#d4af37" />
+        <meta name="msapplication-TileImage" content="/icon-192.png" />
+        <meta name="msapplication-square70x70logo" content="/icon-192.png" />
+        <meta name="msapplication-square150x150logo" content="/icon-192.png" />
+        <meta name="msapplication-wide310x150logo" content="/icon-512.png" />
+        <meta name="msapplication-square310x310logo" content="/icon-512.png" />
+        <meta name="application-name" content="قرآن في كل زمان ومكان" />
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <script
           dangerouslySetInnerHTML={{
             __html: `

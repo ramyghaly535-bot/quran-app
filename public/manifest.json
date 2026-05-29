@@ -3,12 +3,14 @@
   "short_name": "قرآن",
   "description": "تطبيق الاستماع إلى القرآن الكريم مع تفسير وترجمة",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#1a2a3a",
   "theme_color": "#d4af37",
   "orientation": "portrait-primary",
   "dir": "rtl",
   "lang": "ar",
+  "categories": ["education", "music", "lifestyle"],
   "icons": [
     {
       "src": "/icon-192.png",
@@ -25,7 +27,10 @@
     {
       "src": "/quran-logo.png",
       "sizes": "1024x1024",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     }
-  ]
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
 }
