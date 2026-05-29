@@ -58,6 +58,23 @@ body {
   justify-content: center;
 }
 
+.logo-img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  border-radius: 14px;
+  position: relative;
+  z-index: 2;
+  animation: logoFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(212, 175, 55, .4)) drop-shadow(0 0 20px rgba(212, 175, 55, .25));
+  transition: transform .3s, filter .3s;
+}
+
+.logo-img:hover {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 12px rgba(212, 175, 55, .6)) drop-shadow(0 0 30px rgba(212, 175, 55, .4));
+}
+
 .logo {
   font-size: 2.8rem;
   font-family: 'Amiri', serif;
@@ -2478,6 +2495,17 @@ footer {
     font-size: 2.2rem;
   }
 
+  .logo-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+  }
+
+  .logo-glow {
+    width: 50px;
+    height: 50px;
+  }
+
   .app-t {
     font-size: .92rem;
   }
@@ -2590,6 +2618,17 @@ footer {
 
 /* ===== Responsive: Small mobile (max-width: 400px) ===== */
 @media (max-width: 400px) {
+  .logo-img {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .logo-glow {
+    width: 42px;
+    height: 42px;
+  }
+
   .pwa-banner {
     padding: 10px 12px;
     gap: 8px;
@@ -2661,6 +2700,12 @@ footer {
 
 /* ===== Responsive: Smallest screens (max-width: 360px) ===== */
 @media (max-width: 360px) {
+  .logo-img {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+  }
+
   .rc-g {
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
