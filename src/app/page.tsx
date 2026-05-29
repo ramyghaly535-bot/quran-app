@@ -971,7 +971,7 @@ export default function Home() {
         <div className="h-center">
           <div className="logo-wrap">
             <div className="logo-glow"></div>
-            <span className="logo">﷽</span>
+            <span className="logo">ق</span>
           </div>
           <div className="app-t">قرآن في كل زمان ومكان</div>
         </div>
