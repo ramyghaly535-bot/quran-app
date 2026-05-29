@@ -768,17 +768,13 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, .025);
+  background: transparent;
   padding: 8px 12px;
   margin-bottom: 3px;
   border-radius: 10px;
-  transition: .2s;
-  border: 1px solid transparent;
-}
-
-.dl-si:hover {
-  background: rgba(0, 201, 167, .05);
-  border-color: rgba(0, 201, 167, .08);
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .dl-si span {
