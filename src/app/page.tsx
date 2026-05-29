@@ -336,13 +336,17 @@ export default function Home() {
 
     // ===== إشعار القارئ =====
     let recNotifT:any=null;
+    let recNotifI:any=null;
+    function clearRecNotif(){if(recNotifT){clearTimeout(recNotifT);recNotifT=null}if(recNotifI){clearInterval(recNotifI);recNotifI=null}let el=$('recNotif');if(el)el.classList.remove('on')}
     function showReciterNotif(reciterName:string, surahName:string){
       let el=$('recNotif');let info=$('recNotifInfo');
       if(!el||!info)return;
+      clearRecNotif();
       info.textContent=reciterName+' - '+surahName;
       el.classList.add('on');
-      if(recNotifT)clearTimeout(recNotifT);
       recNotifT=setTimeout(function(){el.classList.remove('on')},10000);
+      if(recNotifI)clearInterval(recNotifI);
+      recNotifI=setInterval(function(){if(st.playing){info.textContent=reciterName+' - '+surahName;el.classList.add('on');if(recNotifT)clearTimeout(recNotifT);recNotifT=setTimeout(function(){el.classList.remove('on')},10000)}else{clearInterval(recNotifI);recNotifI=null}},300000);
     }
 
     // ===== تحميل =====
@@ -624,7 +628,7 @@ export default function Home() {
     function startRd(num:number){
       if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();
       st.curS=num;st.curA=1;st.loading=true;E.ld.style.display='block';E.wh.style.display='none';E.vd.style.display='none';E.linkTag.style.display='none';st.linkMode=false;
-      ayahTimings=[];lastAutoAyah=-1;hideSurArrow();
+      ayahTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
       if(!st.curR.id&&st.curR.url){
         st.linkMode=true;let u=getRUrl(st.curR,num);
         if(!u){E.ld.style.display='none';E.wh.style.display='block';st.loading=false;toast('رابط غير متاح');return}
