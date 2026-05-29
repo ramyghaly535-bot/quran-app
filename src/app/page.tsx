@@ -1029,6 +1029,10 @@ export default function Home() {
           <a href="https://www.mp3quran.net/ar" target="_blank" rel="noopener noreferrer" className="be">
             <i className="fas fa-external-link-alt"></i> زيارة موقع MP3 Quran
           </a>
+          <a className="be footer-email-link" onClick={() => (window as any).openWhatsApp?.()} style={{borderColor:'rgba(37,211,102,.3)',background:'rgba(37,211,102,.06)'}}>
+            <i className="fab fa-whatsapp"></i>
+            <span>ramyghaly535@gmail.com</span>
+          </a>
         </div>
       </main>
 
@@ -1044,13 +1048,6 @@ export default function Home() {
       </div>
 
       <footer>
-        <div className="footer-email-row">
-          <a className="footer-link footer-email-link" onClick={() => (window as any).openWhatsApp?.()}>
-            <i className="fab fa-whatsapp"></i>
-            <i className="fas fa-envelope"></i>
-            <span>ramyghaly535@gmail.com</span>
-          </a>
-        </div>
         <div className="ci">
           <i className="fas fa-phone"></i>{' '}
           <a className="footer-link" onClick={() => (window as any).openWhatsApp?.()}>
