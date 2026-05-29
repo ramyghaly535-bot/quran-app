@@ -820,9 +820,21 @@ export default function Home() {
       let dismissed=localStorage.getItem('pwa_dismissed');
       if(!dismissed){let b=$('pwaBanner');if(b)b.classList.add('on')}
     });
-    W.addEventListener('appinstalled',function(){deferredPrompt=null;let b=$('pwaBanner');if(b)b.classList.remove('on')});
+    W.addEventListener('appinstalled',function(){deferredPrompt=null;let b=$('pwaBanner');if(b)b.classList.remove('on');localStorage.setItem('pwa_dismissed','1')});
     W.dismissPWA=function(){let b=$('pwaBanner');if(b)b.classList.remove('on');localStorage.setItem('pwa_dismissed','1')};
-    W.installPWA=function(){if(!deferredPrompt){toast('التثبيت غير متاح حالياً');return}deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;let b=$('pwaBanner');if(b)b.classList.remove('on');toast('جارٍ تثبيت التطبيق...')}).catch(function(){})};
+    W.installPWA=function(){
+      if(!deferredPrompt){
+        if(navigator.standalone||window.matchMedia('(display-mode: standalone)').matches){
+          toast('التطبيق مثبّت بالفعل');
+        } else {
+          toast('اضغط على زر المشاركة في المتصفح ثم "إضافة إلى الشاشة الرئيسية"');
+        }
+        let b=$('pwaBanner');if(b)b.classList.remove('on');localStorage.setItem('pwa_dismissed','1');return;
+      }
+      deferredPrompt.prompt();deferredPrompt.userChoice.then(function(){deferredPrompt=null;let b=$('pwaBanner');if(b)b.classList.remove('on');localStorage.setItem('pwa_dismissed','1');toast('جارٍ تثبيت التطبيق...')}).catch(function(){});
+    };
+    // أظهر شريط التثبيت دائماً ما لم يكن مستخدماً
+    setTimeout(function(){if(!localStorage.getItem('pwa_dismissed')){let b=$('pwaBanner');if(b)b.classList.add('on')}},2000);
 
     // ===== Init =====
     function init(){
