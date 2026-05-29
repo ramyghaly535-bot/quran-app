@@ -1516,7 +1516,7 @@ main {
 .bs {
   height: 45px;
   padding: 0 22px;
-  border-radius: 25px;
+  border-radius: 9999px;
   background: linear-gradient(135deg, #d4af37, #b8912f);
   color: #fff;
   font-size: .85rem;
