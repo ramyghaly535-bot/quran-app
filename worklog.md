@@ -29,3 +29,20 @@
 - Added two volume buttons (`volUpB` and `volDownB`) in the `.br` controls bar between the next button and surah button
 - Added click event listeners that increase/decrease volume by 10% and show a toast with current volume percentage
 - Added `.vol-btn` CSS styling with gold color and opacity transitions
+
+---
+
+Task ID: 5
+Agent: Main
+Task: Add reciter notification banner showing "قراءة عطرة بصوت القارئ" with reciter name and surah, appearing 10 seconds then disappearing
+
+Work Log:
+- Added HTML notification element `rec-notif` in page.tsx JSX after the toast element
+- Added `showReciterNotif(reciterName, surahName)` function that shows the banner for 10 seconds with auto-hide
+- Called `showReciterNotif` in `startRd()` in all 3 audio paths: link mode, API mode, and fallback API mode
+- Added comprehensive CSS in globals.css: glass morphism banner with gold border, pulsing glow animation, crescent icon animation, responsive mobile styles
+
+Stage Summary:
+- Notification appears at top center with gold Islamic crescent icon, "قراءة عطرة بصوت القارئ" title, and reciter name + surah name
+- Auto-disappears after 10 seconds
+- Responsive design for mobile screens

@@ -334,6 +334,17 @@ export default function Home() {
     let tT:any=null;
     function toast(m:string){let t=$('toast');if(tT)clearTimeout(tT);t.textContent=m;t.classList.add('on');tT=setTimeout(function(){t.classList.remove('on')},2500)}
 
+    // ===== إشعار القارئ =====
+    let recNotifT:any=null;
+    function showReciterNotif(reciterName:string, surahName:string){
+      let el=$('recNotif');let info=$('recNotifInfo');
+      if(!el||!info)return;
+      info.textContent=reciterName+' - '+surahName;
+      el.classList.add('on');
+      if(recNotifT)clearTimeout(recNotifT);
+      recNotifT=setTimeout(function(){el.classList.remove('on')},10000);
+    }
+
     // ===== تحميل =====
     function buildSel(){}
 
@@ -631,14 +642,14 @@ export default function Home() {
             tryEstimate();
           }else{E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''}
         }).catch(function(){E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''});
-        E.aud.src=u;E.aud.load();E.aud.play().then(function(){st.playing=true;updPP()}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});return;
+        E.aud.src=u;E.aud.load();E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(st.curR.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});return;
       }
       let apiId=st.curR.id;let url='https://api.alquran.cloud/v1/surah/'+num+'/editions/'+apiId+',ar.muyassar,en.sahih';
       fetch(url).then(function(r){return r.json()}).then(function(d:any){
-        if(d.code===200&&d.data&&d.data.length>=1){st.sData=d.data;st.totV=d.data[0].numberOfAyahs;st.curA=1;let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah()}else throw new Error('err');
+        if(d.code===200&&d.data&&d.data.length>=1){st.sData=d.data;st.totV=d.data[0].numberOfAyahs;st.curA=1;let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'')}else throw new Error('err');
       }).catch(function(){
         fetch('https://api.alquran.cloud/v1/surah/'+num+'/'+apiId).then(function(r){return r.json()}).then(function(d:any){
-          if(d.code===200&&d.data&&d.data.ayahs){let ad=d.data;st.sData=[ad,{numberOfAyahs:ad.numberOfAyahs,ayahs:ad.ayahs.map(function(a:any){return{text:'--'}})},{numberOfAyahs:ad.numberOfAyahs,ayahs:ad.ayahs.map(function(a:any){return{text:'--'}})}];st.totV=ad.numberOfAyahs;st.curA=1;let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah()}else throw new Error('err2');
+          if(d.code===200&&d.data&&d.data.ayahs){let ad=d.data;st.sData=[ad,{numberOfAyahs:ad.numberOfAyahs,ayahs:ad.ayahs.map(function(a:any){return{text:'--'}})},{numberOfAyahs:ad.numberOfAyahs,ayahs:ad.ayahs.map(function(a:any){return{text:'--'}})}];st.totV=ad.numberOfAyahs;st.curA=1;let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'')}else throw new Error('err2');
         }).catch(function(){E.ld.style.display='none';E.wh.style.display='block';st.loading=false;toast('تحقق من الاتصال بالإنترنت')});
       });
     }
@@ -824,6 +835,17 @@ export default function Home() {
       <div className="bg-c" id="bgC"></div>
       <div className="toast" id="toast"></div>
       <div className="dtb" id="dtb"><i className="fas fa-circle-check"></i><span>جارٍ تحميل: <span className="fn" id="dtbFn">--</span></span></div>
+
+      {/* إشعار القارئ */}
+      <div className="rec-notif" id="recNotif">
+        <div className="rec-notif-inner">
+          <i className="fas fa-star-and-crescent rec-notif-icon"></i>
+          <div className="rec-notif-text">
+            <div className="rec-notif-title">قراءة عطرة بصوت القارئ</div>
+            <div className="rec-notif-info" id="recNotifInfo"></div>
+          </div>
+        </div>
+      </div>
 
       {/* QR العائم */}
       <div className="qr-f" onClick={() => (window as any).openQRSide?.()}>
