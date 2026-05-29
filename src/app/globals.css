@@ -1732,6 +1732,7 @@ footer {
 .footer-email-row {
   display: flex;
   justify-content: center;
+  margin-top: -5px;
 }
 
 @keyframes emailPulse {
