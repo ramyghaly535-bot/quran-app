@@ -713,6 +713,11 @@ export default function Home() {
     E.repB.addEventListener('click',function(){st.repeating=!st.repeating;E.repB.style.color=st.repeating?'var(--primary)':'#fff';toast(st.repeating?'تكرار الآية: مفعل':'تكرار الآية: معطل')});
     E.pBar.addEventListener('input',function(e:any){if(E.aud.duration&&isFinite(E.aud.duration))E.aud.currentTime=E.aud.duration/100*e.target.value});
 
+    // Volume controls
+    E.volUpB=$('volUpB');E.volDownB=$('volDownB');
+    E.volUpB.addEventListener('click',function(){let v=Math.min(1,E.aud.volume+0.1);E.aud.volume=v;toast('مستوى الصوت: '+Math.round(v*100)+'%')});
+    E.volDownB.addEventListener('click',function(){let v=Math.max(0,E.aud.volume-0.1);E.aud.volume=v;toast('مستوى الصوت: '+Math.round(v*100)+'%')});
+
     // ===== سور =====
     function openSurM(){$('surOv').classList.add('on');$('surQ').value='';rndSurL();setTimeout(function(){$('surQ').focus()},100);hideSurArrow()}
     function closeSurM(){$('surOv').classList.remove('on')}
@@ -806,7 +811,7 @@ export default function Home() {
 
     // ===== Init =====
     function init(){
-      buildReciters();rndRC();buildSel();startBG();initQR();updDT();updFavUI();updUpdBdg()
+      buildReciters();rndRC();buildSel();startBG();initQR();updDT();updFavUI();updUpdBdg();showSurArrow()
     }
 
     init()
@@ -988,6 +993,8 @@ export default function Home() {
               <button className="bt" id="repB" title="تكرار الآية"><i className="fas fa-redo"></i></button>
               <button className="bp" id="ppB" title="تشغيل / إيقاف"><i className="fas fa-play"></i></button>
               <button className="bt" id="nxtB" title="الآية التالية"><i className="fas fa-step-backward"></i></button>
+              <button className="bt vol-btn" id="volDownB" title="خفض الصوت"><i className="fas fa-volume-down"></i></button>
+              <button className="bt vol-btn" id="volUpB" title="رفع الصوت"><i className="fas fa-volume-up"></i></button>
               <div style={{position:'relative',display:'inline-flex'}}>
                 <div className="sur-arrow-wrap" id="surArrow">
                   <span className="sur-arrow-label">اختر سورة الآن</span>
