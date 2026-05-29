@@ -1472,7 +1472,9 @@ main {
 .br {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .bt {
@@ -1514,30 +1516,30 @@ main {
 }
 
 .sur-circle-btn {
-  height: 45px;
-  padding: 0 20px;
+  height: 40px;
+  padding: 0 14px;
   border-radius: 9999px;
   background: linear-gradient(135deg, #d4af37, #b8912f);
   border: 2px solid rgba(255, 255, 255, .3);
   color: #fff;
-  font-size: .82rem;
+  font-size: .78rem;
   font-weight: 700;
   font-family: 'Cairo', sans-serif;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
   transition: .3s;
   box-shadow: 0 4px 14px rgba(212, 175, 55, .4);
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  flex-shrink: 0;
+  flex-shrink: 1;
   white-space: nowrap;
 }
 
 .sur-circle-btn i {
-  font-size: .95rem;
+  font-size: .85rem;
 }
 
 .sur-circle-btn:hover {
@@ -1585,29 +1587,29 @@ main {
 }
 
 .dl-circle-btn {
-  height: 45px;
-  padding: 0 20px;
+  height: 40px;
+  padding: 0 14px;
   border-radius: 9999px;
   background: linear-gradient(135deg, var(--teal), var(--teal-d));
   border: 2px solid rgba(255, 255, 255, .2);
   color: #fff;
-  font-size: .82rem;
+  font-size: .78rem;
   font-weight: 700;
   font-family: 'Cairo', sans-serif;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
   transition: .3s;
   box-shadow: 0 3px 14px rgba(0, 201, 167, .3);
-  flex-shrink: 0;
+  flex-shrink: 1;
   white-space: nowrap;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
 
 .dl-circle-btn i {
-  font-size: .95rem;
+  font-size: .85rem;
 }
 
 .dl-circle-btn:hover {
