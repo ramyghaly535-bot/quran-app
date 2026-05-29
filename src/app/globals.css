@@ -735,7 +735,7 @@ header {
   height: 100%;
   width: 0%;
   border-radius: 3px;
-  background: linear-gradient(90deg, var(--teal), var(--primary));
+  background: var(--teal);
   transition: width .4s;
 }
 
