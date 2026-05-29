@@ -1513,6 +1513,37 @@ main {
   transform: scale(1.1);
 }
 
+.sur-circle-btn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37, #b8912f);
+  border: 2px solid rgba(255, 255, 255, .3);
+  color: #fff;
+  font-size: 1.15rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s;
+  box-shadow: 0 4px 14px rgba(212, 175, 55, .4);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.sur-circle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 22px rgba(212, 175, 55, .6);
+  border-color: #fff;
+}
+
+.sur-circle-btn:active {
+  transform: scale(.95);
+}
+
+/* ===== Surah Button (legacy) ===== */
 .bs {
   height: 45px;
   padding: 0 22px;
