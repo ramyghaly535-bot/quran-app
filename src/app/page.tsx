@@ -873,13 +873,7 @@ export default function Home() {
         <div className="qr-side-footer">شارك القرآن الكريم مع الجميع</div>
       </div>
 
-      {/* زر التحميلات */}
-      <div className="dl-f">
-        <div className="dl-fb" onClick={() => (window as any).toggleDlM?.()} title="تحميل السور">
-          <i className="fas fa-cloud-arrow-down"></i>
-        </div>
-        <span className="dl-fl">التحميلات</span>
-      </div>
+      {/* زر التحميلات - مخفي من العائم */
 
       {/* نافذة المفضلات */}
       <div className="ov" id="favOv">
@@ -1027,6 +1021,7 @@ export default function Home() {
                   <i className="fas fa-caret-down sur-arrow-icon"></i>
                 </div>
                 <button className="bs" id="surBtn" title="اختر سورة"><i className="fas fa-book-quran"></i> اختر سورة</button>
+                <button className="bs dl-inline-btn" onClick={() => (window as any).toggleDlM?.()} title="تحميل السور"><i className="fas fa-cloud-arrow-down"></i> التحميلات</button>
               </div>
             </div>
           </div>

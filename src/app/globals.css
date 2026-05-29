@@ -568,60 +568,6 @@ header {
   color: rgba(255, 255, 255, .2);
 }
 
-/* ===== Download Floating Button ===== */
-.dl-f {
-  position: fixed;
-  bottom: 20px;
-  left: 16px;
-  z-index: 500;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.dl-fb {
-  width: 55px;
-  height: 55px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--teal), var(--teal-d));
-  border: 2px solid rgba(255, 255, 255, .2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: .3s;
-  box-shadow: 0 4px 18px rgba(0, 201, 167, .3);
-  position: relative;
-  color: #fff;
-  font-size: 1.3rem;
-}
-
-.dl-fb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 28px rgba(0, 201, 167, .45);
-  border-color: #fff;
-}
-
-.dl-fb::after {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 201, 167, .3);
-  animation: pul 2.5s ease-in-out infinite;
-}
-
-@keyframes pul {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0; }
-}
-
-.dl-fl {
-  font-size: .6rem;
-  color: rgba(255, 255, 255, .3);
-}
-
 /* ===== Download Modal ===== */
 .dl-b {
   border-color: var(--teal);
@@ -1597,6 +1543,16 @@ main {
 .bs:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 22px rgba(212, 175, 55, .6);
+  border-color: #fff;
+}
+
+.dl-inline-btn {
+  background: linear-gradient(135deg, var(--teal), var(--teal-d));
+  box-shadow: 0 4px 14px rgba(0, 201, 167, .4);
+}
+
+.dl-inline-btn:hover {
+  box-shadow: 0 6px 22px rgba(0, 201, 167, .6);
   border-color: #fff;
 }
 
