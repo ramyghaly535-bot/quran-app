@@ -256,11 +256,13 @@ export default function Home() {
     }
 
     // ===== QR =====
+    var APK_URL='https://my-project-ramy1.vercel.app/quran-app.apk';
     function initQR(){
       let u=W.location.href;
       let q='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(u)+'&color=1a2a3a&bgcolor=ffffff&format=png';
       let qs='https://api.qrserver.com/v1/create-qr-code/?size=600x600&data='+encodeURIComponent(u)+'&color=1a2a3a&bgcolor=ffffff&format=png';
-      let qrFi=$('qrFi'),qrBig=$('qrBig');if(qrFi)qrFi.src=q;if(qrBig)qrBig.src=qs;
+      let qa='https://api.qrserver.com/v1/create-qr-code/?size=600x600&data='+encodeURIComponent(APK_URL)+'&color=1a2a3a&bgcolor=ffffff&format=png';
+      let qrFi=$('qrFi'),qrBig=$('qrBig'),qrApk=$('qrApk');if(qrFi)qrFi.src=q;if(qrBig)qrBig.src=qs;if(qrApk)qrApk.src=qa;
     }
     function openQRSide(){$('qrSide').classList.add('open');$('qrOverlay').classList.add('open')}
     function closeQRSide(){$('qrSide').classList.remove('open');$('qrOverlay').classList.remove('open')}
@@ -873,14 +875,22 @@ export default function Home() {
       <div className="qr-side-overlay" id="qrOverlay"></div>
       <div className="qr-side" id="qrSide">
         <div className="qr-side-header">
-          <h3><i className="fas fa-qrcode"></i> مشاركة الموقع</h3>
+          <h3><i className="fas fa-qrcode"></i> مشاركة التطبيق</h3>
           <button className="mx" onClick={() => (window as any).closeQRSide?.()}><i className="fas fa-times"></i></button>
         </div>
         <div className="qr-side-body">
-          <div className="qr-big-wrap"><img className="qr-big" id="qrBig" alt="QR Code" /></div>
-          <div className="qr-side-info">امسح الكود بالكاميرا لفتح الموقع<br /><strong>قرآن في كل زمان ومكان</strong></div>
+          <div style="display:flex;gap:15px;align-items:flex-start;flex-wrap:wrap;justify-content:center">
+            <div style="text-align:center">
+              <div className="qr-big-wrap" style="margin-bottom:8px"><img className="qr-big" id="qrBig" alt="QR الموقع" style="width:160px;height:160px" /></div>
+              <div style="font-size:.75rem;color:rgba(255,255,255,.5)">مسح لفتح الموقع</div>
+            </div>
+            <div style="text-align:center">
+              <div className="qr-big-wrap" style="margin-bottom:8px"><img className="qr-big" id="qrApk" alt="QR تحميل APK" style="width:160px;height:160px" /></div>
+              <div style="font-size:.75rem;color:rgba(255,255,255,.5)">مسح لتحميل APK</div>
+            </div>
+          </div>
           <button className="qr-copy-btn" onClick={() => (window as any).copyLink?.()}><i className="fas fa-copy"></i> نسخ الرابط</button>
-          <button className="qr-share-btn" onClick={() => (window as any).shareLink?.()}><i className="fas fa-share-nodes"></i> مشاركة مباشرة</button>
+          <a className="qr-share-btn" href={(window as any).APK_URL || 'https://my-project-ramy1.vercel.app/quran-app.apk'} download style={{textDecoration:'none',cursor:'pointer'}}><i className="fas fa-download"></i> تحميل APK مباشرة</a>
         </div>
         <div className="qr-side-footer">شارك القرآن الكريم مع الجميع</div>
       </div>
