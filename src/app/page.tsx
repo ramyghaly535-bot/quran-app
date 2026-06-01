@@ -256,7 +256,7 @@ export default function Home() {
     }
 
     // ===== QR =====
-    var APK_URL='https://my-project-ramy1.vercel.app/quran-app.apk';
+    const APK_URL='https://my-project-ramy1.vercel.app/quran-app.apk';
     function initQR(){
       let u=W.location.href;
       let q='https://api.qrserver.com/v1/create-qr-code/?size=300x300&data='+encodeURIComponent(u)+'&color=1a2a3a&bgcolor=ffffff&format=png';
@@ -880,6 +880,7 @@ export default function Home() {
         <div className="qr-side-body">
           <div className="qr-big-wrap"><img className="qr-big" id="qrBig" alt="QR Code" /></div>
           <div className="qr-side-info">امسح الكود بالكاميرا لفتح الموقع<br /><strong>قرآن في كل زمان ومكان</strong></div>
+          <a href="/quran-app.apk" download className="qr-copy-btn" style={{textDecoration:'none',background:'rgba(16,185,129,.15)',borderColor:'rgba(16,185,129,.4)',display:'flex',alignItems:'center',justifyContent:'center',gap:'8px',cursor:'pointer'}}><i className="fas fa-download"></i> تحميل APK مباشرة</a>
           <button className="qr-copy-btn" onClick={() => (window as any).copyLink?.()}><i className="fas fa-copy"></i> نسخ الرابط</button>
           <button className="qr-share-btn" onClick={() => {if(typeof window!=='undefined'){(window as any).shareLink?.()}}}><i className="fas fa-share-nodes"></i> مشاركة مباشرة</button>
         </div>
@@ -1039,6 +1040,10 @@ export default function Home() {
         </div>
 
         <div className="el">
+          <a href="/quran-app.apk" download className="be" style={{borderColor:'rgba(16,185,129,.5)',background:'rgba(16,185,129,.12)',display:'inline-flex',alignItems:'center',gap:'8px',animation:'whatsappBounce 2s ease-in-out infinite'}}>
+            <i className="fas fa-mobile-screen-button" style={{color:'#10b981',fontSize:'1.15rem'}}></i>
+            <span style={{color:'#10b981',fontWeight:600}}>تحميل التطبيق APK</span>
+          </a>
           <a href="https://www.mp3quran.net/ar" target="_blank" rel="noopener noreferrer" className="be">
             <i className="fas fa-external-link-alt"></i> زيارة موقع MP3 Quran
           </a>
