@@ -1040,8 +1040,8 @@ export default function Home() {
         </div>
 
         <div className="el">
-          <a href="/quran-app.apk" download className="be" style={{borderColor:'rgba(16,185,129,.5)',background:'rgba(16,185,129,.12)',display:'inline-flex',alignItems:'center',gap:'8px',animation:'whatsappBounce 2s ease-in-out infinite'}}>
-            <i className="fas fa-mobile-screen-button" style={{color:'#10b981',fontSize:'1.15rem'}}></i>
+          <a href="/download.html" className="be" style={{borderColor:'rgba(16,185,129,.5)',background:'rgba(16,185,129,.12)',display:'inline-flex',alignItems:'center',gap:'8px',animation:'whatsappBounce 2s ease-in-out infinite'}}>
+            <i className="fas fa-download" style={{color:'#10b981',fontSize:'1.15rem'}}></i>
             <span style={{color:'#10b981',fontWeight:600}}>تحميل التطبيق APK</span>
           </a>
           <a href="https://www.mp3quran.net/ar" target="_blank" rel="noopener noreferrer" className="be">

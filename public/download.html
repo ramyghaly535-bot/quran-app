@@ -2,75 +2,622 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تحميل تطبيق قرآن في كل زمان ومكان</title>
-<meta name="description" content="تحميل تطبيق قرآن في كل زمان ومكان للأندرويد - أكثر من 80 قارئ - مجانى">
-<meta name="keywords" content="قرآن, كريم, تطبيق, أندرويد, APK, تحميل, استماع, قارئ, تلاوة">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>تحميل تطبيق قرآن في كل زمان ومكان - APK مجاني</title>
+<meta name="description" content="تحميل تطبيق قرآن في كل زمان ومكان للأندرويد مجانا - أكثر من 80 قارئ - 114 سورة - بدون إنترنت - بدون إعلانات">
+<meta name="keywords" content="قرآن كريم, تطبيق قرآن, تحميل APK, أندرويد, استماع قرآن, تلاوة, قارئ, مجاني">
+<meta property="og:title" content="قرآن في كل زمان ومكان - تحميل التطبيق">
+<meta property="og:description" content="تطبيق استماع القرآن الكريم - أكثر من 80 قارئ - 114 سورة - مجاني بالكامل">
+<meta property="og:image" content="https://my-project-ramy1.vercel.app/app-icon.png">
+<meta property="og:url" content="https://my-project-ramy1.vercel.app/download.html">
+<meta property="og:type" content="website">
 <link rel="icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,sans-serif;background:linear-gradient(135deg,#1a2a3a 0%,#0f1a28 50%,#1a2a3a 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:20px}
-.container{max-width:500px;width:100%;text-align:center}
-.logo{font-size:5rem;color:#d4af37;text-shadow:0 0 20px rgba(212,175,55,.4),0 0 40px rgba(212,175,55,.2);margin-bottom:10px;animation:glow 2s ease-in-out infinite alternate}
-@keyframes glow{0%{text-shadow:0 0 20px rgba(212,175,55,.4),0 0 40px rgba(212,175,55,.2)}100%{text-shadow:0 0 30px rgba(212,175,55,.6),0 0 60px rgba(212,175,55,.4)}}
-h1{font-size:1.6rem;color:#d4af37;margin-bottom:8px}
-.subtitle{color:rgba(255,255,255,.6);font-size:.95rem;margin-bottom:25px}
-.features{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:30px}
-.feature{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:8px 16px;font-size:.82rem;backdrop-filter:blur(5px)}
-.feature span{color:#d4af37}
-.dl-btn{display:inline-flex;align-items:center;gap:10px;padding:18px 40px;border-radius:16px;background:linear-gradient(135deg,#d4af37,#b8912f);color:#1a2a3a;font-size:1.15rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 8px 30px rgba(212,175,55,.4);margin-bottom:15px}
-.dl-btn:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(212,175,55,.6)}
-.dl-btn svg{width:28px;height:28px}
-.info{color:rgba(255,255,255,.4);font-size:.78rem;margin-top:5px}
-.stats{margin-top:25px;display:flex;gap:20px;justify-content:center}
-.stat{text-align:center}
-.stat-num{font-size:1.8rem;color:#d4af37;font-weight:700}
-.stat-label{font-size:.72rem;color:rgba(255,255,255,.4)}
-.badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,201,167,.15);border:1px solid rgba(0,201,167,.3);color:#00c9a7;padding:4px 12px;border-radius:20px;font-size:.75rem;margin-top:15px}
-.qr-section{margin-top:30px;padding-top:25px;border-top:1px solid rgba(255,255,255,.1)}
-.qr-section p{color:rgba(255,255,255,.5);font-size:.85rem;margin-bottom:10px}
-.qr-code{width:150px;height:150px;border-radius:12px;border:3px solid #d4af37;padding:8px;background:#fff;margin:0 auto}
-footer{margin-top:30px;color:rgba(255,255,255,.25);font-size:.72rem}
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --gold:#d4af37;--gold-light:#f0d060;--gold-dark:#b8912f;
+  --navy:#1a2a3a;--navy-dark:#0f1a28;--navy-light:#243a50;
+  --teal:#00c9a7;--green:#10b981;
+}
+
+body{
+  font-family:'Segoe UI',Tahoma,Arial,sans-serif;
+  background:var(--navy-dark);
+  min-height:100vh;
+  color:#fff;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* Animated Background */
+.bg-layer{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 30%,var(--navy-dark) 60%,#162230 100%);
+  z-index:0;
+}
+.bg-image{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:url('download-bg.png') center center/cover no-repeat;
+  opacity:.15;z-index:1;
+}
+
+/* Floating Particles */
+.particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:2;pointer-events:none}
+.particle{
+  position:absolute;
+  width:4px;height:4px;
+  background:var(--gold);
+  border-radius:50%;
+  opacity:0;
+  animation:float-particle linear infinite;
+}
+@keyframes float-particle{
+  0%{opacity:0;transform:translateY(100vh) scale(0)}
+  10%{opacity:.6}
+  90%{opacity:.3}
+  100%{opacity:0;transform:translateY(-10vh) scale(1)}
+}
+
+/* Main Content */
+.page{
+  position:relative;z-index:10;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  padding:30px 20px 40px;
+}
+
+/* Header */
+.header{text-align:center;margin-bottom:20px}
+
+.app-icon{
+  width:110px;height:110px;
+  border-radius:26px;
+  border:3px solid var(--gold);
+  box-shadow:0 8px 40px rgba(212,175,55,.3),0 0 80px rgba(212,175,55,.1);
+  margin:0 auto 16px;
+  object-fit:cover;
+  animation:pulse-glow 3s ease-in-out infinite;
+}
+@keyframes pulse-glow{
+  0%,100%{box-shadow:0 8px 40px rgba(212,175,55,.3),0 0 80px rgba(212,175,55,.1);transform:scale(1)}
+  50%{box-shadow:0 12px 50px rgba(212,175,55,.5),0 0 100px rgba(212,175,55,.2);transform:scale(1.03)}
+}
+
+.app-name{
+  font-family:'Amiri',serif;
+  font-size:2rem;font-weight:700;
+  color:var(--gold);
+  text-shadow:0 2px 20px rgba(212,175,55,.3);
+  margin-bottom:6px;
+}
+
+.app-dev{font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:4px}
+
+.rating{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0}
+.stars{display:flex;gap:2px}
+.star{color:var(--gold);font-size:1rem}
+.star.empty{color:rgba(255,255,255,.15)}
+.rating-text{font-size:.78rem;color:rgba(255,255,255,.45)}
+.rating-badge{
+  background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);
+  color:var(--green);padding:2px 10px;border-radius:12px;font-size:.72rem;font-weight:600;
+}
+
+/* Stats Bar */
+.stats-bar{
+  display:flex;justify-content:center;gap:24px;
+  margin:16px 0 20px;
+  padding:14px 20px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:16px;
+  backdrop-filter:blur(10px);
+}
+.stat-item{text-align:center}
+.stat-val{font-size:1.5rem;font-weight:700;color:var(--gold)}
+.stat-label{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:2px}
+
+/* Download Section */
+.dl-section{
+  width:100%;max-width:420px;
+  margin-bottom:20px;
+}
+
+.dl-btn{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;padding:18px 24px;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  color:var(--navy-dark);
+  font-size:1.15rem;font-weight:700;
+  text-decoration:none;
+  transition:all .3s ease;
+  box-shadow:0 8px 35px rgba(212,175,55,.35);
+  border:none;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.dl-btn::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+  animation:shimmer 2.5s infinite;
+}
+@keyframes shimmer{0%{left:-100%}100%{left:100%}}
+.dl-btn:active{transform:scale(.97)}
+.dl-btn-icon{font-size:1.4rem}
+.dl-btn-text{display:flex;flex-direction:column;text-align:right}
+.dl-btn-main{font-size:1.1rem;line-height:1.2}
+.dl-btn-sub{font-size:.72rem;font-weight:400;opacity:.7}
+.dl-btn-arrow{font-size:1.2rem;animation:bounce-arrow 1.5s ease-in-out infinite}
+@keyframes bounce-arrow{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+.dl-info{
+  text-align:center;
+  color:rgba(255,255,255,.35);
+  font-size:.75rem;
+  margin-top:12px;
+  display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;
+}
+.dl-info span{display:flex;align-items:center;gap:4px}
+
+/* Direct Link */
+.direct-link-section{
+  width:100%;max-width:420px;
+  margin-bottom:24px;
+  padding:14px 16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  text-align:center;
+}
+.direct-link-label{font-size:.78rem;color:rgba(255,255,255,.4);margin-bottom:8px}
+.direct-link-box{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(0,0,0,.3);border:1px solid rgba(212,175,55,.2);
+  border-radius:10px;padding:8px 12px;
+  direction:ltr;
+}
+.direct-link-url{
+  flex:1;font-size:.72rem;color:var(--gold);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  text-align:left;
+}
+.copy-btn{
+  background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.3);
+  color:var(--gold);padding:6px 14px;border-radius:8px;
+  font-size:.72rem;cursor:pointer;transition:.2s;
+  white-space:nowrap;font-family:inherit;
+}
+.copy-btn:hover{background:rgba(212,175,55,.25)}
+.copy-btn:active{transform:scale(.95)}
+.copy-btn.copied{background:rgba(16,185,129,.2);border-color:rgba(16,185,129,.4);color:var(--green)}
+
+/* Features Grid */
+.features{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  width:100%;max-width:420px;
+  margin-bottom:24px;
+}
+.feature-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  padding:14px 12px;
+  text-align:center;
+  transition:.3s;
+}
+.feature-card:hover{background:rgba(255,255,255,.08);border-color:rgba(212,175,55,.2)}
+.feature-icon{font-size:1.6rem;margin-bottom:6px;display:block}
+.feature-text{font-size:.82rem;color:rgba(255,255,255,.7);font-weight:600}
+.feature-sub{font-size:.68rem;color:rgba(255,255,255,.35);margin-top:3px}
+
+/* Screenshots / Preview */
+.preview-section{
+  width:100%;max-width:420px;
+  margin-bottom:24px;
+  text-align:center;
+}
+.preview-title{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:12px}
+.preview-frame{
+  background:rgba(255,255,255,.03);
+  border:2px solid rgba(212,175,55,.15);
+  border-radius:20px;
+  padding:10px;
+  box-shadow:0 10px 40px rgba(0,0,0,.3);
+}
+.preview-frame iframe{
+  width:100%;height:500px;
+  border:none;border-radius:14px;
+  background:var(--navy-dark);
+}
+.preview-link{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:12px;
+  color:var(--gold);font-size:.82rem;
+  text-decoration:none;
+  transition:.3s;
+}
+.preview-link:hover{color:var(--gold-light)}
+
+/* Trust Section */
+.trust-section{
+  width:100%;max-width:420px;
+  margin-bottom:24px;
+}
+.trust-badges{
+  display:flex;justify-content:center;gap:12px;flex-wrap:wrap;
+}
+.trust-badge{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  padding:8px 14px;border-radius:10px;
+  font-size:.75rem;color:rgba(255,255,255,.5);
+}
+.trust-badge i{font-size:.9rem}
+.trust-badge.verified i{color:var(--green)}
+.trust-badge.free i{color:var(--gold)}
+.trust-badge.fast i{color:#60a5fa}
+
+/* QR Section */
+.qr-section{
+  text-align:center;
+  margin-bottom:24px;
+  padding:20px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+  width:100%;max-width:420px;
+}
+.qr-title{font-size:.85rem;color:rgba(255,255,255,.45);margin-bottom:12px}
+.qr-image{
+  width:140px;height:140px;
+  border-radius:14px;
+  border:3px solid var(--gold);
+  padding:6px;background:#fff;
+  margin:0 auto;
+}
+.qr-hint{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:8px}
+
+/* How to Install */
+.install-section{
+  width:100%;max-width:420px;
+  margin-bottom:24px;
+}
+.install-title{
+  font-size:.9rem;color:var(--gold);
+  margin-bottom:14px;
+  display:flex;align-items:center;gap:8px;
+}
+.install-steps{display:flex;flex-direction:column;gap:10px}
+.install-step{
+  display:flex;align-items:flex-start;gap:12px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px;
+  padding:12px 14px;
+}
+.step-num{
+  width:28px;height:28px;min-width:28px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  color:var(--navy-dark);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;font-weight:700;
+}
+.step-text{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.5}
+
+/* Web App Alternative */
+.web-section{
+  width:100%;max-width:420px;
+  margin-bottom:24px;
+  text-align:center;
+  padding:20px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:18px;
+}
+.web-section-title{font-size:.85rem;color:rgba(255,255,255,.5);margin-bottom:10px}
+.web-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:12px 28px;border-radius:14px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;font-size:.9rem;
+  text-decoration:none;transition:.3s;
+}
+.web-btn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.25)}
+.web-hint{font-size:.72rem;color:rgba(255,255,255,.3);margin-top:8px}
+
+/* Footer */
+footer{
+  text-align:center;
+  padding:20px;
+  color:rgba(255,255,255,.2);
+  font-size:.72rem;
+}
+footer .footer-heart{color:#e74c3c;font-size:.8rem}
+footer a{color:var(--gold);text-decoration:none}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:-60px;left:50%;transform:translateX(-50%);
+  background:var(--green);color:#fff;
+  padding:10px 24px;border-radius:10px;
+  font-size:.82rem;font-weight:600;
+  z-index:9999;
+  transition:.4s ease;
+  box-shadow:0 4px 20px rgba(16,185,129,.4);
+}
+.toast.show{bottom:30px}
+
+/* Counter Animation */
+.counter{display:inline-block}
+
+/* Responsive */
+@media(max-width:380px){
+  .app-name{font-size:1.6rem}
+  .features{grid-template-columns:1fr}
+  .stats-bar{gap:16px}
+  .stat-val{font-size:1.2rem}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--navy-dark)}
+::-webkit-scrollbar-thumb{background:rgba(212,175,55,.3);border-radius:3px}
 </style>
 </head>
 <body>
-<div class="container">
-<div class="logo">ق</div>
-<h1>قرآن في كل زمان ومكان</h1>
-<p class="subtitle">تطبيق الاستماع إلى القرآن الكريم</p>
 
-<div class="features">
-<div class="feature">📖 <span>+80</span> قارئ</div>
-<div class="feature">🔊 آية بآية</div>
-<div class="feature">📥 تحميل</div>
-<div class="feature">❤️ مفضلات</div>
-<div class="feature">📱 أندرويد</div>
-<div class="feature">🖥️ ويندوز</div>
+<div class="bg-layer"></div>
+<div class="bg-image"></div>
+<div class="particles" id="particles"></div>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <img class="app-icon" src="app-icon.png" alt="قرآن في كل زمان ومكان" onerror="this.style.display='none';document.getElementById('fallback-icon').style.display='flex'">
+    <div id="fallback-icon" style="display:none;width:110px;height:110px;border-radius:26px;border:3px solid var(--gold);background:linear-gradient(135deg,var(--navy),var(--navy-dark));margin:0 auto 16px;align-items:center;justify-content:center;font-family:Amiri,serif;font-size:3.5rem;color:var(--gold);box-shadow:0 8px 40px rgba(212,175,55,.3)">ق</div>
+    <h1 class="app-name">قرآن في كل زمان ومكان</h1>
+    <div class="app-dev">تطبيق الاستماع إلى القرآن الكريم</div>
+    <div class="rating">
+      <div class="stars">
+        <span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span>
+      </div>
+      <span class="rating-text">5.0</span>
+      <span class="rating-badge">&#10003; موثوق</span>
+    </div>
+  </div>
+
+  <!-- Stats Bar -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-val"><span class="counter" data-target="114">0</span></div>
+      <div class="stat-label">سورة</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val"><span class="counter" data-target="80">0</span>+</div>
+      <div class="stat-label">قارئ</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">0</div>
+      <div class="stat-label">إعلانات</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">24/7</div>
+      <div class="stat-label">متاح</div>
+    </div>
+  </div>
+
+  <!-- Download Section -->
+  <div class="dl-section">
+    <a href="quran-app.apk" download class="dl-btn" id="dlBtn">
+      <span class="dl-btn-icon">&#9660;</span>
+      <div class="dl-btn-text">
+        <span class="dl-btn-main">تحميل التطبيق APK</span>
+        <span class="dl-btn-sub">لأجهزة أندرويد • بدون تسجيل</span>
+      </div>
+      <span class="dl-btn-arrow">&#8593;</span>
+    </a>
+    <div class="dl-info">
+      <span>&#128241; أندرويد 5.0+</span>
+      <span>&#128190; 153 KB</span>
+      <span>&#128274; آمن 100%</span>
+    </div>
+  </div>
+
+  <!-- Direct Link Copy -->
+  <div class="direct-link-section">
+    <div class="direct-link-label">&#128279; شارك رابط التحميل المباشر مع أصدقائك</div>
+    <div class="direct-link-box">
+      <span class="direct-link-url" id="dlUrl">https://my-project-ramy1.vercel.app/quran-app.apk</span>
+      <button class="copy-btn" id="copyBtn" onclick="copyLink()">&#128203; نسخ</button>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="features">
+    <div class="feature-card">
+      <span class="feature-icon">&#127926;</span>
+      <div class="feature-text">+80 قارئ</div>
+      <div class="feature-sub">أشهر القراء عالمياً</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#128337;</span>
+      <div class="feature-text">114 سورة</div>
+      <div class="feature-sub">كامل القرآن الكريم</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#128241;</span>
+      <div class="feature-text">بدون إنترنت</div>
+      <div class="feature-sub">استمع في أي مكان</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#128268;</span>
+      <div class="feature-text">آية بآية</div>
+      <div class="feature-sub">تلاوة مرتبة</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#10084;&#65039;</span>
+      <div class="feature-text">المفضلات</div>
+      <div class="feature-sub">احفظ قراءك المفضلين</div>
+    </div>
+    <div class="feature-card">
+      <span class="feature-icon">&#128187;</span>
+      <div class="feature-text">ويندوز + أندرويد</div>
+      <div class="feature-sub">يعمل على كل الأجهزة</div>
+    </div>
+  </div>
+
+  <!-- Live Preview -->
+  <div class="preview-section">
+    <div class="preview-title">&#128241; معاينة التطبيق</div>
+    <div class="preview-frame">
+      <iframe src="https://my-project-ramy1.vercel.app" title="معاينة التطبيق" loading="lazy"></iframe>
+    </div>
+    <a href="https://my-project-ramy1.vercel.app" target="_blank" class="preview-link">&#128279; افتح التطبيق في المتصفح</a>
+  </div>
+
+  <!-- Trust Badges -->
+  <div class="trust-section">
+    <div class="trust-badges">
+      <div class="trust-badge verified">&#10003; موثوق وآمن</div>
+      <div class="trust-badge free">&#9733; مجاني 100%</div>
+      <div class="trust-badge fast">&#9889; سريع وخفيف</div>
+    </div>
+  </div>
+
+  <!-- QR Code -->
+  <div class="qr-section">
+    <div class="qr-title">&#128247; امسح الكود لتحميل التطبيق مباشرة</div>
+    <img class="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fmy-project-ramy1.vercel.app%2Fdownload.html&color=1a2a3a&bgcolor=ffffff&format=png" alt="QR Code">
+    <div class="qr-hint">امسح بكاميرا هاتفك • بدون تطبيق مسح</div>
+  </div>
+
+  <!-- How to Install -->
+  <div class="install-section">
+    <div class="install-title">&#128295; كيفية التثبيت على أندرويد</div>
+    <div class="install-steps">
+      <div class="install-step">
+        <div class="step-num">1</div>
+        <div class="step-text">اضغط على زر <strong style="color:var(--gold)">"تحميل التطبيق APK"</strong> أعلاه</div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">2</div>
+        <div class="step-text">بعد التحميل، افتح ملف APK من الإشعارات أو مجلد التحميلات</div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">3</div>
+        <div class="step-text">إذا ظهر تحذير "التثبيت من مصادر غير معروفة"، اضغط <strong style="color:var(--gold)">"إعدادات"</strong> ثم فعّل <strong>"السماح من هذا المصدر"</strong></div>
+      </div>
+      <div class="install-step">
+        <div class="step-num">4</div>
+        <div class="step-text">اضغط <strong style="color:var(--gold)">"تثبيت"</strong> واستمتع بالقرآن الكريم! &#10084;&#65039;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Web App Alternative -->
+  <div class="web-section">
+    <div class="web-section-title">&#127760; يمكنك أيضاً استخدام التطبيق مباشرة من المتصفح</div>
+    <a href="https://my-project-ramy1.vercel.app" target="_blank" class="web-btn">&#127760; فتح التطبيق في المتصفح</a>
+    <div class="web-hint">يعمل على أندرويد وآيفون وويندوز بدون تحميل</div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-heart">&#10084;&#65039;</span> صنع بكل حب لخدمة كتاب الله تعالى
+    <br><br>
+    <a href="https://my-project-ramy1.vercel.app">الصفحة الرئيسية</a> • 
+    <a href="https://github.com/ramyghaly535-bot/quran-app" target="_blank">GitHub</a>
+  </footer>
+
 </div>
 
-<a href="https://github.com/ramyghaly535-bot/quran-app/releases/download/v1.0.0/quran-app.apk" class="dl-btn">
-<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 2H6.5C5.12 2 4 3.12 4 4.5v15C4 20.88 5.12 22 6.5 22h11c1.38 0 2.5-1.12 2.5-2.5v-15C19 3.12 17.88 2 17.5 2zM12 6.5l4.5 5h-3v5h-3v-5h-3l4.5-5z"/></svg>
-تحميل التطبيق (APK)
-</a>
-<p class="info">يعمل على أندرويد 5.0 وأحدث • حجم 153 KB</p>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-<div class="badge">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="#00c9a7"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-مجاني 100% • بدون إعلانات
-</div>
+<script>
+// ===== Particles =====
+(function(){
+  const c=document.getElementById('particles');
+  for(let i=0;i<20;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(8+Math.random()*12)+'s';
+    p.style.animationDelay=Math.random()*10+'s';
+    p.style.width=p.style.height=(2+Math.random()*4)+'px';
+    c.appendChild(p);
+  }
+})();
 
-<div class="stats">
-<div class="stat"><div class="stat-num">114</div><div class="stat-label">سورة</div></div>
-<div class="stat"><div class="stat-num">80+</div><div class="stat-label">قارئ</div></div>
-<div class="stat"><div class="stat-num">153</div><div class="stat-label">KB</div></div>
-</div>
+// ===== Counter Animation =====
+(function(){
+  const counters=document.querySelectorAll('.counter[data-target]');
+  counters.forEach(function(el){
+    const target=parseInt(el.getAttribute('data-target'));
+    let current=0;
+    const step=Math.ceil(target/40);
+    const timer=setInterval(function(){
+      current+=step;
+      if(current>=target){current=target;clearInterval(timer)}
+      el.textContent=current;
+    },50);
+  });
+})();
 
-<div class="qr-section">
-<p>امسح الرمز لتحميل التطبيق</p>
-<img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=https%3A%2F%2Fgithub.com%2Framyghaly535-bot%2Fquran-app%2Freleases%2Fdownload%2Fv1.0.0%2Fquran-app.apk&color=1a2a3a&bgcolor=ffffff&format=png" alt="QR Code">
-</div>
+// ===== Copy Link =====
+function copyLink(){
+  const url=document.getElementById('dlUrl').textContent;
+  const btn=document.getElementById('copyBtn');
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(url).then(function(){
+      btn.textContent='&#10003; تم النسخ!';
+      btn.classList.add('copied');
+      showToast('تم نسخ رابط التحميل بنجاح');
+      setTimeout(function(){btn.textContent='&#128203; نسخ';btn.classList.remove('copied')},3000);
+    });
+  } else {
+    const ta=document.createElement('textarea');ta.value=url;
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent='&#10003; تم النسخ!';
+    btn.classList.add('copied');
+    showToast('تم نسخ رابط التحميل بنجاح');
+    setTimeout(function(){btn.textContent='&#128203; نسخ';btn.classList.remove('copied')},3000);
+  }
+}
 
-<footer>صنع بكل ❤️ لخدمة كتاب الله تعالى</footer>
-</div>
+// ===== Toast =====
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},3000);
+}
+
+// ===== Auto Download on Android =====
+(function(){
+  const ua=navigator.userAgent||'';
+  const isAndroid=/Android/i.test(ua);
+  if(isAndroid){
+    // Add a floating download hint for Android users
+    const hint=document.createElement('div');
+    hint.style.cssText='position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,var(--gold),var(--gold-dark));color:var(--navy-dark);padding:14px 20px;text-align:center;font-size:.88rem;font-weight:700;z-index:100;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px';
+    hint.innerHTML='&#9660; اضغط هنا لتحميل التطبيق مباشرة';
+    hint.onclick=function(){document.getElementById('dlBtn').click();hint.remove()};
+    document.body.appendChild(hint);
+  }
+})();
+</script>
+
 </body>
 </html>
