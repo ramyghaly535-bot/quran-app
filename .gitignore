@@ -9,3 +9,4 @@ tmp/
 dev.log
 next-env.d.ts
 .zscripts/
+.vercel
