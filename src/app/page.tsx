@@ -167,10 +167,11 @@ export default function Home() {
     ];
 
     // ===== quran.com mapped reciters (ID → chapter_recitations with segments) =====
+    // Only IDs verified to have ACTUAL timestamps (not just 200 response)
     const QC_MAP:any={
       'ar.alafasy':7,'ar.abdulbasitmurattal':2,'ar.abdulbasitmujawwad':1,
       'ar.husary':6,'ar.husarymujawwad':12,'ar.minshawimurattal':9,'ar.minshawimujawwad':8,
-      'ar.abdurrahmaansudais':3,'ar.abubakrshatri':4,'ar.maheralmuaiqly':52,
+      'ar.abdurrahmaansudais':3,'ar.abubakrshatri':4,'ar.maheralmuaiqly':159,
       'ar.ahmedajamy':19,'ar.abdullahbasfar':66,
       // Additional mapped reciters with timestamps
       'ar.hudhaify':5,'ar.saaborali':17,'ar.sahl_yaseen':17,
@@ -178,49 +179,39 @@ export default function Home() {
       'ar.misharyalafasy':7,'ar.mohammedaltablawi':91,'ar.yasserdosari':97
     };
     // Also map by dl (download) identifiers for link-mode reciters
+    // Only IDs with ACTUAL timestamps verified via API testing
+    // Each entry maps dl-folder → quran.com ID where the SAME reciter exists
     const QC_DL_MAP:any={
+      // === المقرئون المدمجون (مُتحقَّق منهم) ===
       'afasy':7,'afasy_tajweed':7,
       'abdulbasit':2,'abdulbasit_mujawwad':1,
       'husary':6,'husary_mujawwad':12,'husary_tajweed':6,'m_husary':6,
-      'minshawi':9,'minshawi_mujawwad':8,
+      'minshawi':9,'minshawi_mujawwad':8,'minshawi_kids':168,
       'sudais':3,'sudais_tajweed':3,
-      'maher':52,'shamri':87,
       'ajamy':19,'basfar':66,
       'shatri':4,'shur':10,'shur_tajweed':10,'m_shur':10,
-      'hudhaify':5,'aboona':17,'sahl':17,
+      'hudhaify':5,
+      // === قراء إضافيون مُتحقَّق منهم ===
+      'aboona':17,'sahl':17,
       'fares':14,'hane':14,
       'salah_budair':43,'hajjaji':44,'tablawi':91,
-      'yasser':97,'yasser_mujawwad':97,
-      'ketbi':11,'balilah':44,
-      'nufais':48,'jleel':50,'abkr':46,
-      'qtm':78,
-      'juhany':48,'juhany_tajweed':48,
-      'kazabri':55,
-      'akhdar':34,'akhdar_mujawwad':34,
-      'naina':83,
-      'kandari':77,
-      'thubaiti':73,
-      'makhloof':70,
-      'ghamdi':67,
-      'jaber':45,
-      'fawzan':61,
-      'kalbani':64,
-      'qasim':58,
-      'khalifi':68,
-      'zahran':85,
-      'qarni':93,
-      'mgagry':71,
-      'maali':80,
-      'dossari':97,
-      'bader_tajweed':79,
-      'hadouchi':57,
-      'hawashi':84,
-      'ahmed_saleh':82,
+      'yasser':97,'yasser_mujawwad':97,'dossari':97,
+      'ketbi':11,'balilah':44,'qasim':58,
       'nabil':88,
-      'hamid':86,
-      'm_althani':81,
-      'jdeed':90,
-      'fahad':60,
+      // === قراء جدد مُتحقَّق منهم (مطابقة صحيحة) ===
+      'qtm':104,           // ناصر القطامي
+      'jleel':170,         // خالد الجليل
+      'maher':159,         // ماهر المعيقلي (نسخة 1440)
+      'juhany':162,        // عبدالله الجهني
+      'juhany_tajweed':162,
+      'jaber':158,         // علي جابر
+      'naina':126,         // أحمد ناينع
+      'kandari':160,       // فهد الكندري
+      'hajjaji2':128,      // علي الحاجاجي
+      'khalifi':161,       // عبدالله الخليفي
+      'matroud':124,       // عبدالله مطرود
+      'albana':129,        // محمود علي البنا
+      'husary_iza3a':122,  // الحصري إذاعة
       'nasseralketbi':11
     };
     // Timestamps from quran.com API (ms per ayah: [timestamp_from, timestamp_to])
