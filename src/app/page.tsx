@@ -758,9 +758,10 @@ export default function Home() {
           E.aud.src=af.audio_url;E.aud.load();
           E.aud.play().then(function(){st.playing=true;updPP();startRAFSync();showReciterNotif(reciter.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
         });
-      }).catch(function(){
-        // quran.com sync failed, fall back to original method
-        if(reciter.id)doAlquranApi(num);else doLinkMode(num);
+      }).catch(function(err){
+        // quran.com sync failed — fall back to link mode with estimated timings + rAF sync
+        console.warn('quran.com sync failed for reciter, using estimated timings:', err);
+        doLinkMode(num);
       });
     }
 
@@ -772,7 +773,8 @@ export default function Home() {
       fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.alafasy,ar.muyassar,en.sahih').then(function(r){return r.json()}).then(function(d:any){
         if(d.code===200&&d.data&&d.data.length>=1){st.sData=d.data;st.totV=d.data[0].numberOfAyahs;st.curA=1;
           showAyah();
-          function tryEstimate(){let dur=E.aud.duration;if(dur&&isFinite(dur)&&dur>0){estimateAyahTimings(st.sData[0].ayahs,dur,num)}else{setTimeout(tryEstimate,800)}}
+          // Estimate timings then start rAF sync for smooth ayah detection
+          function tryEstimate(){let dur=E.aud.duration;if(dur&&isFinite(dur)&&dur>0){estimateAyahTimings(st.sData[0].ayahs,dur,num);lastAutoAyah=-1;startRAFSync()}else{setTimeout(tryEstimate,800)}}
           tryEstimate();
         }else{E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''}
       }).catch(function(){E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''});
