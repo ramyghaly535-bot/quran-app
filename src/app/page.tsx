@@ -166,8 +166,16 @@ export default function Home() {
       'https://picsum.photos/seed/rainforest8/1920/1080'
     ];
 
+    // ===== quran.com mapped reciters (ID → ayah-by-ayah audio) =====
+    const QC_MAP:any={
+      'ar.alafasy':7,'ar.abdulbasitmurattal':2,'ar.abdulbasitmujawwad':1,
+      'ar.husary':6,'ar.husarymujawwad':12,'ar.minshawimurattal':9,'ar.minshawimujawwad':8,
+      'ar.abdurrahmaansudais':3
+    };
+    const QC_BASE='https://verses.quran.com/';
+
     // ===== STATE =====
-    let st={curS:0,curA:0,totV:0,playing:false,repeating:false,curR:null,sData:[],loading:false,dlMRun:false,dlAbort:false,linkMode:false};
+    let st={curS:0,curA:0,totV:0,playing:false,repeating:false,curR:null,sData:[],loading:false,dlMRun:false,dlAbort:false,linkMode:false,qcMode:false};
     let RC:any[]=[];
     let PR:any[]=[];
     let cachedEd:any=null;
@@ -635,29 +643,22 @@ export default function Home() {
       return 1;
     }
 
-    function startRd(num:number){
-      if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();
-      st.curS=num;st.curA=1;st.loading=true;E.ld.style.display='block';E.wh.style.display='none';E.vd.style.display='none';E.linkTag.style.display='none';st.linkMode=false;
-      ayahTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
-      if(!st.curR.id&&st.curR.url){
-        st.linkMode=true;let u=getRUrl(st.curR,num);
-        if(!u){E.ld.style.display='none';E.wh.style.display='block';st.loading=false;toast('رابط غير متاح');return}
-        let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.linkTag.style.display='inline-block';E.aCn.innerText=inf?inf.ay+' آية':'';
-        E.vd.style.display='block';E.ld.style.display='none';st.loading=false;
-        fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.alafasy,ar.muyassar,en.sahih').then(function(r){return r.json()}).then(function(d:any){
-          if(d.code===200&&d.data&&d.data.length>=1){
-            st.sData=d.data;st.totV=d.data[0].numberOfAyahs;st.curA=1;
-            showAyah();
-            function tryEstimate(){
-              let dur=E.aud.duration;
-              if(dur&&isFinite(dur)&&dur>0){estimateAyahTimings(st.sData[0].ayahs,dur,num)}
-              else{setTimeout(tryEstimate,800)}
-            }
-            tryEstimate();
-          }else{E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''}
-        }).catch(function(){E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''});
-        E.aud.src=u;E.aud.load();E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(st.curR.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});return;
-      }
+    function doLinkMode(num:number){
+      st.linkMode=true;let u=getRUrl(st.curR,num);
+      if(!u){E.ld.style.display='none';E.wh.style.display='block';st.loading=false;toast('رابط غير متاح');return}
+      let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.linkTag.style.display='inline-block';E.aCn.innerText=inf?inf.ay+' آية':'';
+      E.vd.style.display='block';E.ld.style.display='none';st.loading=false;
+      fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.alafasy,ar.muyassar,en.sahih').then(function(r){return r.json()}).then(function(d:any){
+        if(d.code===200&&d.data&&d.data.length>=1){st.sData=d.data;st.totV=d.data[0].numberOfAyahs;st.curA=1;
+          showAyah();
+          function tryEstimate(){let dur=E.aud.duration;if(dur&&isFinite(dur)&&dur>0){estimateAyahTimings(st.sData[0].ayahs,dur,num)}else{setTimeout(tryEstimate,800)}}
+          tryEstimate();
+        }else{E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''}
+      }).catch(function(){E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''});
+      E.aud.src=u;E.aud.load();E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(st.curR.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
+    }
+
+    function doAlquranApi(num:number){
       let apiId=st.curR.id;let url='https://api.alquran.cloud/v1/surah/'+num+'/editions/'+apiId+',ar.muyassar,en.sahih';
       fetch(url).then(function(r){return r.json()}).then(function(d:any){
         if(d.code===200&&d.data&&d.data.length>=1){st.sData=d.data;st.totV=d.data[0].numberOfAyahs;st.curA=1;let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'')}else throw new Error('err');
@@ -666,6 +667,69 @@ export default function Home() {
           if(d.code===200&&d.data&&d.data.ayahs){let ad=d.data;st.sData=[ad,{numberOfAyahs:ad.numberOfAyahs,ayahs:ad.ayahs.map(function(a:any){return{text:'--'}})},{numberOfAyahs:ad.numberOfAyahs,ayahs:ad.ayahs.map(function(a:any){return{text:'--'}})}];st.totV=ad.numberOfAyahs;st.curA=1;let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'')}else throw new Error('err2');
         }).catch(function(){E.ld.style.display='none';E.wh.style.display='block';st.loading=false;toast('تحقق من الاتصال بالإنترنت')});
       });
+    }
+
+    function startRd(num:number){
+      if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();
+      st.curS=num;st.curA=1;st.loading=true;E.ld.style.display='block';E.wh.style.display='none';E.vd.style.display='none';E.linkTag.style.display='none';st.linkMode=false;st.qcMode=false;
+      ayahTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
+      if(!st.curR.id&&st.curR.url){
+        // Link mode reciter — try quran.com ayah-by-ayah first
+        let dlId=st.curR.dl||'';
+        let qcRecId=QC_MAP[dlId];
+        if(qcRecId){
+          // Use quran.com for segmented ayah audio
+          st.qcMode=true;
+          fetch('https://api.quran.com/api/v4/recitations/'+qcRecId+'/by_chapter/'+num).then(function(r){return r.json()}).then(function(d:any){
+            let af=d.audio_files||[];if(!af.length)throw new Error('no audio');
+            let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.aCn.innerText=inf?inf.ay+' آية':'';
+            st.totV=af.length;st.curA=1;
+            // Fetch text/translation from alquran
+            fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.muyassar,en.sahih').then(function(r2){return r2.json()}).then(function(d2:any){
+              if(d2.code===200&&d2.data){
+                // Build sData: merge quran.com audio with alquran text
+                st.sData=[{numberOfAyahs:af.length,ayahs:af.map(function(a:any,i:number){
+                  let parts=a.verse_key.split(':');
+                  return{number:parseInt(parts[0])*1000+parseInt(parts[1]),numberInSurah:i+1,audio:QC_BASE+a.url,text:d2.data[0]&&d2.data[0].ayahs&&d2.data[0].ayahs[i]?d2.data[0].ayahs[i].text:'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ'}
+                })}];
+                if(d2.data.length>1){st.sData.push({numberOfAyahs:af.length,ayahs:d2.data[1].ayahs||af.map(function(){return{text:'--'}})})}else{st.sData.push({numberOfAyahs:af.length,ayahs:af.map(function(){return{text:'--'}})})}
+                if(d2.data.length>2){st.sData.push({numberOfAyahs:af.length,ayahs:d2.data[2].ayahs||af.map(function(){return{text:''}})})}else{st.sData.push({numberOfAyahs:af.length,ayahs:af.map(function(){return{text:''}})})}
+              }
+              E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'');
+            }).catch(function(){
+              // Fallback: audio only without text sync
+              st.sData=[{numberOfAyahs:af.length,ayahs:af.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:QC_BASE+a.url,text:''}})},{numberOfAyahs:af.length,ayahs:af.map(function(){return{text:'--'}})},{numberOfAyahs:af.length,ayahs:af.map(function(){return{text:''}})}];
+              E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'');
+            });
+          }).catch(function(){
+            // quran.com failed, fallback to link mode
+            doLinkMode(num);
+          });
+          return;
+        }
+        doLinkMode(num);return;
+      }
+      // API reciter — try quran.com first, then alquran.cloud
+      let qcRecId2=QC_MAP[st.curR.id];
+      if(qcRecId2){
+        st.qcMode=true;
+        fetch('https://api.quran.com/api/v4/recitations/'+qcRecId2+'/by_chapter/'+num).then(function(r){return r.json()}).then(function(d:any){
+          let af=d.audio_files||[];if(!af.length)throw new Error('no qc audio');
+          let inf=S.find(function(s:any){return s.n===num});E.sNm.innerText='سورة '+(inf?inf.nm:'');E.aCn.innerText=inf?inf.ay+' آية':'';
+          st.totV=af.length;st.curA=1;
+          fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.muyassar,en.sahih').then(function(r2){return r2.json()}).then(function(d2:any){
+            if(d2.code===200&&d2.data){
+              st.sData=[{numberOfAyahs:af.length,ayahs:af.map(function(a:any,i:number){let parts=a.verse_key.split(':');return{number:parseInt(parts[0])*1000+parseInt(parts[1]),numberInSurah:i+1,audio:QC_BASE+a.url,text:d2.data[0]&&d2.data[0].ayahs&&d2.data[0].ayahs[i]?d2.data[0].ayahs[i].text:'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ'}})},{numberOfAyahs:af.length,ayahs:d2.data.length>1&&d2.data[1]?d2.data[1].ayahs:af.map(function(){return{text:'--'}})},{numberOfAyahs:af.length,ayahs:d2.data.length>2&&d2.data[2]?d2.data[2].ayahs:af.map(function(){return{text:''}})}];
+            }
+            E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'');
+          }).catch(function(){
+            st.sData=[{numberOfAyahs:af.length,ayahs:af.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:QC_BASE+a.url,text:''}})},{numberOfAyahs:af.length,ayahs:af.map(function(){return{text:'--'}})},{numberOfAyahs:af.length,ayahs:af.map(function(){return{text:''}})}];
+            E.vd.style.display='block';E.ld.style.display='none';st.loading=false;showAyah();playAyah();showReciterNotif(st.curR.nm,inf?inf.nm:'');
+          });
+        }).catch(function(){doAlquranApi(num)});
+        return;
+      }
+      doAlquranApi(num);
     }
 
     function showAyah(){
@@ -1045,7 +1109,6 @@ export default function Home() {
                 <button className="sur-circle-btn" id="surBtn" title="اختر سورة"><i className="fas fa-book-quran"></i> اختر سورة</button>
               </div>
               <button className="dl-circle-btn" onClick={() => (window as any).toggleDlM?.()} title="تحميل السور"><i className="fas fa-cloud-arrow-down"></i> حمل السورة</button>
-              <button className="dl-circle-btn" onClick={() => (window as any).openQuranCom?.()} title="استمع على quran.com" style={{borderColor:'rgba(212,175,55,.3)',background:'rgba(212,175,55,.06)'}}><i className="fas fa-globe" style={{color:'#d4af37'}}></i> quran.com</button>
             </div>
           </div>
         </div>
