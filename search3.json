@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://alquran.cloud/api",
+    "name": "Quran API - Al Quran Cloud",
+    "snippet": "The following endpoints are supported by the Quran API. They all support the HTTP GET method and return JSON.",
+    "host_name": "alquran.cloud",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://alquran.cloud",
+    "name": "Al Quran Cloud",
+    "snippet": "Read the Quran and translations and stream audio for an ayah, surah, juz or the entire Quran. Read the Quran. Build with the API. Build full featured web and ...",
+    "host_name": "alquran.cloud",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/cpfair/quran-align",
+    "name": "cpfair/quran-align: Word-accurate timestamps for Qur'anic audio.",
+    "snippet": "A tool for producing word-precise segmentation of recorded Qur'anic recitation. Designed to work with EveryAyah style audio input.",
+    "host_name": "github.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://api-docs.quran.foundation/docs/content_apis_versioned/4.0.0/chapter-reciter-audio-file",
+    "name": "Get chapter's audio file of a reciter - Quran Foundation API Docs",
+    "snippet": "When segments=true , verse-level timestamp entries include segments ([word_index, start_ms, end_ms]). All time values are milliseconds. timestamp includes a ...",
+    "host_name": "api-docs.quran.foundation",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://documenter.getpostman.com/view/9793048/2sB3BEoqSE",
+    "name": "Al-Quran Cloud API Postman Collection",
+    "snippet": "Al-Quran Cloud API Documentation. This document provides a comprehensive guide to the Al-Quran Cloud API (v1) endpoints.",
+    "host_name": "documenter.getpostman.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://medium.com/@alshargi.usa/alignment-of-text-and-voice-of-the-holly-quran-7456184ccfeb",
+    "name": "Alignment of Text and Voice of the Holly Qur'an | by ALSHARGI",
+    "snippet": "In this guide, we learn how to align the text of the Qur'an with its recited audio — making it easier to follow each verse, understand meanings, ...",
+    "host_name": "medium.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://alquran.cloud/cdn",
+    "name": "Al Quran Content Delivery Network (CDN)",
+    "snippet": "Al Quran Cloud provides an open CDN to serve ayah and surah audio files and Quran ayah images to allow you integrate media into your app.",
+    "host_name": "alquran.cloud",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.kodular.io/t/how-to-get-json-data-from-quran-cloud-api/92797",
+    "name": "How To Get JSON data from Quran Cloud API - Kodular Community",
+    "snippet": "How to get JSON data from an Api using dictionaries. The Dictionaries can be used to obtain data from a Json in a simple way.",
+    "host_name": "community.kodular.io",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://prezi.com/p/qvgolg4qzbj_/quran-api",
+    "name": "Quran API - Doaa Assi - Prezi",
+    "snippet": "The list of Quran reciters. Fetch Ayah data including audio. https://api.alquran.cloud/v1/ayah/262/ar.alafasy. This retrieves ayah al-kursy ...",
+    "host_name": "prezi.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://sr.ht/~rehandaphedar/lafzize",
+    "name": "lafzize: A program to generate word level timestamps of Qurʾān",
+    "snippet": "Send a POST request to the API endpoint with the following data: audio : The audio file of the recitation. segments : The range of verses recited in the ...",
+    "host_name": "sr.ht",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

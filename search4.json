@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://api-docs.quran.foundation/docs/content_apis_versioned/4.0.0/chapter-reciter-audio-files",
+    "name": "List of all chapter audio files of a reciter - Quran Foundation API Docs",
+    "snippet": "Get list of chapters' audio files of a reciter. Configure the environment, credentials, and inputs for a live API request. /v4/chapter_recitations/:reciter_id'",
+    "host_name": "api-docs.quran.foundation",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://quran.com/en/developers",
+    "name": "Developers - Quran.com",
+    "snippet": "Resources, tools, and guidance for developers building Quran experiences. Quran reader with bookmarks, recitations, and offline support. Audio streaming ...",
+    "host_name": "quran.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.reddit.com/r/muslimtechnet/comments/1cgbg1w/please_help_with_qurancom_api",
+    "name": "Please help with Quran.com API :'))) : r/muslimtechnet - Reddit",
+    "snippet": "I am struggling to get Tafsir of chapters (Surahs) from the Quran.com API. I am not sure what I am doing wrong, I would appreciate any help.",
+    "host_name": "www.reddit.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://alquran.cloud/api",
+    "name": "Quran API - Al Quran Cloud",
+    "snippet": "The following endpoints are supported by the Quran API. Available text and audio editions. Lists all audio editions in french of the versebyverse type 2.",
+    "host_name": "alquran.cloud",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/SyahmiRafsan/quran-api-scraper",
+    "name": "Quran Foundation API Scraper (Chapters, Verses, Translations, and",
+    "snippet": "A Node.js application that scrapes Quran verses data from the Quran.com API (v4), including translations in multiple languages (Indonesian and English).",
+    "host_name": "github.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://api-docs.quran.foundation/docs/content_apis_versioned/4.0.0/chapter-reciter-audio-file",
+    "name": "Get chapter's audio file of a reciter - Quran Foundation API Docs",
+    "snippet": "Get chapter's audio file. Configure the environment, credentials, and inputs for a live API request. /v4/chapter_recitations/:reciter_id/:chapter_number'",
+    "host_name": "api-docs.quran.foundation",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.globalquran.com",
+    "name": "GlobalQuran.com - Download Anything and Everything!",
+    "snippet": "GlobalQuran API is a high-performance REST API service, providing comprehensive access to Quranic text, translations, and audio recitations. This API enables ...",
+    "host_name": "docs.globalquran.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://quran.com/en",
+    "name": "The Noble Quran - Quran.com",
+    "snippet": "It provides translations, tafsir, recitations, word-by-word translation, and tools for deeper study, making the Quran accessible to everyone.",
+    "host_name": "quran.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://alquran-api.pages.dev",
+    "name": "Al-Quran API - Multilingual Quran API with Translations & Search",
+    "snippet": "Al-Quran API. A comprehensive RESTful API providing access to the Holy Quran with translations in multiple languages. Try the API Documentation Download.",
+    "host_name": "alquran-api.pages.dev",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=-nV-D-bwzR4",
+    "name": "Laravel Quran API Tutorial: Fetching & Displaying  - YouTube",
+    "snippet": "Join us in this Laravel tutorial as we dive into the world of Quranic data integration using Laravel's HTTP Client. In this hands-on lecture ...",
+    "host_name": "www.youtube.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://api-docs.quran.foundation/docs/content_apis_versioned/4.0.0/chapter-reciter-audio-file",
+    "name": "Get chapter's audio file of a reciter - Quran Foundation API Docs",
+    "snippet": "Get chapter's audio file of a reciter. Supports `segments` (boolean query param; default `false`). When `segments=true`, verse-level timestamp entries ...",
+    "host_name": "api-docs.quran.foundation",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://quran.com/en/developers",
+    "name": "Developers - Quran.com",
+    "snippet": "Resources, tools, and guidance for developers building Quran experiences. Connected Quran Apps. Explore transformative Apps addressing unique needs and various ...",
+    "host_name": "quran.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/cpfair/quran-align",
+    "name": "cpfair/quran-align: Word-accurate timestamps for Qur'anic audio.",
+    "snippet": "A tool for producing word-precise segmentation of recorded Qur'anic recitation. Designed to work with EveryAyah style audio input.",
+    "host_name": "github.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://apps.apple.com/us/app/quran-audio-by-quran-com/id6759504275",
+    "name": "Quran Audio by Quran.com - App Store - Apple",
+    "snippet": "This release adds a larger learning and listening upgrade for Quran Audio: - New voice search support in Quran Search, powered by offline Arabic recitation ...",
+    "host_name": "apps.apple.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://quran.com/en/product-updates/simplifying-word-by-word-and-audio-settings",
+    "name": "Simplifying Word by Word and Audio Settings - Quran.com",
+    "snippet": "It provides translations, tafsir, recitations, word-by-word translation, and tools for deeper study, making the Quran accessible to everyone. As ...",
+    "host_name": "quran.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.kaggle.com/code/abdo3id/quran-com-timestamps",
+    "name": "Quran.com timestamps - Kaggle",
+    "snippet": "wget \"https://api.qurancdn.com/api/qdc/audio/reciters?locale=en&fields=undefined\" -O ... cp \"/kaggle/input/quran-com-timestamps/ayat.txt\" /kaggle/working/ ...",
+    "host_name": "www.kaggle.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://sr.ht/~rehandaphedar/lafzize",
+    "name": "lafzize: A program to generate word level timestamps of Qurʾān",
+    "snippet": "Send a POST request to the API endpoint with the following data: audio : The audio file of the recitation. segments : The range of verses recited in the ...",
+    "host_name": "sr.ht",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://alquran.cloud/api",
+    "name": "Quran API - Al Quran Cloud",
+    "snippet": "A RESTful Quran API to retrieve an Ayah, Surah, Juz or the enitre Holy Quran. ... (Audio) Returns Mishary Alafasy's recitation of the Quran. GET Juz - Get a Juz ...",
+    "host_name": "alquran.cloud",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://api-docs.quran.foundation/docs/content_apis_versioned/4.0.0/list-surah-recitation",
+    "name": "Get Ayah recitations for specific Surah - Quran Foundation API Docs",
+    "snippet": "Get Ayah recitations for specific Surah​. Returns per-verse audio file URLs for the chapter. Response includes a pagination object. Path Parameters.",
+    "host_name": "api-docs.quran.foundation",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://ummahapi.com/blog/free-quran-api-guide",
+    "name": "Free Quran API: The Complete Developer Guide (2026) - UmmahAPI",
+    "snippet": "A complete guide to using a free Quran API. Arabic scripts, eight translations, audio from eight reciters, tafsir, and search.",
+    "host_name": "ummahapi.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

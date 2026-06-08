@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://github.com/cpfair/quran-align",
+    "name": "cpfair/quran-align: Word-accurate timestamps for Qur'anic audio.",
+    "snippet": "A tool for producing word-precise segmentation of recorded Qur'anic recitation. Designed to work with EveryAyah style audio input.",
+    "host_name": "github.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://everyayah.com",
+    "name": "Every Ayah",
+    "snippet": "Home Page Quran Text Quran Text images (JPG) Quran Text HI Res (PNG) Quran Timings Files Tools XML Recitations. Recitations JS Ayat MP3 Page Mp3.",
+    "host_name": "everyayah.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://huggingface.co/datasets/Rdyh/everyayah/blob/main/README.md",
+    "name": "README.md · Rdyh/everyayah at main - Hugging Face",
+    "snippet": "Downloaded full surah (chapter) recordings for each of the 4 reciters from EveryAyah.com · Obtained verse-level timing information in JSON format ...",
+    "host_name": "huggingface.co",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://api-docs.quran.foundation/docs/content_apis_versioned/4.0.0/chapter-reciter-audio-file",
+    "name": "Get chapter's audio file of a reciter - Quran Foundation API Docs",
+    "snippet": "When segments=true , verse-level timestamp entries include segments ([word_index, start_ms, end_ms]). All time values are milliseconds. Path Parameters.",
+    "host_name": "api-docs.quran.foundation",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://medium.com/@alshargi.usa/alignment-of-text-and-voice-of-the-holly-quran-7456184ccfeb",
+    "name": "Alignment of Text and Voice of the Holly Qur'an | by ALSHARGI",
+    "snippet": "In this guide, we learn how to align the text of the Qur'an with its recited audio — making it easier to follow each verse, understand meanings, ...\nView the Alignment as a Table, You now have a JSON file linking each verse of the Qur'an with its start and end times in the audio, plus the ...",
+    "host_name": "medium.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://everyayah.com/old_index.html",
+    "name": "Verse By Verse Quran Files - Every Ayah",
+    "snippet": "Contact us for more details. QuranText/ · QuranText_jpg/ · Large High Quality Ayah Images (PNG Format) · Timings Files (in milliseconds when to split each file)\nChapter 1: Al-Faatiha 2: Al-Baqara 3: Aal-i-Imraan 4: An-Nisaa 5: Al-Maaida 6: Al-An'aam 7: Al-A'raaf 8: Al",
+    "host_name": "everyayah.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/cpfair/quran-align/issues/5",
+    "name": "Release data has an error · Issue #5 · cpfair/quran-align - GitHub",
+    "snippet": "I want timing data per ayah, not verse by verse, could you help me ... If you want per-ayah data, you can just download the ayah MP3s from ...",
+    "host_name": "github.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://sr.ht/~rehandaphedar/lafzize",
+    "name": "lafzize: A program to generate word level timestamps of Qurʾān",
+    "snippet": "A program to generate word level/word by word timestamps of Qurʾān recitations. Unfortunately, there is no public demo/instance at this point. I would host it ...\n#Introduction. A program to generate word level/word by word timestamps of Qurʾān recitations. Unfortunately, there is no public demo/instance at this point ...",
+    "host_name": "sr.ht",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.kaggle.com/datasets/abdelrahmanahmed110/quranic-ayahs-with-tafseer-json-dataset",
+    "name": "Quranic Ayahs with Tafseer JSON Dataset - Kaggle",
+    "snippet": "Description: This dataset contains JSON files for various Quranic surahs, including Arabic text and tafseer (exegesis) from multiple sources. Each file provides ...",
+    "host_name": "www.kaggle.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.reddit.com/r/DomainDrivenDesign/comments/1tmwlqn/how_we_prevented_invalid_quran_verses_from_ever",
+    "name": "How we prevented invalid Quran verses from ever existing in our",
+    "snippet": "The Ayah doesn't know how many verses its surah has. That data lives in a JSON file loaded by a provider. ... The Quran structure is fixed ...",
+    "host_name": "www.reddit.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]
