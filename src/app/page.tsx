@@ -274,6 +274,15 @@ export default function Home() {
       if(navigator.share){navigator.share({title:'قرآن في كل زمان ومكان',url:W.location.href}).catch(function(){})}else{copyLink()}
     }
 
+    // ===== quran.com =====
+    function openQuranCom(){
+      if(!st.curR||!st.curS){toast('اختر قارئ وسورة أولاً');return}
+      let recId=st.curR.id||'';
+      let ch=st.curS;
+      let url='https://quran.com/'+recId+'?chapter_number='+ch+'&segments=true';
+      W.open(url,'_blank');
+    }
+
     // ===== واتساب =====
     function openWhatsApp(){
       let phone='972595061313';
@@ -780,6 +789,7 @@ export default function Home() {
     W.resetSkipped = resetSkipped
     W.closeSurM = closeSurM
     W.openWhatsApp = openWhatsApp
+    W.openQuranCom = openQuranCom
     W.toggleDtM = toggleDtM
 
     function scrollToSurBtn(){
@@ -1035,6 +1045,7 @@ export default function Home() {
                 <button className="sur-circle-btn" id="surBtn" title="اختر سورة"><i className="fas fa-book-quran"></i> اختر سورة</button>
               </div>
               <button className="dl-circle-btn" onClick={() => (window as any).toggleDlM?.()} title="تحميل السور"><i className="fas fa-cloud-arrow-down"></i> حمل السورة</button>
+              <button className="dl-circle-btn" onClick={() => (window as any).openQuranCom?.()} title="استمع على quran.com" style={{borderColor:'rgba(212,175,55,.3)',background:'rgba(212,175,55,.06)'}}><i className="fas fa-globe" style={{color:'#d4af37'}}></i> quran.com</button>
             </div>
           </div>
         </div>
