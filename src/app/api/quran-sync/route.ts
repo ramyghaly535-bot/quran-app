@@ -23,6 +23,18 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await res.json()
+
+    // Normalize: add verse_timings in standard format {verse_key, start_time, end_time}
+    if (data.audio_file && data.audio_file.timestamps) {
+      data.audio_file.verse_timings = data.audio_file.timestamps.map(
+        (t: { verse_key: string; timestamp_from: number; timestamp_to: number }) => ({
+          verse_key: t.verse_key,
+          start_time: t.timestamp_from,
+          end_time: t.timestamp_to,
+        })
+      )
+    }
+
     return NextResponse.json(data)
   } catch (error: any) {
     return NextResponse.json({ error: error.message || 'Failed to fetch sync data' }, { status: 500 })

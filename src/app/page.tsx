@@ -179,14 +179,54 @@ export default function Home() {
     };
     // Also map by dl (download) identifiers for link-mode reciters
     const QC_DL_MAP:any={
-      'afasy':7,'abdulbasit':2,'husary':6,'minshawi':9,'sudais':3,
-      'maher':52,'ajamy':19,'basfar':66,'shatri':4,'shur':10,
-      'hudhaify':5,'aboona':17,'sahl':17,'fares':14,
-      'salah_budair':43,'hajjaji':44,'tablawi':91,'yasser':97,
-      'hane':14,'m_husary':6,'ketbi':11,'balilah':44
+      'afasy':7,'afasy_tajweed':7,
+      'abdulbasit':2,'abdulbasit_mujawwad':1,
+      'husary':6,'husary_mujawwad':12,'husary_tajweed':6,'m_husary':6,
+      'minshawi':9,'minshawi_mujawwad':8,
+      'sudais':3,'sudais_tajweed':3,
+      'maher':52,'shamri':87,
+      'ajamy':19,'basfar':66,
+      'shatri':4,'shur':10,'shur_tajweed':10,'m_shur':10,
+      'hudhaify':5,'aboona':17,'sahl':17,
+      'fares':14,'hane':14,
+      'salah_budair':43,'hajjaji':44,'tablawi':91,
+      'yasser':97,'yasser_mujawwad':97,
+      'ketbi':11,'balilah':44,
+      'nufais':48,'jleel':50,'abkr':46,
+      'qtm':78,
+      'juhany':48,'juhany_tajweed':48,
+      'kazabri':55,
+      'akhdar':34,'akhdar_mujawwad':34,
+      'naina':83,
+      'kandari':77,
+      'thubaiti':73,
+      'makhloof':70,
+      'ghamdi':67,
+      'jaber':45,
+      'fawzan':61,
+      'kalbani':64,
+      'qasim':58,
+      'khalifi':68,
+      'zahran':85,
+      'qarni':93,
+      'mgagry':71,
+      'maali':80,
+      'dossari':97,
+      'bader_tajweed':79,
+      'hadouchi':57,
+      'hawashi':84,
+      'ahmed_saleh':82,
+      'nabil':88,
+      'hamid':86,
+      'm_althani':81,
+      'jdeed':90,
+      'fahad':60,
+      'nasseralketbi':11
     };
     // Timestamps from quran.com API (ms per ayah: [timestamp_from, timestamp_to])
-    let syncedTimestamps:{from:number,to:number}[]=[];
+    let syncedTimestamps:{from:number,to:number,key:string}[]=[];
+    // Verse timings in standard format: {verse_key, start_time, end_time}
+    let verseTimings:{verse_key:string,start_time:number,end_time:number}[]=[];
 
     // ===== STATE =====
     let st={curS:0,curA:0,totV:0,playing:false,repeating:false,curR:null,sData:[],loading:false,dlMRun:false,dlAbort:false,linkMode:false,qcMode:false};
@@ -197,6 +237,26 @@ export default function Home() {
     let lastAutoAyah:number=-1;
     // rAF-based zero-delay sync loop
     let rafId:number|null=null;
+
+    // ===== دالة لجلب توقيتات سورة معينة لقارئ معين برابط مباشر =====
+    async function getQuranTimestamps(reciterId:number, chapterNumber:number):Promise<{verse_key:string,start_time:number,end_time:number}[]>{
+      try {
+        const response = await fetch('/api/quran-sync?reciter=' + reciterId + '&chapter=' + chapterNumber);
+        const data = await response.json();
+        if(!data || !data.audio_file) return [];
+        // مصفوفة تحتوي على وقت بداية ونهاية كل آية بالملي ثانية
+        const verse_timings: {verse_key:string,start_time:number,end_time:number}[] = (data.audio_file.verse_timings || data.audio_file.timestamps || []).map(function(t:any){
+          return {
+            verse_key: t.verse_key || '',
+            start_time: t.start_time || t.timestamp_from || 0,
+            end_time: t.end_time || t.timestamp_to || 0
+          };
+        });
+        return verse_timings;
+      } catch(e) {
+        return [];
+      }
+    }
 
     // ===== HELPERS =====
     function $(id:string){return document.getElementById(id)}
@@ -663,22 +723,37 @@ export default function Home() {
       // Fetch segmented audio data from quran.com API
       fetch('/api/quran-sync?reciter='+qcRecId+'&chapter='+num).then(function(r){return r.json()}).then(function(d:any){
         let af=d.audio_file;if(!af||!af.audio_url)throw new Error('no audio');
-        let timestamps=af.timestamps||[];if(!timestamps.length)throw new Error('no timestamps');
+        // Support both timestamps (quran.com) and verse_timings (standard format)
+        let timestamps=af.timestamps||af.verse_timings||[];
+        if(!timestamps.length)throw new Error('no timestamps');
         let inf=S.find(function(s:any){return s.n===num});
         E.sNm.innerText='سورة '+(inf?inf.nm:'');
         E.aCn.innerText=inf?inf.ay+' آية':'';
         st.totV=timestamps.length;st.curA=1;
         st.linkMode=true;st.qcMode=true; // linkMode enables rAF ayah detection
-        // Store precise timestamps
-        syncedTimestamps=timestamps.map(function(t:any){return{from:t.timestamp_from,to:t.timestamp_to}});
+        // Store precise timestamps in both formats for maximum compatibility
+        syncedTimestamps=timestamps.map(function(t:any){
+          return{
+            from: t.timestamp_from || t.start_time || 0,
+            to: t.timestamp_to || t.end_time || 0,
+            key: t.verse_key || ''
+          };
+        });
+        verseTimings=timestamps.map(function(t:any){
+          return{
+            verse_key: t.verse_key || '',
+            start_time: t.timestamp_from || t.start_time || 0,
+            end_time: t.timestamp_to || t.end_time || 0
+          };
+        });
         ayahTimings=syncedTimestamps.map(function(t:any){return t.from/1000});
         lastAutoAyah=-1;stopRAFSync();
         // Fetch Arabic Quran text + tafsir + translation from alquran
         fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.alafasy,ar.muyassar,en.sahih').then(function(r2){return r2.json()}).then(function(d2:any){
           if(d2.code===200&&d2.data){
-            st.sData=[{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:d2.data[0]&&d2.data[0].ayahs&&d2.data[0].ayahs[i]?d2.data[0].ayahs[i].text:''}})},{numberOfAyahs:timestamps.length,ayahs:d2.data.length>1&&d2.data[1]?d2.data[1].ayahs:timestamps.map(function(){return{text:'--'}})},{numberOfAyahs:timestamps.length,ayahs:d2.data.length>2&&d2.data[2]?d2.data[2].ayahs:timestamps.map(function(){return{text:''}})}];
+            st.sData=[{numberOfAyahs:verseTimings.length,ayahs:verseTimings.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:d2.data[0]&&d2.data[0].ayahs&&d2.data[0].ayahs[i]?d2.data[0].ayahs[i].text:''}})},{numberOfAyahs:verseTimings.length,ayahs:d2.data.length>1&&d2.data[1]?d2.data[1].ayahs:verseTimings.map(function(){return{text:'--'}})},{numberOfAyahs:verseTimings.length,ayahs:d2.data.length>2&&d2.data[2]?d2.data[2].ayahs:verseTimings.map(function(){return{text:''}})}];
           }else{
-            st.sData=[{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:''}})},{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(){return{text:'--'}})},{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(){return{text:''}})}];
+            st.sData=[{numberOfAyahs:verseTimings.length,ayahs:verseTimings.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:''}})},{numberOfAyahs:verseTimings.length,ayahs:verseTimings.map(function(){return{text:'--'}})},{numberOfAyahs:verseTimings.length,ayahs:verseTimings.map(function(){return{text:''}})}];
           }
           // Play the full surah audio as single file
           E.vd.style.display='block';E.ld.style.display='none';st.loading=false;
@@ -686,7 +761,7 @@ export default function Home() {
           E.aud.src=af.audio_url;E.aud.load();
           E.aud.play().then(function(){st.playing=true;updPP();startRAFSync();showReciterNotif(reciter.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
         }).catch(function(){
-          st.sData=[{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:''}})},{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(){return{text:'--'}})},{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(){return{text:''}})}];
+          st.sData=[{numberOfAyahs:verseTimings.length,ayahs:verseTimings.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:''}})},{numberOfAyahs:verseTimings.length,ayahs:verseTimings.map(function(){return{text:'--'}})},{numberOfAyahs:verseTimings.length,ayahs:verseTimings.map(function(){return{text:''}})}];
           E.vd.style.display='block';E.ld.style.display='none';st.loading=false;
           showAyah();
           E.aud.src=af.audio_url;E.aud.load();
@@ -727,7 +802,7 @@ export default function Home() {
     function startRd(num:number){
       if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();stopRAFSync();
       st.curS=num;st.curA=1;st.loading=true;E.ld.style.display='block';E.wh.style.display='none';E.vd.style.display='none';E.linkTag.style.display='none';st.linkMode=false;st.qcMode=false;
-      syncedTimestamps=[];ayahTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
+      syncedTimestamps=[];ayahTimings=[];verseTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
 
       // Determine quran.com reciter ID
       let qcRecId:number|null=null;

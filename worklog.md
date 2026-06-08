@@ -69,3 +69,28 @@ Stage Summary:
 - 20+ reciters now have precise quran.com segment-based sync (was 12)
 - Proper Arabic Quran text displayed in sync mode (was showing tafsir)
 - All changes verified with Agent Browser — no console errors, proper data flow confirmed
+
+---
+
+Task ID: 7
+Agent: Main
+Task: Add getQuranTimestamps function with verse_timings format and expand QC_DL_MAP coverage
+
+Work Log:
+- Added `getQuranTimestamps(reciterId, chapterNumber)` async function that fetches verse timings from `/api/quran-sync` API proxy
+- Returns standardized format: `{verse_key, start_time, end_time}` in milliseconds
+- Supports both `verse_timings` (standard) and `timestamps` (quran.com legacy) response formats
+- Updated API proxy (`/api/quran-sync/route.ts`) to normalize response and include both `verse_timings` and `timestamps` fields
+- Updated `startSyncedPlay()` to support both `timestamps` and `verse_timings` from API response
+- Added `verseTimings` array variable for standard format storage alongside `syncedTimestamps`
+- Updated `syncedTimestamps` to include `key` field (verse_key)
+- Expanded QC_DL_MAP from 20 to 50+ entries covering all built-in and popular pool reciters:
+  - Added: juhany(48), kazabri(55), akhdar(34), naina(83), kandari(77), thubaiti(73), makhloof(70), ghamdi(67), jaber(45), fawzan(61), kalbani(64), qasim(58), khalifi(68), zahran(85), qarni(93), mgagry(71), maali(80), hadouchi(57), hawashi(84), nabil(88), hamid(86), jdeed(90), fahad(60), nufais(48), jleel(50), abkr(46), qtm(78)
+  - Added tajweed variants: afasy_tajweed, abdulbasit_mujawwad, husary_mujawwad, husary_tajweed, minshawi_mujawwad, sudais_tajweed, shur_tajweed, yasser_mujawwad, juhany_tajweed, akhdar_mujawwad, bader_tajweed, m_husary, m_shur
+
+Stage Summary:
+- `getQuranTimestamps(7, 1)` → returns `[{verse_key:"1:1", start_time:0, end_time:6090}, ...]` (7 verses for Al-Fatiha)
+- API proxy normalizes all responses to include `verse_timings` field in standard format
+- 50+ reciters now mapped for automatic quran.com sync (was 20)
+- All verified with Agent Browser: Mishary Al-Afasy + Al-Fatiha plays with quran.com audio, rAF sync auto-advances ayah text correctly (verified verse 2 at 0:09s → verse 5 at 0:25s)
+- No browser console errors, clean compilation
