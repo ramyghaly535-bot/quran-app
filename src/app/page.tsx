@@ -59,12 +59,12 @@ export default function Home() {
       {id:'ar.hudhaify',dl:'hudhaify',nm:'علي الحذيفي',im:'https://picsum.photos/seed/hudhaify/100/100',builtin:true},
       {id:'ar.ahmedajamy',dl:'ajamy',nm:'أحمد العجمي',im:'https://picsum.photos/seed/ajamy/100/100',builtin:true},
       {id:'ar.abdullahbasfar',dl:'basfar',nm:'عبد الله البصفر',im:'https://picsum.photos/seed/basfar/100/100',builtin:true},
-      {id:null,dl:'nufais',nm:'أحمد النفيس',im:'https://picsum.photos/seed/nufais/100/100',builtin:true},
+      {id:'ar.nufais',dl:'nufais',nm:'أحمد النفيس',im:'https://picsum.photos/seed/nufais/100/100',builtin:true},
       {id:null,dl:'shur',nm:'سعود الشريم',im:'https://picsum.photos/seed/shur/100/100',builtin:true},
       {id:null,dl:'yasser',nm:'ياسر الدوسري',im:'https://picsum.photos/seed/yasser/100/100',builtin:true},
       {id:null,dl:'qtm',nm:'ناصر القطامي',im:'https://picsum.photos/seed/qtm/100/100',builtin:true},
       {id:null,dl:'jleel',nm:'خالد الجليل',im:'https://picsum.photos/seed/jleel/100/100',builtin:true},
-      {id:null,dl:'abkr',nm:'إدريس أبكر',im:'https://picsum.photos/seed/abkr/100/100',builtin:true},
+      {id:'ar.idrisabkr',dl:'abkr',nm:'إدريس أبكر',im:'https://picsum.photos/seed/abkr/100/100',builtin:true},
       {id:null,dl:'shatri',nm:'أبو بكر الشاطري',im:'https://picsum.photos/seed/shatri/100/100',builtin:true}
     ];
 
@@ -174,7 +174,7 @@ export default function Home() {
       'ar.abdurrahmaansudais':3,'ar.abubakrshatri':4,'ar.maheralmuaiqly':159,
       'ar.ahmedajamy':19,'ar.abdullahbasfar':66,
       // Additional mapped reciters with timestamps
-      'ar.hudhaify':5,'ar.saaborali':17,'ar.sahl_yaseen':17,
+      'ar.saaborali':17,'ar.sahl_yaseen':17,
       'ar.faresabbad':14,'ar.salahbudair':43,'ar.azizalili':44,
       'ar.misharyalafasy':7,'ar.mohammedaltablawi':91,'ar.yasserdosari':97
     };
@@ -190,14 +190,12 @@ export default function Home() {
       'sudais':3,'sudais_tajweed':3,
       'ajamy':19,'basfar':66,
       'shatri':4,'shur':10,'shur_tajweed':10,'m_shur':10,
-      'hudhaify':5,
       // === قراء إضافيون مُتحقَّق منهم ===
       'aboona':17,'sahl':17,
       'fares':14,'hane':14,
       'salah_budair':43,'hajjaji':44,'tablawi':91,
       'yasser':97,'yasser_mujawwad':97,'dossari':97,
-      'ketbi':11,'balilah':44,'qasim':58,
-      'nabil':88,
+      'ketbi':11,'balilah':44,
       // === قراء جدد مُتحقَّق منهم (مطابقة صحيحة) ===
       'qtm':104,           // ناصر القطامي
       'jleel':170,         // خالد الجليل
