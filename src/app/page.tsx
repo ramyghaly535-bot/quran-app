@@ -171,12 +171,19 @@ export default function Home() {
       'ar.alafasy':7,'ar.abdulbasitmurattal':2,'ar.abdulbasitmujawwad':1,
       'ar.husary':6,'ar.husarymujawwad':12,'ar.minshawimurattal':9,'ar.minshawimujawwad':8,
       'ar.abdurrahmaansudais':3,'ar.abubakrshatri':4,'ar.maheralmuaiqly':52,
-      'ar.ahmedajamy':19,'ar.abdullahbasfar':66
+      'ar.ahmedajamy':19,'ar.abdullahbasfar':66,
+      // Additional mapped reciters with timestamps
+      'ar.hudhaify':5,'ar.saaborali':17,'ar.sahl_yaseen':17,
+      'ar.faresabbad':14,'ar.salahbudair':43,'ar.azizalili':44,
+      'ar.misharyalafasy':7,'ar.mohammedaltablawi':91,'ar.yasserdosari':97
     };
     // Also map by dl (download) identifiers for link-mode reciters
     const QC_DL_MAP:any={
       'afasy':7,'abdulbasit':2,'husary':6,'minshawi':9,'sudais':3,
-      'maher':52,'ajamy':19,'basfar':66,'shatri':4,'shur':10
+      'maher':52,'ajamy':19,'basfar':66,'shatri':4,'shur':10,
+      'hudhaify':5,'aboona':17,'sahl':17,'fares':14,
+      'salah_budair':43,'hajjaji':44,'tablawi':91,'yasser':97,
+      'hane':14,'m_husary':6,'ketbi':11,'balilah':44
     };
     // Timestamps from quran.com API (ms per ayah: [timestamp_from, timestamp_to])
     let syncedTimestamps:{from:number,to:number}[]=[];
@@ -188,6 +195,8 @@ export default function Home() {
     let cachedEd:any=null;
     let ayahTimings:number[]=[];
     let lastAutoAyah:number=-1;
+    // rAF-based zero-delay sync loop
+    let rafId:number|null=null;
 
     // ===== HELPERS =====
     function $(id:string){return document.getElementById(id)}
@@ -659,13 +668,13 @@ export default function Home() {
         E.sNm.innerText='سورة '+(inf?inf.nm:'');
         E.aCn.innerText=inf?inf.ay+' آية':'';
         st.totV=timestamps.length;st.curA=1;
-        st.linkMode=true;st.qcMode=true; // linkMode enables timeupdate ayah detection
+        st.linkMode=true;st.qcMode=true; // linkMode enables rAF ayah detection
         // Store precise timestamps
         syncedTimestamps=timestamps.map(function(t:any){return{from:t.timestamp_from,to:t.timestamp_to}});
         ayahTimings=syncedTimestamps.map(function(t:any){return t.from/1000});
-        lastAutoAyah=-1;
-        // Fetch text/translation from alquran
-        fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.muyassar,en.sahih').then(function(r2){return r2.json()}).then(function(d2:any){
+        lastAutoAyah=-1;stopRAFSync();
+        // Fetch Arabic Quran text + tafsir + translation from alquran
+        fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.alafasy,ar.muyassar,en.sahih').then(function(r2){return r2.json()}).then(function(d2:any){
           if(d2.code===200&&d2.data){
             st.sData=[{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:d2.data[0]&&d2.data[0].ayahs&&d2.data[0].ayahs[i]?d2.data[0].ayahs[i].text:''}})},{numberOfAyahs:timestamps.length,ayahs:d2.data.length>1&&d2.data[1]?d2.data[1].ayahs:timestamps.map(function(){return{text:'--'}})},{numberOfAyahs:timestamps.length,ayahs:d2.data.length>2&&d2.data[2]?d2.data[2].ayahs:timestamps.map(function(){return{text:''}})}];
           }else{
@@ -675,13 +684,13 @@ export default function Home() {
           E.vd.style.display='block';E.ld.style.display='none';st.loading=false;
           showAyah();
           E.aud.src=af.audio_url;E.aud.load();
-          E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(reciter.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
+          E.aud.play().then(function(){st.playing=true;updPP();startRAFSync();showReciterNotif(reciter.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
         }).catch(function(){
           st.sData=[{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(a:any,i:number){return{number:i+1,numberInSurah:i+1,audio:'',text:''}})},{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(){return{text:'--'}})},{numberOfAyahs:timestamps.length,ayahs:timestamps.map(function(){return{text:''}})}];
           E.vd.style.display='block';E.ld.style.display='none';st.loading=false;
           showAyah();
           E.aud.src=af.audio_url;E.aud.load();
-          E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(reciter.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
+          E.aud.play().then(function(){st.playing=true;updPP();startRAFSync();showReciterNotif(reciter.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
         });
       }).catch(function(){
         // quran.com sync failed, fall back to original method
@@ -716,7 +725,7 @@ export default function Home() {
     }
 
     function startRd(num:number){
-      if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();
+      if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();stopRAFSync();
       st.curS=num;st.curA=1;st.loading=true;E.ld.style.display='block';E.wh.style.display='none';E.vd.style.display='none';E.linkTag.style.display='none';st.linkMode=false;st.qcMode=false;
       syncedTimestamps=[];ayahTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
 
@@ -779,28 +788,47 @@ export default function Home() {
     }
     function updPP(){E.ppB.innerHTML=st.playing?'<i class="fas fa-pause"></i>':'<i class="fas fa-play"></i>'}
 
-    // ===== Audio events =====
+    // ===== Zero-delay sync via requestAnimationFrame (60fps instead of timeupdate 4Hz) =====
+    function startRAFSync(){
+      stopRAFSync();
+      function tick(){
+        if(!st.playing||!st.linkMode)return;
+        let c=E.aud.currentTime,d=E.aud.duration;
+        if(d&&d>0&&isFinite(d)){
+          E.pBar.value=c/d*100;
+          let f=function(t:number){let m=Math.floor(t/60),s=Math.floor(t%60);return m+':'+(s<10?'0':'')+s};
+          E.cT.innerText=f(c);E.dur.innerText=f(d);
+          if(ayahTimings.length>0){
+            let detected=getCurrentAyahByTime(c);
+            if(detected!==lastAutoAyah&&detected>=1&&detected<=st.totV){
+              lastAutoAyah=detected;st.curA=detected;showAyah();
+            }
+          }
+        }
+        rafId=requestAnimationFrame(tick);
+      }
+      rafId=requestAnimationFrame(tick);
+    }
+    function stopRAFSync(){if(rafId!==null){cancelAnimationFrame(rafId);rafId=null}}
+
+    // Fallback timeupdate for non-link mode (API ayah-by-ayah playback)
     E.aud.addEventListener('timeupdate',function(){
+      if(st.linkMode)return; // rAF handles linkMode
       let c=E.aud.currentTime,d=E.aud.duration;
       if(d&&d>0&&isFinite(d)){
         E.pBar.value=c/d*100;
         let f=function(t:number){let m=Math.floor(t/60),s=Math.floor(t%60);return m+':'+(s<10?'0':'')+s};
         E.cT.innerText=f(c);E.dur.innerText=f(d);
-        if(st.linkMode&&ayahTimings.length>0){
-          let detected=getCurrentAyahByTime(c);
-          if(detected!==lastAutoAyah&&detected>=1&&detected<=st.totV){
-            lastAutoAyah=detected;st.curA=detected;showAyah();
-          }
-        }
       }
     });
     E.aud.addEventListener('ended',function(){
+      stopRAFSync();
       if(st.linkMode){st.playing=false;updPP();toast('انتهت السورة');st.curA=st.totV;showAyah()}
       else{if(st.repeating)playAyah();else nxtA()}
     });
-    E.aud.addEventListener('play',function(){st.playing=true;updPP()});
-    E.aud.addEventListener('pause',function(){st.playing=false;updPP()});
-    E.aud.addEventListener('error',function(){st.playing=false;updPP()});
+    E.aud.addEventListener('play',function(){st.playing=true;updPP();if(st.linkMode)startRAFSync()});
+    E.aud.addEventListener('pause',function(){st.playing=false;updPP();stopRAFSync()});
+    E.aud.addEventListener('error',function(){st.playing=false;updPP();stopRAFSync()});
 
     E.ppB.addEventListener('click',togPlay);
     E.nxtB.addEventListener('click',function(){if(st.curS>0)nxtA()});

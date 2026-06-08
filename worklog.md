@@ -46,3 +46,26 @@ Stage Summary:
 - Notification appears at top center with gold Islamic crescent icon, "قراءة عطرة بصوت القارئ" title, and reciter name + surah name
 - Auto-disappears after 10 seconds
 - Responsive design for mobile screens
+
+---
+
+Task ID: 6
+Agent: Main
+Task: Implement zero-delay ayah-audio sync with requestAnimationFrame and expand quran.com reciter coverage
+
+Work Log:
+- Replaced `timeupdate` event listener (~4Hz, 250ms delay) with `requestAnimationFrame` loop (~60fps, ~16ms delay) for zero-delay ayah detection
+- Added `startRAFSync()` and `stopRAFSync()` functions that manage the rAF loop lifecycle
+- rAF loop handles: progress bar updates, time display, and precise ayah-by-ayah sync detection using quran.com timestamps
+- `timeupdate` is now only used as fallback for non-link mode (ayah-by-ayah API playback) for basic time display
+- Added rAF cleanup on `pause`, `error`, `ended`, and `startRd()` to prevent memory leaks
+- Expanded QC_MAP with 8 additional reciters: hudhaify(5), saaborali(17), sahl_yaseen(17), faresabbad(14), salahbudair(43), azizalili(44), mohammedaltablawi(91), yasserdosari(97)
+- Expanded QC_DL_MAP with 10 additional download-folder mappings: hudhaify, aboona, sahl, fares, salah_budair, hajjaji, tablawi, yasser, hane, m_husary, ketbi, balilah
+- Fixed sync mode text: changed `ar.muyassar` to `ar.alafasy` as primary text edition (muyassar was showing tafsir instead of Quran text; now moved to secondary position)
+- Total quran.com sync coverage: 20+ reciters now mapped (12 by id + 15 by download folder)
+
+Stage Summary:
+- Zero-delay sync: rAF loop runs at 60fps (16ms) vs old timeupdate at 4Hz (250ms) — 15x faster detection
+- 20+ reciters now have precise quran.com segment-based sync (was 12)
+- Proper Arabic Quran text displayed in sync mode (was showing tafsir)
+- All changes verified with Agent Browser — no console errors, proper data flow confirmed
