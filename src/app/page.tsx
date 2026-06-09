@@ -756,7 +756,101 @@ export default function Home() {
       buildReciters();rndRC();buildSel();updFavUI();toast('تم حذف القارئ: '+reciter.nm);
     }
 
-    // ===== قراء جدد =====
+    // ===== مكتبة 115 قارئ =====
+    let libReciters:any[]=[];
+    let libLoaded=false;
+    let libSearchTimer:any=null;
+    function openLibM(){
+      let o=$('libOv');if(o.classList.contains('on')){o.classList.remove('on');return}
+      o.classList.add('on');$('libQ').value='';
+      if(!libLoaded){loadLibrary();}
+      else{renderLibList(libReciters);}
+      setTimeout(function(){$('libQ').focus()},150);
+    }
+    function closeLibM(){$('libOv').classList.remove('on')}
+    function onLibSearchInput(e:any){
+      let q=(e.target.value||'').trim();
+      if(libSearchTimer){clearTimeout(libSearchTimer);libSearchTimer=null}
+      if(!q){renderLibList(libReciters);$('libCnt').textContent='';return}
+      $('libCnt').textContent='جارٍ البحث...';
+      libSearchTimer=setTimeout(function(){
+        let filtered=libReciters.filter(function(r:any){
+          return r.name.includes(q)||r.rewaya.includes(q)||String(r.id)===q;
+        });
+        renderLibList(filtered);
+        $('libCnt').textContent=filtered.length+' من '+libReciters.length;
+      },200);
+    }
+    async function loadLibrary(){
+      let list=$('libL');
+      list.innerHTML='<div style="text-align:center;padding:40px 15px;color:rgba(255,255,255,.3)"><div class="ar-loading"><div></div></div><span style="font-size:.8rem;margin-top:10px;display:block">جارٍ تحميل مكتبة 115 قارئ...</span></div>';
+      try{
+        let res=await fetch('/api/all-reciters');
+        let data=await res.json();
+        libReciters=data.reciters||[];
+        libLoaded=true;
+        renderLibList(libReciters);
+        $('libCnt').textContent=libReciters.length+' قارئ ('+data.withTiming+' بتوقيت دقيق)';
+      }catch(e){
+        list.innerHTML='<div class="ar-error"><i class="fas fa-exclamation-triangle"></i>تعذر تحميل القائمة<br><span style="font-size:.76rem;color:rgba(255,255,255,.2)">تحقق من اتصالك بالإنترنت</span></div>';
+      }
+    }
+    function renderLibList(reciters:any[]){
+      let list=$('libL');list.innerHTML='';
+      if(!reciters.length){list.innerHTML='<div class="no-r"><i class="fas fa-search"></i>لا يوجد نتائج</div>';return}
+      let existingDls=RC.map(function(r:any){return r.dl});
+      // Stats bar
+      let stats=document.createElement('div');stats.className='lib-stats';
+      let timingCount=reciters.filter(function(r:any){return r.hasTiming}).length;
+      stats.innerHTML='<span><i class="fas fa-clock"></i> '+timingCount+' بتوقيت دقيق</span><span><i class="fas fa-headphones"></i> '+reciters.length+' قارئ</span>';
+      list.appendChild(stats);
+      // Sort: with timing first
+      let sorted=reciters.slice().sort(function(a:any,b:any){return (b.hasTiming?1:0)-(a.hasTiming?1:0)});
+      sorted.forEach(function(r:any){
+        let isAdded=existingDls.indexOf(r.folder)!==-1;
+        let it=document.createElement('div');it.className='lib-i'+(isAdded?' added':'');
+        // Avatar
+        let av=document.createElement('div');av.className='lib-av';
+        av.textContent=r.name.charAt(0);
+        if(r.hasTiming){let badge=document.createElement('span');badge.className='lib-timing-badge';badge.innerHTML='<i class="fas fa-clock"></i>';av.appendChild(badge);}
+        // Info
+        let inf=document.createElement('div');inf.className='lib-info';
+        let nm=document.createElement('div');nm.className='lib-nm';nm.textContent=r.name;
+        let meta=document.createElement('div');meta.className='lib-meta';
+        let tags='';
+        if(r.hasTiming)tags+='<span class="lib-tag timing"><i class="fas fa-clock"></i> توقيت دقيق</span>';
+        tags+='<span class="lib-tag rewaya">'+r.rewaya+'</span>';
+        meta.innerHTML=tags;
+        inf.appendChild(nm);inf.appendChild(meta);
+        // Button
+        let btn=document.createElement('button');
+        if(isAdded){btn.className='lib-btn done';btn.innerHTML='<i class="fas fa-check"></i> مضاف';btn.disabled=true}
+        else{btn.className='lib-btn add';btn.innerHTML='<i class="fas fa-plus"></i> إضافة';
+          (function(rec:any){
+            btn.onclick=function(e:any){
+              e.stopPropagation();
+              addLibraryReciter(rec);
+              it.classList.add('added');btn.className='lib-btn done';btn.innerHTML='<i class="fas fa-check"></i> مضاف';btn.disabled=true;
+            };
+          })(r);
+        }
+        it.appendChild(av);it.appendChild(inf);it.appendChild(btn);list.appendChild(it);
+      });
+    }
+    function addLibraryReciter(rec:any){
+      if(RC.find(function(r:any){return r.dl===rec.folder})){toast('هذا القارئ مضاف بالفعل');return}
+      let newR={id:null,dl:rec.folder,nm:rec.name,url:rec.url,im:'https://picsum.photos/seed/'+rec.folder+'/100/100',builtin:false,isNew:true,qcId:null as number|null,mp3qReadId:rec.readId||null};
+      let added=gAdded();added.push(newR);sAdded(added);
+      buildReciters();rndRC();buildSel();
+      toast('تمت الإضافة: '+rec.name);
+      // Discover timing
+      discoverAndVerify(rec.name,rec.folder,rec.url).then(function(r2:any){
+        if(r2.qcId){newR.qcId=r2.qcId;let all=gAdded();let idx=all.findIndex(function(a:any){return a.dl===rec.folder});if(idx!==-1){all[idx].qcId=r2.qcId;sAdded(all)}}
+      });
+      let foundR=RC.find(function(r:any){return r.dl===rec.folder});
+      if(foundR){selLinkR(foundR);closeLibM();openSurM();}
+    }
+    // Also keep the old update mechanism for compatibility
     function getAvailableNew(){let addedNms=gAdded().map(function(r:any){return r.nm});let skipped=gSkipped();return NEW_POOL.filter(function(r:any){return addedNms.indexOf(r.nm)===-1&&skipped.indexOf(r.nm)===-1})}
     function getDailyNew(){
       let avail=getAvailableNew();if(!avail.length)return[];
@@ -1328,6 +1422,8 @@ export default function Home() {
     W.closeAddR = closeAddR
     W.resetSkipped = resetSkipped
     W.closeSurM = closeSurM
+    W.openLibM = openLibM
+    W.closeLibM = closeLibM
     W.openWhatsApp = openWhatsApp
     W.toggleDtM = toggleDtM
 
@@ -1348,6 +1444,7 @@ export default function Home() {
     $('viewToggleBtn').addEventListener('click',toggleViewMode);
     $('surQ').addEventListener('input',function(e:any){rndSurL(e.target.value.trim())});
     $('addRQ').addEventListener('input',onSearchInput);
+    $('libQ').addEventListener('input',onLibSearchInput);
 
     $('surOv').addEventListener('click',function(e:any){if(e.target===this)closeSurM()});
     $('dlOv').addEventListener('click',function(e:any){if(e.target===this)toggleDlM()});
@@ -1355,10 +1452,11 @@ export default function Home() {
     $('dtOv').addEventListener('click',function(e:any){if(e.target===this)toggleDtM()});
     $('addROv').addEventListener('click',function(e:any){if(e.target===this)closeAddR()});
     $('updOv').addEventListener('click',function(e:any){if(e.target===this)toggleUpdM()});
+    $('libOv').addEventListener('click',function(e:any){if(e.target===this)closeLibM()});
     $('qrOverlay').addEventListener('click',function(){closeQRSide()});
 
     document.addEventListener('keydown',function(e:any){
-      if(e.key==='Escape'){closeSurM();$('dlOv').classList.remove('on');$('favOv').classList.remove('on');$('dtOv').classList.remove('on');closeAddR();$('updOv').classList.remove('on');closeQRSide();if(dtI){clearInterval(dtI);dtI=null}}
+      if(e.key==='Escape'){closeSurM();$('dlOv').classList.remove('on');$('favOv').classList.remove('on');$('dtOv').classList.remove('on');closeAddR();$('updOv').classList.remove('on');$('libOv').classList.remove('on');closeQRSide();if(dtI){clearInterval(dtI);dtI=null}}
       if(e.key===' '&&e.target.tagName!=='INPUT'){e.preventDefault();togPlay()}
     });
 
@@ -1488,6 +1586,19 @@ export default function Home() {
         </div>
       </div>
 
+      {/* مكتبة 115 قارئ */}
+      <div className="ov" id="libOv">
+        <div className="mb lib-b" style={{maxWidth:520}}>
+          <div className="mh">
+            <h2><i className="fas fa-mosque"></i> مكتبة القراء</h2>
+            <button className="mx" onClick={() => (window as any).closeLibM?.()}><i className="fas fa-times"></i></button>
+          </div>
+          <div className="ms"><input type="text" id="libQ" placeholder="ابحث عن قارئ بالاسم أو الرواية..." /></div>
+          <div className="lib-count" id="libCnt"></div>
+          <div className="ml" id="libL" style={{maxHeight:'65vh',overflowY:'auto'}}></div>
+        </div>
+      </div>
+
       {/* نافذة السور */}
       <div className="ov" id="surOv">
         <div className="mb">
@@ -1545,7 +1656,10 @@ export default function Home() {
         <section className="rc-s">
           <div className="sec-t">
             <i className="fas fa-microphone-alt"></i> اختر القارئ
-            <button className="add-r-btn" onClick={() => (window as any).openAddR?.()} title="إضافة قارئ جديد"><i className="fas fa-plus"></i></button>
+            <div style={{display:'flex',gap:'6px'}}>
+              <button className="lib-open-btn" onClick={() => (window as any).openLibM?.()} title="مكتبة 115 قارئ"><i className="fas fa-mosque"></i> <span>115 قارئ</span></button>
+              <button className="add-r-btn" onClick={() => (window as any).openAddR?.()} title="إضافة قارئ جديد"><i className="fas fa-plus"></i></button>
+            </div>
           </div>
           <div className="rc-g-wrap" id="rcGWrap">
             <div className="rc-g" id="rcG"></div>

@@ -193,3 +193,24 @@ Stage Summary:
 - 3-tier timing system: quran.com precise sync → mp3quran precise sync → estimated timings
 - Every reciter with `readId` gets precise ms-level verse sync via mp3quran Timing API
 - Server mapping corrected for all 100+ mp3quran folders
+---
+Task ID: 1
+Agent: Main Agent
+Task: Build 115 reciter library with dropdown, verse sync, and download integration
+
+Work Log:
+- Created /api/all-reciters API route returning 115 verified reciters with timing data from mp3quran.net
+- Added library modal (libOv) with searchable list of 115 reciters in page.tsx
+- Added "115 قارئ" button in reciter section header
+- Implemented openLibM, closeLibM, loadLibrary, renderLibList, addLibraryReciter functions
+- Added CSS styles for library modal, items, avatars, timing badges, and responsive design
+- Connected library reciters with existing download modal for audio downloads
+- Verified all 115 reciters load with 112 having precise timing data
+- Tested adding reciters → surah selection opens automatically → download works
+
+Stage Summary:
+- 115 reciters available in searchable dropdown modal
+- Each reciter shows: name, timing indicator (green badge), rewaya tag, add button
+- Click "إضافة" → reciter added to screen + surah selection opens
+- Download modal shows all added reciters with full 114 surah download capability
+- API at /api/all-reciters returns verified data with timing info from mp3quran.net
