@@ -247,13 +247,66 @@ export default function Home() {
       }
     }
 
+    // ===== عرض الآيات (scroll mode) =====
+    let allViewMode=false; // false=آية واحدة, true=كل الآيات
+    let arabicDigits=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    function toArNum(n:number){return String(n).split('').map(function(d){return arabicDigits[Number(d)]}).join('')}
+    function toggleViewMode(){
+      allViewMode=!allViewMode;
+      if(allViewMode){
+        E.aVr.style.display='none';
+        E.surahBox.style.display='block';
+        E.viewToggleBtn.innerHTML='<i class="fas fa-align-justify"></i> عرض آية واحدة';
+        // تحديث التمييز
+        highlightActiveAyah(lastAutoAyah>=1?lastAutoAyah:st.curA);
+      }else{
+        E.aVr.style.display='block';
+        E.surahBox.style.display='none';
+        E.viewToggleBtn.innerHTML='<i class="fas fa-list"></i> عرض كل الآيات';
+      }
+    }
+    (window as any).toggleViewMode=toggleViewMode;
+    function renderAllAyahs(ayahs:any[]){
+      if(!ayahs||!ayahs.length)return;
+      E.surahBox.innerHTML='';
+      for(let i=0;i<ayahs.length;i++){
+        let span=document.createElement('span');
+        span.className='ayah-span';
+        span.id='ayah-'+(i+1);
+        span.textContent=ayahs[i].text+' ﴿'+toArNum(i+1)+'﴾ ';
+        (function(ayahIdx:number){
+          span.addEventListener('click',function(){
+            seekToAyah(ayahIdx+1);
+          });
+        })(i);
+        E.surahBox.appendChild(span);
+      }
+      E.surahBox.style.display=allViewMode?'block':'none';
+      E.viewToggleBtn.style.display='inline-block';
+      E.aVr.style.display=allViewMode?'none':'block';
+    }
+    function highlightActiveAyah(ayahNum:number){
+      if(!allViewMode||ayahNum<1)return;
+      document.querySelectorAll('.ayah-span').forEach(function(el){el.classList.remove('active')});
+      let target=document.getElementById('ayah-'+ayahNum);
+      if(target){
+        target.classList.add('active');
+        target.scrollIntoView({behavior:'smooth',block:'center'});
+      }
+    }
+    function seekToAyah(num:number){
+      if(ayahTimings.length>=num){E.aud.currentTime=ayahTimings[num-1];st.curA=num;lastAutoAyah=num;showAyah();highlightActiveAyah(num)}
+      else if(syncedTimestamps.length>=num){E.aud.currentTime=syncedTimestamps[num-1].from/1000;st.curA=num;lastAutoAyah=num;showAyah();highlightActiveAyah(num)}
+    }
+
     // ===== HELPERS =====
     function $(id:string){return document.getElementById(id)}
     let E:any={
       aud:$('aud'),ppB:$('ppB'),prvB:$('prvB'),nxtB:$('nxtB'),repB:$('repB'),
       pBar:$('pBar'),cT:$('cT'),dur:$('dur'),aVr:$('aVr'),sNm:$('sNm'),
       aCn:$('aCn'),tTx:$('tTx'),trTx:$('trTx'),rcG:$('rcG'),ld:$('ld'),
-      wh:$('wh'),vd:$('vd'),linkTag:$('linkTag')
+      wh:$('wh'),vd:$('vd'),linkTag:$('linkTag'),
+      surahBox:$('surahBox'),viewToggleBtn:$('viewToggleBtn')
     };
 
     function gFav(){try{return JSON.parse(localStorage.getItem('fv_r'))||[]}catch(e){return[]}}
@@ -794,6 +847,8 @@ export default function Home() {
       if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();stopRAFSync();
       st.curS=num;st.curA=1;st.loading=true;E.ld.style.display='block';E.wh.style.display='none';E.vd.style.display='none';E.linkTag.style.display='none';st.linkMode=false;st.qcMode=false;
       syncedTimestamps=[];ayahTimings=[];verseTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
+      // Reset view mode for new surah
+      allViewMode=false;E.surahBox.innerHTML='';E.surahBox.style.display='none';E.viewToggleBtn.style.display='none';E.aVr.style.display='block';
 
       // Determine quran.com reciter ID
       let qcRecId:number|null=null;
@@ -822,8 +877,12 @@ export default function Home() {
           else E.tTx.innerText='التفسير غير متاح';
           if(st.sData.length>2&&st.sData[2].ayahs[i]){E.trTx.innerText=st.sData[2].ayahs[i].text||''}
           else E.trTx.innerText='';
+          // عرض كل الآيات عند أول تحميل
+          if(E.surahBox.children.length===0)renderAllAyahs(st.sData[0].ayahs);
         }
         E.aCn.innerText='الآية '+st.curA+' من '+st.totV;E.aVr.classList.remove('chg');
+        // تمييز الآية النشطة في وضع العرض الكامل
+        highlightActiveAyah(st.curA);
       },300);
     }
 
@@ -969,6 +1028,7 @@ export default function Home() {
 
     // ===== Event listeners =====
     $('surBtn').addEventListener('click',openSurM);
+    $('viewToggleBtn').addEventListener('click',toggleViewMode);
     $('surQ').addEventListener('input',function(e:any){rndSurL(e.target.value.trim())});
     $('addRQ').addEventListener('input',onSearchInput);
 
@@ -1183,7 +1243,14 @@ export default function Home() {
             <span className="link-mode-tag" id="linkTag" style={{display:'none'}}><i className="fas fa-microphone-alt"></i> تلاوة بتزامن الآيات</span>
             <span className="sn" id="sNm"></span>
             <span className="ac" id="aCn"></span>
-            <div className="av" id="aVr"></div>
+            {/* عرض الآية الحالية (الوضع القديم) */}
+            <div className="av" id="aVr" style={{display:'none'}}></div>
+            {/* صندوق عرض كل الآيات مع التمييز */}
+            <div className="surah-box" id="surahBox" style={{display:'none'}}></div>
+            {/* أزرار تبديل العرض */}
+            <button className="view-toggle-btn" id="viewToggleBtn" style={{display:'none'}}>
+              <i className="fas fa-list"></i> عرض كل الآيات
+            </button>
             <div className="tt" id="tTx"></div>
             <div className="tr" id="trTx"></div>
           </div>
