@@ -245,3 +245,58 @@ Stage Summary:
 - عبدالعزيز الزهراني works correctly from `server9.mp3quran.net/zahrani/` (verified: plays with mp3quran timing)
 - All reciters use correct audio URLs matching their voices
 - Agent Browser verified: no console errors, correct audio playback for both reciters
+
+---
+Task ID: 5
+Agent: Audio URL Auditor
+Task: Batch verify 115 reciter URLs
+
+Work Log:
+- Read `/src/app/api/all-reciters/route.ts` to extract all 115 reciters with their audio URLs
+- Tested each reciter's Al-Fatiha (001.mp3) URL using `curl -sI --connect-timeout 8 --max-time 15` HEAD requests
+- Ran tests in parallel batches of 10 for efficiency (total execution: ~2 seconds)
+- All URLs use mp3quran.net CDN across servers 6-16, serving over HTTP/2
+- 4 reciters have `null` readId (no timing data) but were still URL-tested: إبراهيم الجبرين (#11), محمد جبريل (#19), محمود الرفاعي (#36), الفاتح محمد الزبير (#86), عبدالله الغامدي (#60), عادل الكلباني (#115)
+- Initial run had false positives due to HTTP/2 response format (`HTTP/2 200` vs `HTTP/1.1 200`); fixed regex to handle both formats
+
+Results:
+- **115/115 URLs are WORKING** — all return HTTP 200
+- **0 broken URLs found**
+- All mp3quran.net CDN servers (6-16) responding correctly
+- No connection errors, no timeouts, no 404/5xx responses
+
+Server distribution verified:
+- server6: 22 reciters ✓
+- server7: 4 reciters ✓
+- server8: 16 reciters ✓
+- server9: 11 reciters ✓
+- server10: 7 reciters ✓
+- server11: 8 reciters ✓
+- server12: 7 reciters ✓
+- server13: 5 reciters ✓
+- server16: 35 reciters ✓
+
+Stage Summary:
+- 100% uptime across all 115 reciters — no action needed
+- No code changes required; all URLs in RECITER_LIBRARY are valid
+- Verified: 2026-06-09 10:56:11 UTC
+
+---
+Task ID: 6
+Agent: Main Agent
+Task: Fix "MEDIA_ELEMENT_ERROR: Empty src attribute" bug
+
+Work Log:
+- Root cause: `startRd()` (line 1237) and reciter removal functions (lines 737, 752) intentionally set `E.aud.src=''` to clear audio before starting new playback or when removing a reciter
+- This triggered the audio `error` event handler (line 1351) which showed "تعذر تشغيل الصوت" toast with "Empty src attribute" error
+- Fix: Added `_skipAudioErr` boolean guard flag (line 302) that is set to `true` before intentional `src=''` clears
+- Audio error handler checks `_skipAudioErr` at entry — if true, resets flag and returns immediately (line 1352)
+- Applied guard to all 3 intentional src clear locations: `removeCustomReciter()`, `removeAnyReciter()`, `startRd()`
+
+Stage Summary:
+- Empty src error no longer appears when switching surahs, changing reciters, or removing reciters
+- Real audio errors (network, format, 404) are still properly caught and displayed
+- Agent Browser verified: no console errors after surah switching, reciter addition, and playback
+- Verified الزهرani plays correctly from `server9.mp3quran.net/zahrani/001.mp3` (56.32s)
+- Verified الغامدي plays correctly from `server7.mp3quran.net/s_gmd/001.mp3` (48.09s)
+- Both confirmed to NOT be مشاري العفاسي (46.45s)

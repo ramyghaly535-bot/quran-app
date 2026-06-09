@@ -298,6 +298,8 @@ export default function Home() {
     let lastAutoAyah:number=-1;
     // rAF-based zero-delay sync loop
     let rafId:number|null=null;
+    // Guard flag: suppress audio error toasts when src is intentionally cleared
+    let _skipAudioErr=false;
 
     // ===== دالة لجلب توقيتات سورة معينة لقارئ معين برابط مباشر =====
     async function getQuranTimestamps(reciterId:number, chapterNumber:number):Promise<{verse_key:string,start_time:number,end_time:number}[]>{
@@ -732,7 +734,7 @@ export default function Home() {
       if(found!==-1){custom.splice(found,1);sCustom(custom)}
       let added=gAdded();let found2=added.findIndex(function(r:any){return r.dl===dlId});
       if(found2!==-1){added.splice(found2,1);sAdded(added)}
-      if(st.curR&&st.curR.dl===dlId){st.curR=PR.length?PR[0]:null;if(st.curS>0){E.aud.pause();E.aud.src='';st.playing=false;updPP();E.vd.style.display='none';E.wh.style.display='block';st.curS=0}}
+      if(st.curR&&st.curR.dl===dlId){st.curR=PR.length?PR[0]:null;if(st.curS>0){_skipAudioErr=true;E.aud.pause();E.aud.src='';st.playing=false;updPP();E.vd.style.display='none';E.wh.style.display='block';st.curS=0}}
       buildReciters();rndRC();buildSel();toast('تمت إزالة القارئ');
     }
     function removeAnyReciter(dlId:string){
@@ -747,7 +749,7 @@ export default function Home() {
         let custom=gCustom();let idx=custom.findIndex(function(r:any){return r.dl===dlId});
         if(idx!==-1){custom.splice(idx,1);sCustom(custom)}
       }
-      if(st.curR&&st.curR.dl===dlId){st.curR=PR.length?PR[0]:null;if(st.curS>0){E.aud.pause();E.aud.src='';st.playing=false;updPP();E.vd.style.display='none';E.wh.style.display='block';st.curS=0}}
+      if(st.curR&&st.curR.dl===dlId){st.curR=PR.length?PR[0]:null;if(st.curS>0){_skipAudioErr=true;E.aud.pause();E.aud.src='';st.playing=false;updPP();E.vd.style.display='none';E.wh.style.display='block';st.curS=0}}
       buildReciters();rndRC();buildSel();updFavUI();toast('تم حذف القارئ: '+reciter.nm);
     }
 
@@ -1232,7 +1234,7 @@ export default function Home() {
     }
 
     function startRd(num:number){
-      if(st.loading)return;E.aud.pause();E.aud.src='';st.playing=false;updPP();stopRAFSync();
+      if(st.loading)return;_skipAudioErr=true;E.aud.pause();E.aud.src='';st.playing=false;updPP();stopRAFSync();
       st.curS=num;st.curA=1;st.loading=true;E.ld.style.display='block';E.wh.style.display='none';E.vd.style.display='none';E.linkTag.style.display='none';st.linkMode=false;st.qcMode=false;
       syncedTimestamps=[];ayahTimings=[];verseTimings=[];lastAutoAyah=-1;hideSurArrow();clearRecNotif();
       // Reset view mode for new surah
@@ -1345,6 +1347,7 @@ export default function Home() {
     E.aud.addEventListener('play',function(){st.playing=true;updPP();if(st.linkMode)startRAFSync()});
     E.aud.addEventListener('pause',function(){st.playing=false;updPP();stopRAFSync()});
     E.aud.addEventListener('error',function(e:any){
+      if(_skipAudioErr){_skipAudioErr=false;return}
       st.playing=false;updPP();stopRAFSync();st.loading=false;E.ld.style.display='none';
       let errMsg='تعذر تشغيل الصوت';
       if(e.target && e.target.error){
