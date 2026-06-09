@@ -41,7 +41,7 @@ async function getAllReciters(): Promise<ApiReciter[]> {
   }
 
   try {
-    const res = await fetch('https://mp3quran.net/api/v3/reciters?language=ar', {
+    const res = await fetch('https://www.mp3quran.net/api/v3/reciters?language=ar', {
       next: { revalidate: 3600 },
       headers: { 'User-Agent': 'Mozilla/5.0' }
     })

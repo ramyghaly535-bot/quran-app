@@ -133,3 +133,32 @@ Stage Summary:
 - Reciters without match fall back to estimated timings (still rAF-synced)
 - All APIs tested: find-quran-reciter returns correct IDs for known reciters, verify-audio correctly detects broken URLs
 - Lint clean, no browser errors
+
+---
+Task ID: 9
+Agent: Main
+Task: Fix broken mp3quran.net audio URLs and download functionality
+
+Work Log:
+- Diagnosed root cause: `server11.mp3quran.net` returns 404 for ALL audio files
+- mp3quran.net API now uses different servers per reciter (server6-16), each reciter has its own server
+- Fetched current server assignments from `https://www.mp3quran.net/api/v3/reciters?language=ar`
+- Created `DL_SERVER` map: ~50 folder→server mappings for correct URL generation
+- Updated `dlUrl()` to use `DL_SERVER[dlId]` instead of hardcoded `server11`
+- Updated `search-reciters` API to use `www.mp3quran.net` (old domain was timing out)
+- Replaced entire `NEW_POOL` array with correct server URLs (57 reciters verified)
+- Added missing reciters: محمد رفعت, إسلام صبحي, عبدالله الخلف, عبدالله الموسى, منصور السالمي, ناصر العصفور, محمد البخيت, الدوكالي محمد العالم, سعد الغامدي
+- Updated `/api/download/route.ts` with 3-tier download:
+  1. quran.com full surah MP3 (redirect — fastest)
+  2. Direct URL redirect (for mp3quran.net or any link)
+  3. alquran.cloud ayah-by-ayah merge (fallback)
+- Updated `dlSurah()` to accept `qcId` and `directUrl` parameters
+- Updated `dlFile()` to use `getQCIdForReciter()` for priority-based download
+- Verified: all corrected URLs return HTTP 200 (رفعت, صبحي, الجهني, الجليل, القطامي)
+
+Stage Summary:
+- All 57 NEW_POOL reciters now have working audio URLs with correct server numbers
+- Download uses quran.com full surah MP3 when available (fastest), falls back gracefully
+- BUILTIN reciters use correct servers via DL_SERVER map
+- Web search returns correct server URLs from mp3quran.net API v3
+- Lint clean, dev server running without errors

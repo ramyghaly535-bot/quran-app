@@ -7,11 +7,41 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const surah = parseInt(searchParams.get('surah') || '0')
   const reciter = searchParams.get('reciter') || 'ar.alafasy'
+  const qcId = searchParams.get('qcId') ? parseInt(searchParams.get('qcId')!) : null
+  const directUrl = searchParams.get('url') || null
 
   if (!surah || surah < 1 || surah > 114) {
     return NextResponse.json({ error: 'Invalid surah number' }, { status: 400 })
   }
 
+  // Method 1: Quran.com full surah MP3 (fastest - single file download)
+  if (qcId) {
+    try {
+      const syncRes = await fetch(
+        `https://api.quran.com/api/v4/chapter_recitations/${qcId}/${surah}?segments=true`,
+        { headers: { 'Accept': 'application/json' }, cache: 'no-store' }
+      )
+      if (syncRes.ok) {
+        const syncData = await syncRes.json()
+        const audioUrl = syncData.audio_file?.audio_url
+        if (audioUrl) {
+          // Redirect to the actual audio file for direct download
+          return NextResponse.redirect(audioUrl, 302)
+        }
+      }
+    } catch {
+      // Fall through to next method
+    }
+  }
+
+  // Method 2: Direct URL redirect (for mp3quran.net or any direct link)
+  if (directUrl) {
+    const padded = String(surah).padStart(3, '0')
+    const finalUrl = directUrl.replace('{num}', padded).replace('{surah}', String(surah))
+    return NextResponse.redirect(finalUrl, 302)
+  }
+
+  // Method 3: Alquran.cloud API (ayah-by-ayah merge - slower)
   try {
     const apiRes = await fetch(
       `https://api.alquran.cloud/v1/surah/${surah}/${reciter}`,
