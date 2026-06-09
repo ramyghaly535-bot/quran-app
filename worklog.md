@@ -214,3 +214,34 @@ Stage Summary:
 - Click "إضافة" → reciter added to screen + surah selection opens
 - Download modal shows all added reciters with full 114 surah download capability
 - API at /api/all-reciters returns verified data with timing info from mp3quran.net
+
+---
+Task ID: 2
+Agent: Main Agent
+Task: Fix broken reciters and wrong audio playback issue
+
+Work Log:
+- Verified all 125 reciter audio URLs via batch HEAD requests (115 from API + 10 additional from page.tsx)
+- Found 4 broken reciters (404 on all mp3quran servers): ketbi (ناصر القطبي), aboona (سعيد أبو عونة), fawzan (صلاح الفوزان), a_swaiyd (عبدالرحمن السويّد)
+- Replaced broken reciters with 4 working alternatives: jbreen (إبراهيم الجبرين), jbrl (محمد جبريل), mrifai (محمود الرفاعي), fateh (الفاتح محمد الزبير)
+- Updated /api/all-reciters/route.ts and NEW_POOL in page.tsx with replacements
+- Updated DL_SERVER map with new folder mappings
+
+- **ROOT CAUSE FIX: Wrong audio for سعد الغامدي (played مشاري العفاسي's voice)**
+  - Problem: `discoverAndVerify()` function was finding incorrect quran.com IDs for non-BUILTIN reciters
+  - When an incorrect qcId was found, `startSyncedPlay()` used quran.com's audio URL instead of mp3quran.net
+  - This caused سعد الغامدي to play Afasy's audio from `download.quranicaudio.com/qdc/mishari_al_afasy/`
+  - Fix: Removed dynamic qcId (Tier 3) lookup from `startRd()` — only use static QC_MAP and QC_DL_MAP
+  - Library-added reciters now always use `doLinkMode()` with mp3quran.net audio + mp3quran timing data
+  - Removed `discoverAndVerify` qcId storage from `addLibraryReciter()`, `addNewReciter()`, `addWebReciter()`
+
+- Added pre-playback audio URL verification in `doLinkMode()` using `/api/verify-audio` API
+- Improved audio error handler with specific error messages (network, format, not found, cancelled)
+
+Stage Summary:
+- 121/125 reciters have working audio URLs (96.8% uptime)
+- 4 broken reciters replaced with working alternatives
+- سعد الغامدي now plays correct voice from `server7.mp3quran.net/s_gmd/` (verified: 48.1s, not Afasy's 51.9s)
+- عبدالعزيز الزهراني works correctly from `server9.mp3quran.net/zahrani/` (verified: plays with mp3quran timing)
+- All reciters use correct audio URLs matching their voices
+- Agent Browser verified: no console errors, correct audio playback for both reciters

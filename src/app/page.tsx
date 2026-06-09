@@ -74,19 +74,19 @@ export default function Home() {
       // === القراء الموجودون (مع تحديث السيرفرات و readId) ===
       {nm:'عبدالله الجهني',url:'https://server13.mp3quran.net/jhn/{num}.mp3',readId:62},
       {nm:'إبراهيم الأخضر',url:'https://server6.mp3quran.net/akdr/{num}.mp3',readId:1},
-      {nm:'سعيد أبو عونة',url:'https://server6.mp3quran.net/aboona/{num}.mp3'},
+      {nm:'محمد جبريل',url:'https://server8.mp3quran.net/jbrl/{num}.mp3'},
       {nm:'خالد القحطاني',url:'https://server10.mp3quran.net/qht/{num}.mp3',readId:21},
       {nm:'فارس عباد',url:'https://server8.mp3quran.net/frs_a/{num}.mp3',readId:81},
       {nm:'وديع اليمني',url:'https://server6.mp3quran.net/wdee3/{num}.mp3',readId:219},
       {nm:'محمد الطبلاوي',url:'https://server12.mp3quran.net/tblawi/{num}.mp3',readId:106},
       {nm:'هاني الرفاعي',url:'https://server8.mp3quran.net/hani/{num}.mp3',readId:89},
       {nm:'ساهل ياسين',url:'https://server6.mp3quran.net/shl/{num}.mp3',readId:32},
-      {nm:'ناصر القطبي',url:'https://server6.mp3quran.net/ketbi/{num}.mp3'},
+      {nm:'إبراهيم الجبرين',url:'https://server6.mp3quran.net/jbreen/{num}.mp3'},
       {nm:'بندر بليهه',url:'https://server6.mp3quran.net/balilah/{num}.mp3',readId:217},
       {nm:'صلاح البدير',url:'https://server6.mp3quran.net/s_bud/{num}.mp3',readId:43},
       {nm:'ماجد الزامل',url:'https://server9.mp3quran.net/zaml/{num}.mp3',readId:139},
       {nm:'ماجد العنزي',url:'https://server8.mp3quran.net/majd_onazi/{num}.mp3'},
-      {nm:'صلاح الفوزان',url:'https://server10.mp3quran.net/fawzan/{num}.mp3'},
+      {nm:'محمود الرفاعي',url:'https://server11.mp3quran.net/mrifai/{num}.mp3'},
       {nm:'عادل الكلباني',url:'https://server8.mp3quran.net/a_klb/{num}.mp3'},
       {nm:'عادل ريان',url:'https://server8.mp3quran.net/ryan/{num}.mp3',readId:48},
       {nm:'عبدالمحسن القاسم',url:'https://server8.mp3quran.net/qasm/{num}.mp3',readId:67},
@@ -175,7 +175,7 @@ export default function Home() {
       {nm:'عبدالرحمن العوسي',url:'https://server6.mp3quran.net/aloosi/{num}.mp3',readId:225},
       {nm:'محمد خليل القارئ',url:'https://server8.mp3quran.net/m_qari/{num}.mp3',readId:229},
       {nm:'إبراهيم الدوسري',url:'https://server10.mp3quran.net/ibrahim_dosri/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:232},
-      {nm:'عبدالرحمن السويّد',url:'https://server16.mp3quran.net/a_swaiyd/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:135},
+      {nm:'الفاتح محمد الزبير',url:'https://server6.mp3quran.net/fateh/{num}.mp3'},
       {nm:'أحمد النفيس (server16)',url:'https://server16.mp3quran.net/nufais/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:259},
       {nm:'أحمد ديبان',url:'https://server16.mp3quran.net/deban/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:265},
       {nm:'بيشه وا قادر الكردي',url:'https://server16.mp3quran.net/peshawa/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:268},
@@ -432,10 +432,10 @@ export default function Home() {
       'maali':'server10','hawashi':'server11','nabil':'server9',
       'hamid':'server10','qarni':'server9','a_majed':'server10',
       'tablawi':'server12','tblawi':'server12','minshawi_mujawwad2':'server10',
-      'ketbi':'server6','balilah':'server6',
+      'ketbi':'server6','jbreen':'server6','balilah':'server6',
       'fares':'server8','frs_a':'server8','hane':'server8','hani':'server8',
       'salah_budair':'server6','s_bud':'server6','hajjaji':'server9','hajjaj':'server9',
-      'aboona':'server6','sahl':'server6','shl':'server6',
+      'aboona':'server6','jbrl':'server8','sahl':'server6','shl':'server6',
       'juhany':'server13','juhany_tajweed':'server13','jhn':'server13',
       'naina':'server11','shatri2':'server11',
       // قراء إضافيون من mp3quran timing API
@@ -451,7 +451,8 @@ export default function Home() {
       'bna':'server8','noah':'server8','rashad':'server10','trabulsi':'server10',
       'Aamer':'server10','dokali':'server7','wdee3':'server6','kurdi':'server6',
       'aloosi':'server6','m_qari':'server8','ibrahim_dosri':'server10',
-      'a_swaiyd':'server16','a_binhameed':'server16','zaml':'server9',
+      // 'a_swaiyd' removed - 404 on all servers
+      'a_binhameed':'server16','zaml':'server9',
       'mohna':'server11','jaman':'server6','a_turki':'server16',
       'mustafa':'server8','a_maasaraawi':'server16','s_hashemi':'server16',
       'kh_mohammadi':'server16','okasha':'server16','h_saleh':'server16',
@@ -462,7 +463,7 @@ export default function Home() {
       'refat':'server14','islam':'server14','mousa':'server14','khalf':'server14',
       'mansor':'server14','alosfor':'server14','bukheet':'server14',
       'nasser_almajed':'server14','muftah_sultany':'server14',
-      'mrifai':'server11','hatem':'server11','jormy':'server11','bilal':'server11',
+      'mrifai':'server11','fateh':'server6','hatem':'server11','jormy':'server11','bilal':'server11',
       'salamah':'server12','tareq':'server10','a_abdl':'server16'
     };
     function dlUrl(dlId:string,num:number){
@@ -715,19 +716,13 @@ export default function Home() {
 
     function addWebReciter(rec:any){
       if(RC.find(function(r:any){return r.dl===rec.folder})){toast('هذا القارئ مضاف بالفعل');return}
-      let newR={id:null,dl:rec.folder,nm:rec.name,url:rec.url,im:rec.image||'https://picsum.photos/seed/'+rec.folder+'/100/100',builtin:false,isNew:true,qcId:null as number|null};
+      let newR={id:null,dl:rec.folder,nm:rec.name,url:rec.url,im:rec.image||'https://picsum.photos/seed/'+rec.folder+'/100/100',builtin:false,isNew:true};
       let added=gAdded();added.push(newR);sAdded(added);
       buildReciters();rndRC();buildSel();
       toast('تمت الإضافة: '+rec.name);
-      // التحقق من الصوت واكتشاف التوقيتات في الخلفية
+      // فقط التحقق من الصوت في الخلفية
       discoverAndVerify(rec.name,rec.folder,rec.url).then(function(r){
         if(!r.audioOk){toast('⚠️ رابط الصوت قد لا يعمل لهذا القارئ')}
-        if(r.qcId){
-          newR.qcId=r.qcId;
-          let allAdded=gAdded();let idx=allAdded.findIndex(function(a:any){return a.dl===rec.folder});
-          if(idx!==-1){allAdded[idx].qcId=r.qcId;sAdded(allAdded)}
-          if(r.qcSource==='quran_api'){toast('✅ تزامن آية بآية متاح: '+rec.name)}
-        }else{toast('ℹ️ سيستخدم تقدير التوقيتات')}
       });
       let foundR=RC.find(function(r:any){return r.dl===rec.folder});
       if(foundR){selLinkR(foundR);closeAddR();openSurM()}
@@ -839,14 +834,10 @@ export default function Home() {
     }
     function addLibraryReciter(rec:any){
       if(RC.find(function(r:any){return r.dl===rec.folder})){toast('هذا القارئ مضاف بالفعل');return}
-      let newR={id:null,dl:rec.folder,nm:rec.name,url:rec.url,im:'https://picsum.photos/seed/'+rec.folder+'/100/100',builtin:false,isNew:true,qcId:null as number|null,mp3qReadId:rec.readId||null};
+      let newR={id:null,dl:rec.folder,nm:rec.name,url:rec.url,im:'https://picsum.photos/seed/'+rec.folder+'/100/100',builtin:false,isNew:true,mp3qReadId:rec.readId||null};
       let added=gAdded();added.push(newR);sAdded(added);
       buildReciters();rndRC();buildSel();
       toast('تمت الإضافة: '+rec.name);
-      // Discover timing
-      discoverAndVerify(rec.name,rec.folder,rec.url).then(function(r2:any){
-        if(r2.qcId){newR.qcId=r2.qcId;let all=gAdded();let idx=all.findIndex(function(a:any){return a.dl===rec.folder});if(idx!==-1){all[idx].qcId=r2.qcId;sAdded(all)}}
-      });
       let foundR=RC.find(function(r:any){return r.dl===rec.folder});
       if(foundR){selLinkR(foundR);closeLibM();openSurM();}
     }
@@ -896,17 +887,11 @@ export default function Home() {
     }
     function addNewReciter(item:any){
       let dlId=item.dl||extractDlId(item.url);
-      let newR={id:null,dl:dlId,nm:item.nm,url:item.url,im:'https://picsum.photos/seed/'+dlId+'/100/100',builtin:false,isNew:true,qcId:null as number|null,mp3qReadId:item.readId||null};
+      let newR={id:null,dl:dlId,nm:item.nm,url:item.url,im:'https://picsum.photos/seed/'+dlId+'/100/100',builtin:false,isNew:true,mp3qReadId:item.readId||null};
       let added=gAdded();added.push(newR);sAdded(added);buildReciters();rndRC();buildSel();
-      // التحقق من الصوت واكتشاف التوقيتات في الخلفية
+      // فقط التحقق من الصوت في الخلفية (بدون اكتشاف qcId لمنع تشغيل صوت خاطئ)
       discoverAndVerify(item.nm,dlId,item.url).then(function(r){
         if(!r.audioOk){toast('⚠️ رابط الصوت قد لا يعمل: '+item.nm)}
-        if(r.qcId){
-          newR.qcId=r.qcId;
-          let allAdded=gAdded();let idx=allAdded.findIndex(function(a:any){return a.dl===dlId});
-          if(idx!==-1){allAdded[idx].qcId=r.qcId;sAdded(allAdded)}
-          if(r.qcSource==='quran_api'){toast('✅ تزامن آية بآية: '+item.nm)}
-        }
       });
       return newR;
     }
@@ -1224,7 +1209,15 @@ export default function Home() {
           }
         }else{E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''}
       }).catch(function(){E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''});
-      E.aud.src=u;E.aud.load();E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(st.curR.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
+      E.aud.src=u;E.aud.load();
+      // Verify audio before playing (catch 404/403 quickly)
+      fetch('/api/verify-audio?url='+encodeURIComponent(u)).then(function(r){return r.json()}).then(function(d:any){
+        if(!d.ok){toast('⚠️ الصوت غير متاح حالياً: '+(d.status||'خطأ'));E.ld.style.display='none';E.wh.style.display='block';st.loading=false;return}
+        E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(st.curR.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
+      }).catch(function(){
+        // Verification failed, try playing anyway
+        E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(st.curR.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
+      });
     }
 
     function doAlquranApi(num:number){
@@ -1245,35 +1238,22 @@ export default function Home() {
       // Reset view mode for new surah
       allViewMode=false;E.surahBox.innerHTML='';E.surahBox.style.display='none';E.viewToggleBtn.style.display='none';E.aVr.style.display='block';
 
-      // Determine quran.com reciter ID (3-tier: static QC_MAP → static QC_DL_MAP → dynamic qcId)
+      // Determine quran.com reciter ID (ONLY from static verified maps)
+      // Dynamic discovery (Tier 3) is NOT used to prevent wrong audio playback
       let qcRecId:number|null=null;
       if(st.curR.id){qcRecId=QC_MAP[st.curR.id]||null}
       if(!qcRecId&&st.curR.dl){qcRecId=QC_DL_MAP[st.curR.dl]||null}
-      // Tier 3: dynamically discovered qcId stored on the reciter object
-      if(!qcRecId&&st.curR.qcId){qcRecId=st.curR.qcId}
+      // NOTE: st.curR.qcId (dynamic) is intentionally NOT used here
+      // to prevent wrong reciter audio from quran.com
 
-      // Use synced playback if quran.com reciter ID is available
+      // Use synced playback ONLY if static quran.com mapping exists (BUILTIN verified)
       if(qcRecId){
         startSyncedPlay(qcRecId,num,st.curR);
         return;
       }
 
-      // No quran.com mapping — try async discovery then fallback
+      // No quran.com mapping — use link mode with mp3quran audio + mp3quran timing
       if(!st.curR.id&&st.curR.url){
-        // Try to discover quran.com ID asynchronously before falling back
-        if(st.curR.dl&&!dynamicQCMap[st.curR.dl]){
-          let discoverNum=num; // capture surah number
-          discoverAndVerify(st.curR.nm,st.curR.dl,st.curR.url).then(function(r){
-            if(r.qcId&&st.curS===discoverNum&&st.curR){
-              st.curR.qcId=r.qcId;
-              toast('✅ تم اكتشاف تزامن آية بآية!');
-              // Stop current playback and restart with synced mode
-              E.aud.pause();E.aud.src='';stopRAFSync();
-              st.playing=false;st.loading=true;E.ld.style.display='block';
-              startSyncedPlay(r.qcId,discoverNum,st.curR);
-            }
-          });
-        }
         doLinkMode(num);return;
       }
       doAlquranApi(num);
@@ -1364,7 +1344,19 @@ export default function Home() {
     });
     E.aud.addEventListener('play',function(){st.playing=true;updPP();if(st.linkMode)startRAFSync()});
     E.aud.addEventListener('pause',function(){st.playing=false;updPP();stopRAFSync()});
-    E.aud.addEventListener('error',function(){st.playing=false;updPP();stopRAFSync()});
+    E.aud.addEventListener('error',function(e:any){
+      st.playing=false;updPP();stopRAFSync();st.loading=false;E.ld.style.display='none';
+      let errMsg='تعذر تشغيل الصوت';
+      if(e.target && e.target.error){
+        let code=e.target.error.code;
+        if(code===1)errMsg='تم إلغاء تحميل الصوت';
+        else if(code===2)errMsg='خطأ في الشبكة - تحقق من الاتصال';
+        else if(code===3)errMsg='صيغة الصوت غير مدعومة';
+        else if(code===4)errMsg='الملف الصوتي غير موجود أو معطل ❌';
+      }
+      toast(errMsg);
+      console.error('Audio error:', e.target?.error?.message || e);
+    });
 
     E.ppB.addEventListener('click',togPlay);
     E.nxtB.addEventListener('click',function(){if(st.curS>0)nxtA()});
