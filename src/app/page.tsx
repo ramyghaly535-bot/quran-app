@@ -221,7 +221,9 @@ export default function Home() {
       // أنهار Rivers
       '/bg/river1.png','/bg/river2.png','/bg/river3.png','/bg/river4.png',
       // صور مرفوعة Uploaded
-      '/bg/upload1.jpg','/bg/upload2.jpg','/bg/upload4.jpg','/bg/upload6.jpg'
+      '/bg/upload1.jpg','/bg/upload2.jpg','/bg/upload4.jpg','/bg/upload6.jpg',
+      '/bg/upload7.avif','/bg/upload8.avif','/bg/upload9.avif','/bg/upload10.avif',
+      '/bg/upload11.avif','/bg/upload12.avif','/bg/upload13.avif','/bg/upload14.avif','/bg/upload15.avif'
     ];
 
     // ===== quran.com mapped reciters (ID → chapter_recitations with segments) =====
