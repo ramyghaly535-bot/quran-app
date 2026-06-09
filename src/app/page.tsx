@@ -1651,10 +1651,7 @@ export default function Home() {
         <section className="rc-s">
           <div className="sec-t">
             <i className="fas fa-microphone-alt"></i> اختر القارئ
-            <div style={{display:'flex',gap:'6px'}}>
-              <button className="lib-open-btn" onClick={() => (window as any).openLibM?.()} title="مكتبة 115 قارئ"><i className="fas fa-mosque"></i> <span>115 قارئ</span></button>
-              <button className="add-r-btn" onClick={() => (window as any).openAddR?.()} title="إضافة قارئ جديد"><i className="fas fa-plus"></i></button>
-            </div>
+            <button className="lib-open-btn" onClick={() => (window as any).openLibM?.()} title="مكتبة 115 قارئ"><i className="fas fa-mosque"></i> <span>115 قارئ</span></button>
           </div>
           <div className="rc-g-wrap" id="rcGWrap">
             <div className="rc-g" id="rcG"></div>
