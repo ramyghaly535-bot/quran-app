@@ -532,12 +532,56 @@ export default function Home() {
         it.appendChild(av);it.appendChild(inf);it.appendChild(btn);list.appendChild(it);
       });
     }
+    // ذاكرة مؤقتة لمعرفات quran.com المُكتشفة ديناميكياً
+    let dynamicQCMap:any={};
+    function gDynamicQC(){try{return JSON.parse(localStorage.getItem('dyn_qc')||'{}')}catch(e){return{}}}
+    function sDynamicQC(m:any){try{localStorage.setItem('dyn_qc',JSON.stringify(m))}catch(e){}}
+    dynamicQCMap=gDynamicQC();
+
+    // التحقق من رابط الصوت + اكتشاف quran.com ID عند إضافة قارئ جديد
+    async function discoverAndVerify(recName:string, dlFolder:string, audioUrl:string):Promise<{qcId:number|null,audioOk:boolean,qcSource:string}>{
+      let result={qcId:null as number|null,audioOk:true,qcSource:''};
+      // 1) التحقق من رابط الصوت (بسورة الفاتحة 001.mp3)
+      if(audioUrl){
+        try{
+          let testUrl=audioUrl.replace('{num}','001');
+          let vRes=await fetch('/api/verify-audio?url='+encodeURIComponent(testUrl));
+          let vData=await vRes.json();
+          result.audioOk=vData.ok===true;
+        }catch(e){result.audioOk=true} // لا نمنع الإضافة عند فشل التحقق
+      }
+      // 2) البحث عن معرف quran.com (أولاً من الذاكرة المؤقتة)
+      if(dynamicQCMap[dlFolder]){result.qcId=dynamicQCMap[dlFolder];result.qcSource='cached';return result}
+      // 3) البحث عبر API
+      try{
+        let dRes=await fetch('/api/find-quran-reciter?name='+encodeURIComponent(recName)+'&dl='+encodeURIComponent(dlFolder));
+        let dData=await dRes.json();
+        if(dData.found&&dData.reciterId){
+          result.qcId=dData.reciterId;result.qcSource=dData.source||'quran_api';
+          dynamicQCMap[dlFolder]=dData.reciterId;sDynamicQC(dynamicQCMap);
+          // إضافته أيضاً لـ QC_DL_MAP الديناميكي لاستخدامه فوراً
+          QC_DL_MAP[dlFolder]=dData.reciterId;
+        }
+      }catch(e){}
+      return result;
+    }
+
     function addWebReciter(rec:any){
       if(RC.find(function(r:any){return r.dl===rec.folder})){toast('هذا القارئ مضاف بالفعل');return}
-      let newR={id:null,dl:rec.folder,nm:rec.name,url:rec.url,im:rec.image||'https://picsum.photos/seed/'+rec.folder+'/100/100',builtin:false,isNew:true};
+      let newR={id:null,dl:rec.folder,nm:rec.name,url:rec.url,im:rec.image||'https://picsum.photos/seed/'+rec.folder+'/100/100',builtin:false,isNew:true,qcId:null as number|null};
       let added=gAdded();added.push(newR);sAdded(added);
       buildReciters();rndRC();buildSel();
-      toast('تمت إضافة: '+rec.name);
+      toast('تمت الإضافة: '+rec.name);
+      // التحقق من الصوت واكتشاف التوقيتات في الخلفية
+      discoverAndVerify(rec.name,rec.folder,rec.url).then(function(r){
+        if(!r.audioOk){toast('⚠️ رابط الصوت قد لا يعمل لهذا القارئ')}
+        if(r.qcId){
+          newR.qcId=r.qcId;
+          let allAdded=gAdded();let idx=allAdded.findIndex(function(a:any){return a.dl===rec.folder});
+          if(idx!==-1){allAdded[idx].qcId=r.qcId;sAdded(allAdded)}
+          if(r.qcSource==='quran_api'){toast('✅ تزامن آية بآية متاح: '+rec.name)}
+        }else{toast('ℹ️ سيستخدم تقدير التوقيتات')}
+      });
       let foundR=RC.find(function(r:any){return r.dl===rec.folder});
       if(foundR){selLinkR(foundR);closeAddR();openSurM()}
     }
@@ -604,8 +648,19 @@ export default function Home() {
     }
     function addNewReciter(item:any){
       let dlId=item.url.replace('https://server11.mp3quran.net/','').split('/')[0];
-      let newR={id:null,dl:dlId,nm:item.nm,url:item.url,im:'https://picsum.photos/seed/'+dlId+'/100/100',builtin:false,isNew:true};
-      let added=gAdded();added.push(newR);sAdded(added);buildReciters();rndRC();buildSel();return newR;
+      let newR={id:null,dl:dlId,nm:item.nm,url:item.url,im:'https://picsum.photos/seed/'+dlId+'/100/100',builtin:false,isNew:true,qcId:null as number|null};
+      let added=gAdded();added.push(newR);sAdded(added);buildReciters();rndRC();buildSel();
+      // التحقق من الصوت واكتشاف التوقيتات في الخلفية
+      discoverAndVerify(item.nm,dlId,item.url).then(function(r){
+        if(!r.audioOk){toast('⚠️ رابط الصوت قد لا يعمل: '+item.nm)}
+        if(r.qcId){
+          newR.qcId=r.qcId;
+          let allAdded=gAdded();let idx=allAdded.findIndex(function(a:any){return a.dl===dlId});
+          if(idx!==-1){allAdded[idx].qcId=r.qcId;sAdded(allAdded)}
+          if(r.qcSource==='quran_api'){toast('✅ تزامن آية بآية: '+item.nm)}
+        }
+      });
+      return newR;
     }
 
     // ===== نافذة التحميل =====
@@ -850,10 +905,12 @@ export default function Home() {
       // Reset view mode for new surah
       allViewMode=false;E.surahBox.innerHTML='';E.surahBox.style.display='none';E.viewToggleBtn.style.display='none';E.aVr.style.display='block';
 
-      // Determine quran.com reciter ID
+      // Determine quran.com reciter ID (3-tier: static QC_MAP → static QC_DL_MAP → dynamic qcId)
       let qcRecId:number|null=null;
       if(st.curR.id){qcRecId=QC_MAP[st.curR.id]||null}
       if(!qcRecId&&st.curR.dl){qcRecId=QC_DL_MAP[st.curR.dl]||null}
+      // Tier 3: dynamically discovered qcId stored on the reciter object
+      if(!qcRecId&&st.curR.qcId){qcRecId=st.curR.qcId}
 
       // Use synced playback if quran.com reciter ID is available
       if(qcRecId){
@@ -861,8 +918,22 @@ export default function Home() {
         return;
       }
 
-      // No quran.com mapping — use original methods
+      // No quran.com mapping — try async discovery then fallback
       if(!st.curR.id&&st.curR.url){
+        // Try to discover quran.com ID asynchronously before falling back
+        if(st.curR.dl&&!dynamicQCMap[st.curR.dl]){
+          let discoverNum=num; // capture surah number
+          discoverAndVerify(st.curR.nm,st.curR.dl,st.curR.url).then(function(r){
+            if(r.qcId&&st.curS===discoverNum&&st.curR){
+              st.curR.qcId=r.qcId;
+              toast('✅ تم اكتشاف تزامن آية بآية!');
+              // Stop current playback and restart with synced mode
+              E.aud.pause();E.aud.src='';stopRAFSync();
+              st.playing=false;st.loading=true;E.ld.style.display='block';
+              startSyncedPlay(r.qcId,discoverNum,st.curR);
+            }
+          });
+        }
         doLinkMode(num);return;
       }
       doAlquranApi(num);

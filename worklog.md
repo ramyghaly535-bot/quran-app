@@ -94,3 +94,42 @@ Stage Summary:
 - 50+ reciters now mapped for automatic quran.com sync (was 20)
 - All verified with Agent Browser: Mishary Al-Afasy + Al-Fatiha plays with quran.com audio, rAF sync auto-advances ayah text correctly (verified verse 2 at 0:09s → verse 5 at 0:25s)
 - No browser console errors, clean compilation
+
+---
+Task ID: 8
+Agent: Main
+Task: Add auto-discovery of quran.com timings + audio verification for newly added reciters
+
+Work Log:
+- Created `/api/find-quran-reciter/route.ts` — searches for quran.com reciter ID by:
+  1. Cache (in-memory)
+  2. Known static DL map (~45 entries)
+  3. Arabic name keyword matching (~27 hints)
+  4. Scanning known QC IDs (1-174) by audio URL path matching
+  5. Verifies discovered IDs have actual timestamps
+- Created `/api/verify-audio/route.ts` — HEAD request to test audio URL validity (returns ok, status, contentType, size)
+- Added `discoverAndVerify(recName, dlFolder, audioUrl)` async function in page.tsx:
+  1. Verifies audio URL by testing Al-Fatiha (001.mp3)
+  2. Searches quran.com for matching reciter ID
+  3. Caches discovered IDs in localStorage (`dyn_qc`)
+  4. Adds discovered IDs to QC_DL_MAP dynamically
+- Updated `addWebReciter()` — now calls `discoverAndVerify()` in background after adding
+  - Stores `qcId` on reciter object for 3-tier lookup
+  - Shows toast: ✅ for synced mode, ⚠️ for broken audio, ℹ️ for estimated timings
+- Updated `addNewReciter()` — same discovery flow for pool reciters
+- Updated `startRd()` — 3-tier quran.com ID lookup:
+  1. QC_MAP (static, by API ID)
+  2. QC_DL_MAP (static + dynamic, by DL folder)
+  3. reciter.qcId (dynamic, stored on object)
+  - If no mapping found, tries async discovery while falling back to doLinkMode
+  - If async discovery finds ID, stops playback and restarts with synced mode
+- Added `dynamicQCMap` with localStorage persistence via `gDynamicQC()`/`sDynamicQC()`
+
+Stage Summary:
+- Every newly added reciter automatically gets audio URL verification + quran.com timing discovery
+- 3-tier lookup ensures previously discovered IDs are reused (localStorage cache)
+- Audio URL failures reported immediately via toast notification
+- Reciters with quran.com match get precise segment-based sync (rAF 60fps)
+- Reciters without match fall back to estimated timings (still rAF-synced)
+- All APIs tested: find-quran-reciter returns correct IDs for known reciters, verify-audio correctly detects broken URLs
+- Lint clean, no browser errors
