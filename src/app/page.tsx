@@ -212,22 +212,16 @@ export default function Home() {
     };
 
     const BG=[
-      'https://picsum.photos/seed/nature1/1920/1080',
-      'https://picsum.photos/seed/ocean7/1920/1080',
-      'https://picsum.photos/seed/forest3/1920/1080',
-      'https://picsum.photos/seed/mountains5/1920/1080',
-      'https://picsum.photos/seed/sunset22/1920/1080',
-      'https://picsum.photos/seed/desert88/1920/1080',
-      'https://picsum.photos/seed/lake44/1920/1080',
-      'https://picsum.photos/seed/meadow19/1920/1080',
-      'https://picsum.photos/seed/river66/1920/1080',
-      'https://picsum.photos/seed/sky99/1920/1080',
-      'https://picsum.photos/seed/garden33/1920/1080',
-      'https://picsum.photos/seed/cliff77/1920/1080',
-      'https://picsum.photos/seed/valley55/1920/1080',
-      'https://picsum.photos/seed/aurora11/1920/1080',
-      'https://picsum.photos/seed/canyon42/1920/1080',
-      'https://picsum.photos/seed/rainforest8/1920/1080'
+      // بحار Seas
+      '/bg/sea1.png','/bg/sea2.png','/bg/sea3.png','/bg/sea4.png',
+      // سماء Skies
+      '/bg/sky1.png','/bg/sky2.png','/bg/sky3.png','/bg/sky4.png',
+      // نجوم Stars
+      '/bg/star1.png','/bg/star2.png','/bg/star3.png','/bg/star4.png',
+      // أنهار Rivers
+      '/bg/river1.png','/bg/river2.png','/bg/river3.png','/bg/river4.png',
+      // صور مرفوعة Uploaded
+      '/bg/upload1.jpg','/bg/upload2.jpg','/bg/upload4.jpg','/bg/upload6.jpg'
     ];
 
     // ===== quran.com mapped reciters (ID → chapter_recitations with segments) =====
