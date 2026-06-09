@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+db/*.db
+upload/
+mini-services/
+skills/
+agents/
+*.tar.gz
+*.png
+*.apk
+worklog.md
+dev.log
