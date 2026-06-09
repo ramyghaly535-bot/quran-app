@@ -223,7 +223,9 @@ export default function Home() {
       // صور مرفوعة Uploaded
       '/bg/upload1.jpg','/bg/upload2.jpg','/bg/upload4.jpg','/bg/upload6.jpg',
       '/bg/upload7.avif','/bg/upload8.avif','/bg/upload9.avif','/bg/upload10.avif',
-      '/bg/upload11.avif','/bg/upload12.avif','/bg/upload13.avif','/bg/upload14.avif','/bg/upload15.avif'
+      '/bg/upload11.avif','/bg/upload12.avif','/bg/upload13.avif','/bg/upload14.avif','/bg/upload15.avif',
+      '/bg/upload16.jpg','/bg/upload17.jpg','/bg/upload18.jpg','/bg/upload19.jpg',
+      '/bg/upload20.jpg','/bg/upload21.jpg','/bg/upload22.jpg'
     ];
 
     // ===== quran.com mapped reciters (ID → chapter_recitations with segments) =====
