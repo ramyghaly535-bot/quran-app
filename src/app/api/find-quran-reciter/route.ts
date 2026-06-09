@@ -50,7 +50,9 @@ const NAME_HINTS: Array<{ keyword: string; qcId: number }> = [
   { keyword: 'الجهني', qcId: 162 },
   { keyword: 'جابر', qcId: 158 },
   { keyword: 'ناينع', qcId: 126 },
+  { keyword: 'نعينع', qcId: 126 },
   { keyword: 'الكندري', qcId: 160 },
+  { keyword: 'بليلا', qcId: 160 },
   { keyword: 'الخليفي', qcId: 161 },
   { keyword: 'الطبلاوي', qcId: 91 },
   { keyword: 'الشاطري', qcId: 4 },
@@ -60,6 +62,15 @@ const NAME_HINTS: Array<{ keyword: string; qcId: number }> = [
   { keyword: 'الغامدي', qcId: 7 },
   { keyword: 'الثبيتي', qcId: 104 },
   { keyword: 'مخلوف', qcId: 104 },
+  { keyword: 'المطرود', qcId: 124 },
+  { keyword: 'البنا', qcId: 129 },
+  { keyword: 'جبريل', qcId: 169 },
+  { keyword: 'مصطفى إسماعيل', qcId: 88 },
+  { keyword: 'هاجر', qcId: 172 },
+  { keyword: 'هاني الرفاعي', qcId: 5 },
+  { keyword: 'الرفاعي', qcId: 5 },
+  { keyword: 'القاسم', qcId: 11 },
+  { keyword: 'عبد المجيد', qcId: 58 },
 ]
 
 export async function GET(request: NextRequest) {

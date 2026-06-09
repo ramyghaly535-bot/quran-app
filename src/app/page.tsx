@@ -68,64 +68,136 @@ export default function Home() {
       {id:null,dl:'shatri',nm:'أبو بكر الشاطري',im:'https://picsum.photos/seed/shatri/100/100',builtin:true}
     ];
 
+    // NEW_POOL: قراء من mp3quran.net مع توقيتات زمنية دقيقة من Timing API (115 قارئ)
+    // كل قارئ له readId يُستخدم لجلب التوقيتات من /api/mp3quran-timing
     const NEW_POOL=[
-      {nm:'عبدالله الجهني',url:'https://server13.mp3quran.net/jhn/{num}.mp3'},
-      {nm:'إبراهيم الأخضر',url:'https://server6.mp3quran.net/akdr/{num}.mp3'},
+      // === القراء الموجودون (مع تحديث السيرفرات و readId) ===
+      {nm:'عبدالله الجهني',url:'https://server13.mp3quran.net/jhn/{num}.mp3',readId:62},
+      {nm:'إبراهيم الأخضر',url:'https://server6.mp3quran.net/akdr/{num}.mp3',readId:1},
       {nm:'سعيد أبو عونة',url:'https://server6.mp3quran.net/aboona/{num}.mp3'},
-      {nm:'خالد القحطاني',url:'https://server10.mp3quran.net/qht/{num}.mp3'},
-      {nm:'فارس عباد',url:'https://server8.mp3quran.net/frs_a/{num}.mp3'},
-      {nm:'وديع اليمني',url:'https://server6.mp3quran.net/wdee3/{num}.mp3'},
-      {nm:'محمد الطبلاوي',url:'https://server12.mp3quran.net/tblawi/{num}.mp3'},
-      {nm:'هاني الرفاعي',url:'https://server8.mp3quran.net/hani/{num}.mp3'},
-      {nm:'ساهل ياسين',url:'https://server6.mp3quran.net/shl/{num}.mp3'},
+      {nm:'خالد القحطاني',url:'https://server10.mp3quran.net/qht/{num}.mp3',readId:21},
+      {nm:'فارس عباد',url:'https://server8.mp3quran.net/frs_a/{num}.mp3',readId:81},
+      {nm:'وديع اليمني',url:'https://server6.mp3quran.net/wdee3/{num}.mp3',readId:219},
+      {nm:'محمد الطبلاوي',url:'https://server12.mp3quran.net/tblawi/{num}.mp3',readId:106},
+      {nm:'هاني الرفاعي',url:'https://server8.mp3quran.net/hani/{num}.mp3',readId:89},
+      {nm:'ساهل ياسين',url:'https://server6.mp3quran.net/shl/{num}.mp3',readId:32},
       {nm:'ناصر القطبي',url:'https://server6.mp3quran.net/ketbi/{num}.mp3'},
-      {nm:'بندر بليهه',url:'https://server6.mp3quran.net/balilah/{num}.mp3'},
-      {nm:'صلاح البدير',url:'https://server6.mp3quran.net/s_bud/{num}.mp3'},
-      {nm:'ماجد الزامل',url:'https://server9.mp3quran.net/zaml/{num}.mp3'},
+      {nm:'بندر بليهه',url:'https://server6.mp3quran.net/balilah/{num}.mp3',readId:217},
+      {nm:'صلاح البدير',url:'https://server6.mp3quran.net/s_bud/{num}.mp3',readId:43},
+      {nm:'ماجد الزامل',url:'https://server9.mp3quran.net/zaml/{num}.mp3',readId:139},
       {nm:'ماجد العنزي',url:'https://server8.mp3quran.net/majd_onazi/{num}.mp3'},
       {nm:'صلاح الفوزان',url:'https://server10.mp3quran.net/fawzan/{num}.mp3'},
       {nm:'عادل الكلباني',url:'https://server8.mp3quran.net/a_klb/{num}.mp3'},
-      {nm:'عبدالمحسن القاسم',url:'https://server8.mp3quran.net/qasm/{num}.mp3'},
-      {nm:'فهد الكندري',url:'https://server10.mp3quran.net/Abdullahk/{num}.mp3'},
-      {nm:'عبدالباري الثبيتي',url:'https://server6.mp3quran.net/thubti/{num}.mp3'},
-      {nm:'عبدالله المطرود',url:'https://server8.mp3quran.net/mtrod/{num}.mp3'},
-      {nm:'علي جابر',url:'https://server16.mp3quran.net/a_jbr/{num}.mp3'},
+      {nm:'عادل ريان',url:'https://server8.mp3quran.net/ryan/{num}.mp3',readId:48},
+      {nm:'عبدالمحسن القاسم',url:'https://server8.mp3quran.net/qasm/{num}.mp3',readId:67},
+      {nm:'فهد الكندري',url:'https://server10.mp3quran.net/Abdullahk/{num}.mp3',readId:160},
+      {nm:'عبدالباري الثبيتي',url:'https://server6.mp3quran.net/thubti/{num}.mp3',readId:49},
+      {nm:'عبدالله المطرود',url:'https://server8.mp3quran.net/mtrod/{num}.mp3',readId:59},
+      {nm:'علي جابر',url:'https://server11.mp3quran.net/a_jbr/{num}.mp3',readId:76},
       {nm:'عبدالله الغامدي',url:'https://server6.mp3quran.net/ghamdi/{num}.mp3'},
-      {nm:'عبدالعزيز الزهراني',url:'https://server9.mp3quran.net/zahrani/{num}.mp3'},
-      {nm:'الحصري (تجويد)',url:'https://server13.mp3quran.net/husr/{num}.mp3'},
-      {nm:'الدوسري (مجود)',url:'https://server11.mp3quran.net/yasser/{num}.mp3'},
-      {nm:'السديس (تجويد)',url:'https://server11.mp3quran.net/sds/{num}.mp3'},
-      {nm:'محمد الشريم',url:'https://server7.mp3quran.net/shur/{num}.mp3'},
-      {nm:'أحمد الحواشي',url:'https://server11.mp3quran.net/hawashi/{num}.mp3'},
-      {nm:'نبيل الرفاعي',url:'https://server9.mp3quran.net/nabil/{num}.mp3'},
-      {nm:'محمد صالح',url:'https://server12.mp3quran.net/shah/{num}.mp3'},
-      {nm:'عبدالله الخلف',url:'https://server14.mp3quran.net/khalf/{num}.mp3'},
-      {nm:'عبدالله الموسى',url:'https://server14.mp3quran.net/mousa/Rewayat-Hafs-A-n-Assem/{num}.mp3'},
-      {nm:'منصور السالمي',url:'https://server14.mp3quran.net/mansor/{num}.mp3'},
+      {nm:'عبدالعزيز الزهراني',url:'https://server9.mp3quran.net/zahrani/{num}.mp3',readId:56},
+      {nm:'الحصري (تجويد)',url:'https://server13.mp3quran.net/husr/Almusshaf-Al-Mojawwad/{num}.mp3',readId:119},
+      {nm:'الحصري (حفص)',url:'https://server13.mp3quran.net/husr/{num}.mp3',readId:118},
+      {nm:'الدوسري (مجود)',url:'https://server11.mp3quran.net/yasser/{num}.mp3',readId:92},
+      {nm:'السديس',url:'https://server11.mp3quran.net/sds/{num}.mp3',readId:54},
+      {nm:'محمد الشريم',url:'https://server7.mp3quran.net/shur/{num}.mp3',readId:31},
+      {nm:'أحمد الحواشي',url:'https://server11.mp3quran.net/hawashi/{num}.mp3',readId:6},
+      {nm:'نبيل الرفاعي',url:'https://server9.mp3quran.net/nabil/{num}.mp3',readId:87},
+      {nm:'محمد صالح',url:'https://server12.mp3quran.net/shah/{num}.mp3',readId:110},
+      {nm:'عبدالله الخلف',url:'https://server14.mp3quran.net/khalf/{num}.mp3',readId:244},
+      {nm:'عبدالله الموسى',url:'https://server14.mp3quran.net/mousa/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:243},
+      {nm:'منصور السالمي',url:'https://server14.mp3quran.net/mansor/{num}.mp3',readId:245},
       {nm:'ناصر العصفور',url:'https://server14.mp3quran.net/alosfor/{num}.mp3'},
-      {nm:'محمد البخيت',url:'https://server14.mp3quran.net/bukheet/{num}.mp3'},
+      {nm:'محمد البخيت',url:'https://server14.mp3quran.net/bukheet/{num}.mp3',readId:250},
       {nm:'ناصر الماجد',url:'https://server14.mp3quran.net/nasser_almajed/{num}.mp3'},
       {nm:'إسلام صبحي',url:'https://server14.mp3quran.net/islam/Rewayat-Hafs-A-n-Assem/{num}.mp3'},
-      {nm:'مفتاح السلطني',url:'https://server14.mp3quran.net/muftah_sultany/Rewayat_Ibn-Thakwan-A-n-Ibn-Amer/{num}.mp3'},
       {nm:'محمد رفعت',url:'https://server14.mp3quran.net/refat/{num}.mp3'},
-      {nm:'خالد الجليل',url:'https://server10.mp3quran.net/jleel/{num}.mp3'},
-      {nm:'ناصر القطامي',url:'https://server6.mp3quran.net/qtm/{num}.mp3'},
-      {nm:'عبدالرحمن الماجد',url:'https://server10.mp3quran.net/a_majed/{num}.mp3'},
-      {nm:'طارق عبدالغني دعوب',url:'https://server10.mp3quran.net/tareq/{num}.mp3'},
-      {nm:'أحمد عامر',url:'https://server10.mp3quran.net/Aamer/{num}.mp3'},
-      {nm:'الدوكالي محمد العالم',url:'https://server7.mp3quran.net/dokali/{num}.mp3'},
-      {nm:'سعد الغامدي',url:'https://server7.mp3quran.net/s_gmd/{num}.mp3'},
-      {nm:'خالد المهنا',url:'https://server11.mp3quran.net/mohna/{num}.mp3'},
-      {nm:'محمود الرفاعي',url:'https://server11.mp3quran.net/mrifai/{num}.mp3'},
-      {nm:'حاتم فريد الواعر',url:'https://server11.mp3quran.net/hatem/{num}.mp3'},
-      {nm:'إبراهيم الجرمي',url:'https://server11.mp3quran.net/jormy/{num}.mp3'},
-      {nm:'موسى بلال',url:'https://server11.mp3quran.net/bilal/{num}.mp3'},
-      {nm:'ياسر سلامة',url:'https://server12.mp3quran.net/salamah/Rewayat-Hafs-A-n-Assem/{num}.mp3'},
-      {nm:'خليفة الطنيجي',url:'https://server12.mp3quran.net/tnjy/{num}.mp3'},
-      {nm:'سيد رمضان',url:'https://server12.mp3quran.net/sayed/{num}.mp3'},
-      {nm:'شيرزاد عبدالرحمن طاهر',url:'https://server12.mp3quran.net/taher/{num}.mp3'},
-      {nm:'عبدالله خياط',url:'https://server12.mp3quran.net/kyat/{num}.mp3'},
-      {nm:'عبدالبارئ محمد',url:'https://server12.mp3quran.net/bari/{num}.mp3'}
+      {nm:'خالد الجليل',url:'https://server10.mp3quran.net/jleel/{num}.mp3',readId:20},
+      {nm:'ناصر القطامي',url:'https://server6.mp3quran.net/qtm/{num}.mp3',readId:86},
+      {nm:'عبدالرحمن الماجد',url:'https://server10.mp3quran.net/a_majed/{num}.mp3',readId:236},
+      {nm:'أحمد عامر',url:'https://server10.mp3quran.net/Aamer/{num}.mp3',readId:203},
+      {nm:'الدوكالي محمد العالم',url:'https://server7.mp3quran.net/dokali/{num}.mp3',readId:208},
+      {nm:'سعد الغامدي',url:'https://server7.mp3quran.net/s_gmd/{num}.mp3',readId:30},
+      {nm:'خالد المهنا',url:'https://server11.mp3quran.net/mohna/{num}.mp3',readId:159},
+      {nm:'شيرزاد عبدالرحمن طاهر',url:'https://server12.mp3quran.net/taher/{num}.mp3',readId:38},
+      {nm:'خليفة الطنيجي',url:'https://server12.mp3quran.net/tnjy/{num}.mp3',readId:24},
+      {nm:'عبدالله خياط',url:'https://server12.mp3quran.net/kyat/{num}.mp3',readId:61},
+      {nm:'عبدالبارئ محمد',url:'https://server12.mp3quran.net/bari/{num}.mp3',readId:50},
+      {nm:'عبدالباسط (مرتل)',url:'https://server7.mp3quran.net/basit/{num}.mp3',readId:53},
+      {nm:'عبدالباسط (مجود)',url:'https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad/{num}.mp3',readId:51},
+      // === قراء جدد من mp3quran Timing API (توقيتات دقيقة ⏱️) ===
+      {nm:'إبراهيم العسيري',url:'https://server6.mp3quran.net/3siri/{num}.mp3',readId:3},
+      {nm:'أبو بكر الشاطري',url:'https://server11.mp3quran.net/shatri/{num}.mp3',readId:4},
+      {nm:'أحمد العجمي',url:'https://server10.mp3quran.net/ajm/{num}.mp3',readId:5},
+      {nm:'أحمد صابر',url:'https://server8.mp3quran.net/saber/{num}.mp3',readId:8},
+      {nm:'أحمد نعينع',url:'https://server11.mp3quran.net/ahmad_nu/{num}.mp3',readId:9},
+      {nm:'أكرم العلاقمي',url:'https://server9.mp3quran.net/akrm/{num}.mp3',readId:10},
+      {nm:'إدريس أبكر',url:'https://server6.mp3quran.net/abkr/{num}.mp3',readId:12},
+      {nm:'الزين محمد أحمد',url:'https://server9.mp3quran.net/alzain/{num}.mp3',readId:13},
+      {nm:'القارئ ياسين (ورش)',url:'https://server11.mp3quran.net/qari/{num}.mp3',readId:14},
+      {nm:'العيون الكوشي (ورش)',url:'https://server11.mp3quran.net/koshi/{num}.mp3',readId:16},
+      {nm:'توفيق الصايغ',url:'https://server6.mp3quran.net/twfeeq/{num}.mp3',readId:17},
+      {nm:'خالد عبدالكافي',url:'https://server11.mp3quran.net/kafi/{num}.mp3',readId:22},
+      {nm:'داود حمزة',url:'https://server9.mp3quran.net/hamza/{num}.mp3',readId:25},
+      {nm:'زكي داغستاني',url:'https://server9.mp3quran.net/zaki/{num}.mp3',readId:33},
+      {nm:'صابر عبدالحكم',url:'https://server12.mp3quran.net/hkm/{num}.mp3',readId:39},
+      {nm:'صالح الصاهود',url:'https://server8.mp3quran.net/sahood/{num}.mp3',readId:40},
+      {nm:'صالح الهبدان',url:'https://server6.mp3quran.net/habdan/{num}.mp3',readId:42},
+      {nm:'صلاح الهاشم',url:'https://server12.mp3quran.net/salah_hashim_m/{num}.mp3',readId:44},
+      {nm:'صلاح بو خاطر',url:'https://server8.mp3quran.net/bu_khtr/{num}.mp3',readId:46},
+      {nm:'عبدالعزيز الأحمد',url:'https://server11.mp3quran.net/a_ahmed/{num}.mp3',readId:55},
+      {nm:'عبدالله البعيجان',url:'https://server8.mp3quran.net/buajan/{num}.mp3',readId:58},
+      {nm:'عبدالله بصفر',url:'https://server6.mp3quran.net/bsfr/{num}.mp3',readId:60},
+      {nm:'عبدالرشيد صوفي (سوسي)',url:'https://server16.mp3quran.net/soufi/Rewayat-Assosi-A-n-Abi-Amr/{num}.mp3',readId:65},
+      {nm:'عبدالمحسن الحارثي',url:'https://server6.mp3quran.net/mohsin_harthi/{num}.mp3',readId:66},
+      {nm:'عبدالمحسن العبيكان',url:'https://server12.mp3quran.net/obk/{num}.mp3',readId:69},
+      {nm:'عبدالهادي كناكري',url:'https://server6.mp3quran.net/kanakeri/{num}.mp3',readId:70},
+      {nm:'عبدالودود حنيف',url:'https://server8.mp3quran.net/wdod/{num}.mp3',readId:71},
+      {nm:'عبدالولي الأركاني',url:'https://server6.mp3quran.net/arkani/{num}.mp3',readId:72},
+      {nm:'الحذيفي (حفص)',url:'https://server9.mp3quran.net/hthfi/{num}.mp3',readId:74},
+      {nm:'الحذيفي (شعبة)',url:'https://server9.mp3quran.net/hthfi/Rewayat-Sho-bah-A-n-Asim/{num}.mp3',readId:305},
+      {nm:'علي حجاج السويسي',url:'https://server9.mp3quran.net/hajjaj/{num}.mp3',readId:77},
+      {nm:'عماد زهير حافظ',url:'https://server6.mp3quran.net/hafz/{num}.mp3',readId:78},
+      {nm:'عمر القزابري (ورش)',url:'https://server9.mp3quran.net/omar_warsh/{num}.mp3',readId:80},
+      {nm:'نعمة الحسان',url:'https://server8.mp3quran.net/namh/{num}.mp3',readId:88},
+      {nm:'محمد أيوب',url:'https://server8.mp3quran.net/ayyub/{num}.mp3',readId:109},
+      {nm:'محمد عبدالكريم',url:'https://server12.mp3quran.net/m_krm/{num}.mp3',readId:115},
+      {nm:'محمود البنا (مجود)',url:'https://server8.mp3quran.net/bna/Almusshaf-Al-Mojawwad/{num}.mp3',readId:122},
+      {nm:'مشاري العفاسي (mp3quran)',url:'https://server8.mp3quran.net/afs/{num}.mp3',readId:123},
+      {nm:'ماهر المعيقلي (مجود)',url:'https://server12.mp3quran.net/maher/Almusshaf-Al-Mojawwad/{num}.mp3',readId:133},
+      {nm:'محمد سايد (ورش)',url:'https://server16.mp3quran.net/m_sayed/Rewayat-Warsh-A-n-Nafi/{num}.mp3',readId:134},
+      {nm:'أحمد طالب بن حميد',url:'https://server16.mp3quran.net/a_binhameed/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:137},
+      {nm:'جمعان العصيمي',url:'https://server6.mp3quran.net/jaman/{num}.mp3',readId:181},
+      {nm:'يوسف بن نوح أحمد',url:'https://server8.mp3quran.net/noah/{num}.mp3',readId:193},
+      {nm:'محمد رشاد الشريف',url:'https://server10.mp3quran.net/rashad/{num}.mp3',readId:198},
+      {nm:'أحمد الطرابلسي',url:'https://server10.mp3quran.net/trabulsi/{num}.mp3',readId:201},
+      {nm:'رعد محمد الكردي',url:'https://server6.mp3quran.net/kurdi/{num}.mp3',readId:221},
+      {nm:'عبدالرحمن العوسي',url:'https://server6.mp3quran.net/aloosi/{num}.mp3',readId:225},
+      {nm:'محمد خليل القارئ',url:'https://server8.mp3quran.net/m_qari/{num}.mp3',readId:229},
+      {nm:'إبراهيم الدوسري',url:'https://server10.mp3quran.net/ibrahim_dosri/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:232},
+      {nm:'عبدالرحمن السويّد',url:'https://server16.mp3quran.net/a_swaiyd/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:135},
+      {nm:'أحمد النفيس (server16)',url:'https://server16.mp3quran.net/nufais/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:259},
+      {nm:'أحمد ديبان',url:'https://server16.mp3quran.net/deban/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:265},
+      {nm:'بيشه وا قادر الكردي',url:'https://server16.mp3quran.net/peshawa/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:268},
+      {nm:'الحصري (دوري)',url:'https://server13.mp3quran.net/husr/Rewayat-Aldori-A-n-Abi-Amr/{num}.mp3',readId:269},
+      {nm:'الحصري (قالون)',url:'https://server13.mp3quran.net/husr/Rewayat-Qalon-A-n-Nafi/{num}.mp3',readId:270},
+      {nm:'هيثم الدخين',url:'https://server16.mp3quran.net/h_dukhain/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:273},
+      {nm:'عبدالعزيز التركي',url:'https://server16.mp3quran.net/a_turki/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:282},
+      {nm:'مصطفى إسماعيل (مجود)',url:'https://server8.mp3quran.net/mustafa/Almusshaf-Al-Mojawwad/{num}.mp3',readId:288},
+      {nm:'أحمد المعصراوي',url:'https://server16.mp3quran.net/a_maasaraawi/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:289},
+      {nm:'سيد أحمد هاشمي',url:'https://server16.mp3quran.net/s_hashemi/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:294},
+      {nm:'خالد كريم محمدي',url:'https://server16.mp3quran.net/kh_mohammadi/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:295},
+      {nm:'عكاشة كميني (بزي)',url:'https://server16.mp3quran.net/okasha/Rewayat-Albizi-A-n-Ibn-Katheer/{num}.mp3',readId:296},
+      {nm:'حسن صالح',url:'https://server16.mp3quran.net/h_saleh/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:299},
+      {nm:'صالح الشمراني',url:'https://server16.mp3quran.net/shamrani/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:300},
+      {nm:'عيسى عمر سناكو',url:'https://server16.mp3quran.net/i_sanankoua/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:303},
+      {nm:'أنس العمادي',url:'https://server16.mp3quran.net/a_alemadi/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:314},
+      {nm:'محمد برهجي',url:'https://server16.mp3quran.net/M_Burhaji/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:340},
+      {nm:'أحمد خليل شاهين',url:'https://server16.mp3quran.net/shaheen/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:256},
+      {nm:'عبدالرشيد صوفي (حفص)',url:'https://server16.mp3quran.net/soufi/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:258},
+      {nm:'الحصري (ورش)',url:'https://server13.mp3quran.net/husr/Rewayat-Warsh-A-n-Nafi/{num}.mp3',readId:120},
+      {nm:'الحذيفي (قالون)',url:'https://server9.mp3quran.net/huthifi_qalon/{num}.mp3',readId:75},
+      {nm:'حسن الدغريري',url:'https://server16.mp3quran.net/H-Aldaghriri/Rewayat-Hafs-A-n-Assem/{num}.mp3',readId:10905}
     ];
 
     const DL_MAP={
@@ -202,7 +274,15 @@ export default function Home() {
       'matroud':124,       // عبدالله مطرود
       'albana':129,        // محمود علي البنا
       'husary_iza3a':122,  // الحصري إذاعة
-      'nasseralketbi':11
+      'nasseralketbi':11,
+      // === قراء إضافيون من فحص quran.com (44 معرف) ===
+      'basit':53,'sds':3,'afs':7,
+      'thubti':104,'husr':6,'husr_mujawwad':12,
+      'bna':129,'mustafa':88,
+      'akdr':17,'ajm':19,
+      'akrm':127,'ahmad_nu':126,
+      'bsfr':66,'3siri':95,'alzain':95,
+      'a_majed':95
     };
     // Timestamps from quran.com API (ms per ayah: [timestamp_from, timestamp_to])
     let syncedTimestamps:{from:number,to:number,key:string}[]=[];
@@ -336,28 +416,54 @@ export default function Home() {
 
     // خريطة المجلدات → السيرفر الصحيح (من mp3quran.net API v3)
     const DL_SERVER:any={
-      'afasy':'server8','abdulbasit':'server7','abdulbasit_mujawwad':'server7',
-      'husary':'server13','husary_mujawwad':'server13','husary_tajweed':'server13','m_husary':'server13',
-      'minshawi':'server10','minshawi_mujawwad':'server10',
-      'sudais':'server11','sudais_tajweed':'server11',
-      'ajamy':'server10','basfar':'server6',
+      'afasy':'server8','afs':'server8','abdulbasit':'server7','abdulbasit_mujawwad':'server7','basit':'server7',
+      'husary':'server13','husary_mujawwad':'server13','husary_tajweed':'server13','m_husary':'server13','husr':'server13',
+      'minshawi':'server10','minshawi_mujawwad':'server10','minsh':'server10',
+      'sudais':'server11','sudais_tajweed':'server11','sds':'server11',
+      'ajamy':'server10','ajm':'server10','basfar':'server6','bsfr':'server6',
       'shatri':'server11','shur':'server7','shur_tajweed':'server7','m_shur':'server7',
       'maher':'server12','maher_mujawwad':'server12',
-      'hudhaify':'server9','nufais':'server16','abkr':'server6',
-      'qtm':'server6','jleel':'server10','jaber':'server16',
+      'hudhaify':'server9','hthfi':'server9','nufais':'server16','abkr':'server6',
+      'qtm':'server6','jleel':'server10','jaber':'server11','a_jbr':'server11',
       'yasser':'server11','yasser_mujawwad':'server11',
-      'kandari':'server10','thubti':'server6','makhloof':'server8',
-      'qasim':'server8','fawzan':'server10','kalbani':'server8',
-      'ghamdi':'server6','jaber':'server16','zahran':'server9',
+      'kandari':'server10','Abdullahk':'server10','thubti':'server6','makhloof':'server8',
+      'qasim':'server8','fawzan':'server10','kalbani':'server8','a_klb':'server8',
+      'ghamdi':'server6','jaber':'server16','zahran':'server9','zahrani':'server9',
       'maali':'server10','hawashi':'server11','nabil':'server9',
-      'hamid':'server10','qarni':'server9',
-      'tablawi':'server12','minshawi_mujawwad2':'server10',
+      'hamid':'server10','qarni':'server9','a_majed':'server10',
+      'tablawi':'server12','tblawi':'server12','minshawi_mujawwad2':'server10',
       'ketbi':'server6','balilah':'server6',
-      'fares':'server8','hane':'server8',
-      'salah_budair':'server6','hajjaji':'server9',
-      'aboona':'server6','sahl':'server6',
-      'juhany':'server13','juhany_tajweed':'server13',
-      'naina':'server11','shatri2':'server11'
+      'fares':'server8','frs_a':'server8','hane':'server8','hani':'server8',
+      'salah_budair':'server6','s_bud':'server6','hajjaji':'server9','hajjaj':'server9',
+      'aboona':'server6','sahl':'server6','shl':'server6',
+      'juhany':'server13','juhany_tajweed':'server13','jhn':'server13',
+      'naina':'server11','shatri2':'server11',
+      // قراء إضافيون من mp3quran timing API
+      'akdr':'server6','3siri':'server6','qari':'server11','koshi':'server11',
+      'twfeeq':'server6','qht':'server10','kafi':'server11','tnjy':'server12',
+      'hamza':'server9','s_gmd':'server7','saber':'server8','alzain':'server9',
+      'zaki':'server9','taher':'server12','hkm':'server12','sahood':'server8',
+      'habdan':'server6','salah_hashim_m':'server12','bu_khtr':'server8','ryan':'server8',
+      'mtrod':'server8','kyat':'server12','bari':'server12','a_ahmed':'server11',
+      'buajan':'server8','mohsin_harthi':'server6','obk':'server12','kanakeri':'server6',
+      'wdod':'server8','arkani':'server6','hafz':'server6','omar_warsh':'server9',
+      'namh':'server8','shah':'server12','m_krm':'server12','ayyub':'server8',
+      'bna':'server8','noah':'server8','rashad':'server10','trabulsi':'server10',
+      'Aamer':'server10','dokali':'server7','wdee3':'server6','kurdi':'server6',
+      'aloosi':'server6','m_qari':'server8','ibrahim_dosri':'server10',
+      'a_swaiyd':'server16','a_binhameed':'server16','zaml':'server9',
+      'mohna':'server11','jaman':'server6','a_turki':'server16',
+      'mustafa':'server8','a_maasaraawi':'server16','s_hashemi':'server16',
+      'kh_mohammadi':'server16','okasha':'server16','h_saleh':'server16',
+      'shamrani':'server16','i_sanankoua':'server16','a_alemadi':'server16',
+      'M_Burhaji':'server16','H-Aldaghriri':'server16','deban':'server16',
+      'peshawa':'server16','shaheen':'server16',
+      // القراء المضافة حديثاً من server14
+      'refat':'server14','islam':'server14','mousa':'server14','khalf':'server14',
+      'mansor':'server14','alosfor':'server14','bukheet':'server14',
+      'nasser_almajed':'server14','muftah_sultany':'server14',
+      'mrifai':'server11','hatem':'server11','jormy':'server11','bilal':'server11',
+      'salamah':'server12','tareq':'server10','a_abdl':'server16'
     };
     function dlUrl(dlId:string,num:number){
       let s=String(num);while(s.length<3)s='0'+s;
@@ -687,9 +793,16 @@ export default function Home() {
       }
       it.appendChild(av);it.appendChild(inf);it.appendChild(btns);container.appendChild(it);
     }
+    function extractDlId(url:string):string{
+      let m=url.match(/https:\/\/server\d+\.mp3quran\.net\/([^\/]+)/);
+      if(m)return m[1];
+      // Handle URLs with deeper paths
+      let parts=url.replace('https://','').split('/');
+      return parts[1]||'custom';
+    }
     function addNewReciter(item:any){
-      let dlId=item.url.replace('https://server11.mp3quran.net/','').split('/')[0];
-      let newR={id:null,dl:dlId,nm:item.nm,url:item.url,im:'https://picsum.photos/seed/'+dlId+'/100/100',builtin:false,isNew:true,qcId:null as number|null};
+      let dlId=item.dl||extractDlId(item.url);
+      let newR={id:null,dl:dlId,nm:item.nm,url:item.url,im:'https://picsum.photos/seed/'+dlId+'/100/100',builtin:false,isNew:true,qcId:null as number|null,mp3qReadId:item.readId||null};
       let added=gAdded();added.push(newR);sAdded(added);buildReciters();rndRC();buildSel();
       // التحقق من الصوت واكتشاف التوقيتات في الخلفية
       discoverAndVerify(item.nm,dlId,item.url).then(function(r){
@@ -912,6 +1025,59 @@ export default function Home() {
       });
     }
 
+    // mp3quran timing read_id → folder name mapping (from mp3quran Timing API)
+    const MP3Q_READ_MAP:any={};
+    // Will be populated dynamically from API
+    let mp3qReadsPopulated=false;
+    async function populateMp3qReads(){
+      if(mp3qReadsPopulated)return;
+      try{
+        let res=await fetch('/api/mp3quran-timing');
+        let data=await res.json();
+        if(data.reads){
+          for(let r of data.reads){
+            let folder=r.folder_url.replace('https://','').split('/')[1]||'';
+            MP3Q_READ_MAP[folder]=r.id;
+            // Also map by full path prefix
+            MP3Q_READ_MAP[r.id]=folder;
+          }
+        }
+        mp3qReadsPopulated=true;
+      }catch(e){mp3qReadsPopulated=true}
+    }
+    // Get mp3quran timing read ID for a reciter
+    function getMp3qReadId(r:any):number|null{
+      if(r.mp3qReadId)return r.mp3qReadId;
+      if(!r.url&&!(r.dl&&DL_SERVER[r.dl]))return null;
+      // Check by dl folder name
+      if(r.dl&&MP3Q_READ_MAP[r.dl])return MP3Q_READ_MAP[r.dl];
+      // Check by URL
+      if(r.url){
+        for(let folder in MP3Q_READ_MAP){
+          if(typeof MP3Q_READ_MAP[folder]==='number'&&r.url.includes('/'+folder+'/'))return MP3Q_READ_MAP[folder];
+        }
+      }
+      return null;
+    }
+    // Fetch mp3quran timing data for a surah
+    async function fetchMp3qTiming(readId:number,suraNum:number):Promise<any[]>{
+      try{
+        let res=await fetch('/api/mp3quran-timing?sura='+suraNum+'&read='+readId);
+        let data=await res.json();
+        if(data.verse_timings&&data.verse_timings.length>0)return data.verse_timings;
+      }catch(e){}
+      return[];
+    }
+    // Try to find mp3quran read ID by audio URL pattern matching
+    function findMp3qReadByUrl(audioUrl:string):number|null{
+      for(let folder in MP3Q_READ_MAP){
+        if(typeof MP3Q_READ_MAP[folder]==='number'){
+          if(audioUrl.includes('/'+folder+'/'))return MP3Q_READ_MAP[folder];
+        }
+      }
+      return null;
+    }
+
     function doLinkMode(num:number){
       st.linkMode=true;let u=getRUrl(st.curR,num);
       if(!u){E.ld.style.display='none';E.wh.style.display='block';st.loading=false;toast('رابط غير متاح');return}
@@ -920,9 +1086,48 @@ export default function Home() {
       fetch('https://api.alquran.cloud/v1/surah/'+num+'/editions/ar.alafasy,ar.muyassar,en.sahih').then(function(r){return r.json()}).then(function(d:any){
         if(d.code===200&&d.data&&d.data.length>=1){st.sData=d.data;st.totV=d.data[0].numberOfAyahs;st.curA=1;
           showAyah();
-          // Estimate timings then start rAF sync for smooth ayah detection
-          function tryEstimate(){let dur=E.aud.duration;if(dur&&isFinite(dur)&&dur>0){estimateAyahTimings(st.sData[0].ayahs,dur,num);lastAutoAyah=-1;startRAFSync()}else{setTimeout(tryEstimate,800)}}
-          tryEstimate();
+          // Try mp3quran timing first (precise), then fall back to estimated
+          let mp3qReadId=getMp3qReadId(st.curR);
+          if(mp3qReadId){
+            fetchMp3qTiming(mp3qReadId,num).then(function(timings:any[]){
+              if(timings.length>0){
+                // Use precise mp3quran timings
+                ayahTimings=timings.map(function(t:any){return t.start_time/1000});
+                syncedTimestamps=timings.map(function(t:any){return{from:t.start_time,to:t.end_time,key:''}});
+                verseTimings=timings.map(function(t:any){return{verse_key:'',start_time:t.start_time,end_time:t.end_time}});
+                lastAutoAyah=-1;startRAFSync();
+                toast('⏱️ تزامن دقيق من mp3quran ('+timings.length+' آية)');
+              }else{
+                // Fallback to estimated timings
+                function tryEstimate(){let dur=E.aud.duration;if(dur&&isFinite(dur)&&dur>0){estimateAyahTimings(st.sData[0].ayahs,dur,num);lastAutoAyah=-1;startRAFSync()}else{setTimeout(tryEstimate,800)}}
+                tryEstimate();
+              }
+            });
+          }else{
+            // Also try async mp3quran lookup if map not yet populated
+            populateMp3qReads().then(function(){
+              let newReadId=getMp3qReadId(st.curR);
+              if(newReadId){
+                fetchMp3qTiming(newReadId,num).then(function(timings:any[]){
+                  if(timings.length>0){
+                    ayahTimings=timings.map(function(t:any){return t.start_time/1000});
+                    syncedTimestamps=timings.map(function(t:any){return{from:t.start_time,to:t.end_time,key:''}});
+                    verseTimings=timings.map(function(t:any){return{verse_key:'',start_time:t.start_time,end_time:t.end_time}});
+                    lastAutoAyah=-1;startRAFSync();
+                    toast('⏱️ تزامن دقيق من mp3quran ('+timings.length+' آية)');
+                    return;
+                  }
+                });
+              }
+              // If no mp3quran timing, try async URL-based lookup
+              if(!newReadId&&st.curR.url){
+                findMp3qReadByUrl(st.curR.url.replace('{num}','001'));
+              }
+              // Final fallback: estimated timings
+              function tryEstimate(){let dur=E.aud.duration;if(dur&&isFinite(dur)&&dur>0){estimateAyahTimings(st.sData[0].ayahs,dur,num);lastAutoAyah=-1;startRAFSync()}else{setTimeout(tryEstimate,800)}}
+              tryEstimate();
+            });
+          }
         }else{E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''}
       }).catch(function(){E.aVr.innerText='بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ';E.tTx.innerText='تلاوة كاملة بالرابط المباشر';E.trTx.innerText=''});
       E.aud.src=u;E.aud.load();E.aud.play().then(function(){st.playing=true;updPP();showReciterNotif(st.curR.nm,inf?inf.nm:'')}).catch(function(){st.playing=false;updPP();toast('تعذر تشغيل الصوت')});
@@ -1184,7 +1389,9 @@ export default function Home() {
 
     // ===== Init =====
     function init(){
-      buildReciters();rndRC();buildSel();startBG();initQR();updDT();updFavUI();updUpdBdg();showSurArrow()
+      buildReciters();rndRC();buildSel();startBG();initQR();updDT();updFavUI();updUpdBdg();showSurArrow();
+      // Pre-populate mp3quran timing reads map for fast lookup
+      populateMp3qReads();
     }
 
     init()
